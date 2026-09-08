@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f4ef" />
+    <meta name="description" content="Follow all 32 NFL teams' championship outlook, playoff chances, and statistical leaders. Free, transparent weekly snapshots, season after season." />
+    <title>Sunday Signal — NFL Season Tracker</title>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <script>
+      (() => {
+        const param = new URLSearchParams(window.location.search).get("clawpilotTheme");
+        const theme =
+          param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+    <script>
+      try {
+        const saved = localStorage.getItem("sunday-signal-theme");
+        if (!new URLSearchParams(location.search).has("clawpilotTheme") && (saved === "dark" || saved === "light")) {
+          document.documentElement.setAttribute("data-theme", saved);
+        }
+      } catch { /* Theme still works when browser storage is disabled. */ }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="./src/main.tsx"></script>
+  </body>
+</html>

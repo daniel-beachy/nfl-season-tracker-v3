@@ -1,0 +1,69 @@
+name: Capture and publish
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    # Wednesday, 10:15 EDT / 09:15 EST. The collector gates monthly captures
+    # in the offseason/preseason to the first Wednesday of the month.
+    - cron: '15 14 * * 3'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: capture-and-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      pages: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --no-fund --no-audit
+      - name: Capture scheduled snapshot
+        if: github.event_name == 'schedule'
+        run: npm run capture -- --scheduled
+      - name: Capture manual snapshot
+        if: github.event_name == 'workflow_dispatch'
+        run: npm run capture
+      - name: Commit captured JSON
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: |
+          if ! git diff --quiet -- public/data || [ -n "$(git ls-files --others --exclude-standard public/data)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add public/data
+            git commit -m "data: capture NFL season snapshot"
+            git push origin HEAD:main
+          fi
+      - run: npm test
+      - run: npm run build
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
