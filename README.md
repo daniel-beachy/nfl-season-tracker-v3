@@ -10,6 +10,7 @@ A free NFL season tracker: the long view on championship forecasts, playoff chan
 - Team-colored time-series charts with hover/focus tooltips, team filters, a top-eight shortcut, and accessible latest-value tables.
 - Top-10 statistical leaders, cumulative charts, and leaderboard cards. Regular-season totals stay separate from postseason statistics.
 - A season selector that defaults to the current season, independent projection-source selection, and persistent light/dark mode.
+- A snapshot-history slider to rewind the charts and leaderboards to any captured week.
 - Explicit **mocked — not fully accurate** labels on the illustrative previous season. Actual current-season captures are never supplemented with invented history.
 - Honest single-point, missing-source, unsupported-market, refresh-overdue, and **preseason — season not started** states.
 
@@ -47,6 +48,10 @@ src/
 ```
 
 React, TypeScript, Vite, and Recharts compile to a fully static site. All dependencies are bundled locally. There are no paid services, analytics, API keys, application servers, databases, runtime sportsbook requests, or external font dependencies. The only browser data requests are same-origin static files. Team colors are loaded from captured ESPN metadata, not live requests.
+
+Charts prefer the primary team color, switch to the official alternate when needed, and adjust brightness if both colors are unreadable on the selected theme. Every default team line maintains at least 3:1 contrast against the chart surface.
+
+Live sources are **ESPN FPI** and **DraftKings futures syndicated by ESPN**. The sportsbook adapter captures Super Bowl, conference, and division prices and normalizes complete markets to remove the displayed overround proportionally. It does not invent playoff probabilities or projected win totals. Although accessed through ESPN infrastructure, DraftKings is a separate odds provider, not another FPI forecast. Initial 2026 FPI observations are dated August 31 and visibly marked delayed; sportsbook update timestamps are not supplied.
 
 Adapters publish the same five optional metrics: `superBowl`, `conference`, `division`, `playoffs`, and `wins`. A provider declares which metrics it supports. Unavailable inputs remain absent/null, never zero. Missing snapshots break lines instead of interpolating across failures. Model forecasts and market-implied probabilities are never blended. All values are percentages, except projected wins.
 

@@ -1,5 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { TEAMS } from '../scripts/teams.mjs';
 import {
   chartRows, latestRankings, leaderRows, readableTeamColor,
   metricValue, seasonBanner, largestMover, observationSegments,
@@ -50,6 +51,18 @@ test('leader chart aligns athletes by stable ID and leaves unavailable history b
 test('team colors swap alternate when primary is unreadable on theme surface', () => {
   assert.equal(readableTeamColor(teams[0], 'dark'), '#eeeeee');
   assert.equal(readableTeamColor(teams[1], 'light'), '#123456');
+});
+
+test('all real team colors remain readable even when both brand colors are dark', () => {
+  for (const theme of ['light', 'dark']) for (const team of TEAMS) {
+    const color = readableTeamColor(team, theme);
+    const channels = [1, 3, 5].map(index => parseInt(color.slice(index, index + 2), 16) / 255)
+      .map(value => value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4);
+    const foreground = channels[0] * .2126 + channels[1] * .7152 + channels[2] * .0722;
+    const background = theme === 'dark' ? .0222 : 1;
+    const contrast = (Math.max(foreground, background) + .05) / (Math.min(foreground, background) + .05);
+    assert.ok(contrast >= 3, `${team.name} ${theme}: ${color} has contrast ${contrast}`);
+  }
 });
 
 test('season messaging clearly labels mocks and unstarted seasons', () => {

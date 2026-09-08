@@ -1,0 +1,802 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "kind": "live",
+  "startsAt": "2026-09-10T00:20:00.000Z",
+  "teams": [
+    {
+      "id": "2",
+      "abbreviation": "BUF",
+      "name": "Buffalo Bills",
+      "shortName": "Bills",
+      "conference": "AFC",
+      "division": "East",
+      "color": "#00338d",
+      "alternateColor": "#d50a0a",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/buf.png"
+    },
+    {
+      "id": "15",
+      "abbreviation": "MIA",
+      "name": "Miami Dolphins",
+      "shortName": "Dolphins",
+      "conference": "AFC",
+      "division": "East",
+      "color": "#008e97",
+      "alternateColor": "#fc4c02",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/mia.png"
+    },
+    {
+      "id": "17",
+      "abbreviation": "NE",
+      "name": "New England Patriots",
+      "shortName": "Patriots",
+      "conference": "AFC",
+      "division": "East",
+      "color": "#002a5c",
+      "alternateColor": "#c60c30",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/ne.png"
+    },
+    {
+      "id": "20",
+      "abbreviation": "NYJ",
+      "name": "New York Jets",
+      "shortName": "Jets",
+      "conference": "AFC",
+      "division": "East",
+      "color": "#115740",
+      "alternateColor": "#ffffff",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/nyj.png"
+    },
+    {
+      "id": "33",
+      "abbreviation": "BAL",
+      "name": "Baltimore Ravens",
+      "shortName": "Ravens",
+      "conference": "AFC",
+      "division": "North",
+      "color": "#29126f",
+      "alternateColor": "#000000",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/bal.png"
+    },
+    {
+      "id": "4",
+      "abbreviation": "CIN",
+      "name": "Cincinnati Bengals",
+      "shortName": "Bengals",
+      "conference": "AFC",
+      "division": "North",
+      "color": "#fb4f14",
+      "alternateColor": "#000000",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/cin.png"
+    },
+    {
+      "id": "5",
+      "abbreviation": "CLE",
+      "name": "Cleveland Browns",
+      "shortName": "Browns",
+      "conference": "AFC",
+      "division": "North",
+      "color": "#472a08",
+      "alternateColor": "#ff3c00",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/cle.png"
+    },
+    {
+      "id": "23",
+      "abbreviation": "PIT",
+      "name": "Pittsburgh Steelers",
+      "shortName": "Steelers",
+      "conference": "AFC",
+      "division": "North",
+      "color": "#000000",
+      "alternateColor": "#ffb612",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/pit.png"
+    },
+    {
+      "id": "34",
+      "abbreviation": "HOU",
+      "name": "Houston Texans",
+      "shortName": "Texans",
+      "conference": "AFC",
+      "division": "South",
+      "color": "#021018",
+      "alternateColor": "#eb0028",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/hou.png"
+    },
+    {
+      "id": "11",
+      "abbreviation": "IND",
+      "name": "Indianapolis Colts",
+      "shortName": "Colts",
+      "conference": "AFC",
+      "division": "South",
+      "color": "#003b75",
+      "alternateColor": "#ffffff",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/ind.png"
+    },
+    {
+      "id": "30",
+      "abbreviation": "JAX",
+      "name": "Jacksonville Jaguars",
+      "shortName": "Jaguars",
+      "conference": "AFC",
+      "division": "South",
+      "color": "#007487",
+      "alternateColor": "#d7a22a",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/jax.png"
+    },
+    {
+      "id": "10",
+      "abbreviation": "TEN",
+      "name": "Tennessee Titans",
+      "shortName": "Titans",
+      "conference": "AFC",
+      "division": "South",
+      "color": "#4495d2",
+      "alternateColor": "#001532",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/ten.png"
+    },
+    {
+      "id": "7",
+      "abbreviation": "DEN",
+      "name": "Denver Broncos",
+      "shortName": "Broncos",
+      "conference": "AFC",
+      "division": "West",
+      "color": "#0a2343",
+      "alternateColor": "#fc4c02",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/den.png"
+    },
+    {
+      "id": "12",
+      "abbreviation": "KC",
+      "name": "Kansas City Chiefs",
+      "shortName": "Chiefs",
+      "conference": "AFC",
+      "division": "West",
+      "color": "#e31837",
+      "alternateColor": "#ffb612",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/kc.png"
+    },
+    {
+      "id": "13",
+      "abbreviation": "LV",
+      "name": "Las Vegas Raiders",
+      "shortName": "Raiders",
+      "conference": "AFC",
+      "division": "West",
+      "color": "#000000",
+      "alternateColor": "#a5acaf",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/lv.png"
+    },
+    {
+      "id": "24",
+      "abbreviation": "LAC",
+      "name": "Los Angeles Chargers",
+      "shortName": "Chargers",
+      "conference": "AFC",
+      "division": "West",
+      "color": "#0080c6",
+      "alternateColor": "#ffc20e",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/lac.png"
+    },
+    {
+      "id": "6",
+      "abbreviation": "DAL",
+      "name": "Dallas Cowboys",
+      "shortName": "Cowboys",
+      "conference": "NFC",
+      "division": "East",
+      "color": "#002a5c",
+      "alternateColor": "#b0b7bc",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/dal.png"
+    },
+    {
+      "id": "19",
+      "abbreviation": "NYG",
+      "name": "New York Giants",
+      "shortName": "Giants",
+      "conference": "NFC",
+      "division": "East",
+      "color": "#003c7f",
+      "alternateColor": "#c9243f",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png"
+    },
+    {
+      "id": "21",
+      "abbreviation": "PHI",
+      "name": "Philadelphia Eagles",
+      "shortName": "Eagles",
+      "conference": "NFC",
+      "division": "East",
+      "color": "#06424d",
+      "alternateColor": "#000000",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/phi.png"
+    },
+    {
+      "id": "28",
+      "abbreviation": "WSH",
+      "name": "Washington Commanders",
+      "shortName": "Commanders",
+      "conference": "NFC",
+      "division": "East",
+      "color": "#5a1414",
+      "alternateColor": "#ffb612",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/wsh.png"
+    },
+    {
+      "id": "3",
+      "abbreviation": "CHI",
+      "name": "Chicago Bears",
+      "shortName": "Bears",
+      "conference": "NFC",
+      "division": "North",
+      "color": "#0b1c3a",
+      "alternateColor": "#e64100",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/chi.png"
+    },
+    {
+      "id": "8",
+      "abbreviation": "DET",
+      "name": "Detroit Lions",
+      "shortName": "Lions",
+      "conference": "NFC",
+      "division": "North",
+      "color": "#0076b6",
+      "alternateColor": "#bbbbbb",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/det.png"
+    },
+    {
+      "id": "9",
+      "abbreviation": "GB",
+      "name": "Green Bay Packers",
+      "shortName": "Packers",
+      "conference": "NFC",
+      "division": "North",
+      "color": "#204e32",
+      "alternateColor": "#ffb612",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/gb.png"
+    },
+    {
+      "id": "16",
+      "abbreviation": "MIN",
+      "name": "Minnesota Vikings",
+      "shortName": "Vikings",
+      "conference": "NFC",
+      "division": "North",
+      "color": "#4f2683",
+      "alternateColor": "#ffc62f",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/min.png"
+    },
+    {
+      "id": "1",
+      "abbreviation": "ATL",
+      "name": "Atlanta Falcons",
+      "shortName": "Falcons",
+      "conference": "NFC",
+      "division": "South",
+      "color": "#a71930",
+      "alternateColor": "#000000",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/atl.png"
+    },
+    {
+      "id": "29",
+      "abbreviation": "CAR",
+      "name": "Carolina Panthers",
+      "shortName": "Panthers",
+      "conference": "NFC",
+      "division": "South",
+      "color": "#0085ca",
+      "alternateColor": "#000000",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/car.png"
+    },
+    {
+      "id": "18",
+      "abbreviation": "NO",
+      "name": "New Orleans Saints",
+      "shortName": "Saints",
+      "conference": "NFC",
+      "division": "South",
+      "color": "#d3bc8d",
+      "alternateColor": "#000000",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/no.png"
+    },
+    {
+      "id": "27",
+      "abbreviation": "TB",
+      "name": "Tampa Bay Buccaneers",
+      "shortName": "Buccaneers",
+      "conference": "NFC",
+      "division": "South",
+      "color": "#bd1c36",
+      "alternateColor": "#3e3a35",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/tb.png"
+    },
+    {
+      "id": "22",
+      "abbreviation": "ARI",
+      "name": "Arizona Cardinals",
+      "shortName": "Cardinals",
+      "conference": "NFC",
+      "division": "West",
+      "color": "#a40227",
+      "alternateColor": "#ffffff",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/ari.png"
+    },
+    {
+      "id": "14",
+      "abbreviation": "LAR",
+      "name": "Los Angeles Rams",
+      "shortName": "Rams",
+      "conference": "NFC",
+      "division": "West",
+      "color": "#003594",
+      "alternateColor": "#ffd100",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/lar.png"
+    },
+    {
+      "id": "25",
+      "abbreviation": "SF",
+      "name": "San Francisco 49ers",
+      "shortName": "49ers",
+      "conference": "NFC",
+      "division": "West",
+      "color": "#aa0000",
+      "alternateColor": "#b3995d",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/sf.png"
+    },
+    {
+      "id": "26",
+      "abbreviation": "SEA",
+      "name": "Seattle Seahawks",
+      "shortName": "Seahawks",
+      "conference": "NFC",
+      "division": "West",
+      "color": "#002a5c",
+      "alternateColor": "#69be28",
+      "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/sea.png"
+    }
+  ],
+  "sources": [
+    {
+      "id": "espn-fpi",
+      "name": "ESPN FPI",
+      "kind": "forecast",
+      "description": "ESPN Football Power Index simulation forecasts, not betting odds. Values are percent probabilities; complete division groups normalized to 100%. Provider update time may precede capture.",
+      "url": "https://www.espn.com/nfl/fpi",
+      "metrics": [
+        "superBowl",
+        "conference",
+        "division",
+        "playoffs",
+        "wins"
+      ]
+    },
+    {
+      "id": "draftkings",
+      "name": "DraftKings via ESPN",
+      "kind": "market",
+      "description": "DraftKings sportsbook American futures odds syndicated by ESPN, independent of FPI. Complete Super Bowl, conference and division markets are proportionally de-vigged to 100%; incomplete markets retain raw implied probabilities. No playoff or win-total estimates are invented.",
+      "url": "https://www.espn.com/nfl/futures",
+      "metrics": [
+        "superBowl",
+        "conference",
+        "division"
+      ]
+    }
+  ],
+  "snapshots": [
+    {
+      "id": "2026-2026-09-08",
+      "capturedAt": "2026-09-08T16:56:42.327Z",
+      "season": 2026,
+      "phase": "preseason",
+      "week": null,
+      "label": "Preseason",
+      "sources": {
+        "espn-fpi": {
+          "status": "ok",
+          "observedAt": "2026-08-31T14:44:00.000Z",
+          "note": "ESPN reports season 2026. Probabilities are supplied in percent, not fractions. Conference = make Super Bowl (probmaketitlegame), not make conference championship. Complete nonzero division groups normalized to exactly 100%. Provider lastUpdated 2026-08-31T14:44:00.000Z; captured 2026-09-08T16:56:42.327Z. Delayed data warning: provider update is 8 days older than capture. Season 2026 kickoff from ESPN's first regular-season event; week boundaries from ESPN calendar where available.",
+          "projections": {
+            "1": {
+              "conference": 1.7999999999999998,
+              "division": 25.9,
+              "playoffs": 31.7,
+              "wins": 7.665,
+              "superBowl": 0.7000000000000001
+            },
+            "2": {
+              "conference": 19.8,
+              "division": 67.1,
+              "playoffs": 84.1,
+              "wins": 10.731,
+              "superBowl": 10.2
+            },
+            "3": {
+              "conference": 4.5,
+              "division": 18.52,
+              "playoffs": 45.5,
+              "wins": 9.075,
+              "superBowl": 2.1999999999999997
+            },
+            "4": {
+              "conference": 9.6,
+              "division": 35.46,
+              "playoffs": 70.7,
+              "wins": 10.106,
+              "superBowl": 4.5
+            },
+            "5": {
+              "conference": 0.4,
+              "division": 1,
+              "playoffs": 5.4,
+              "wins": 5.836,
+              "superBowl": 0.2
+            },
+            "6": {
+              "conference": 6.5,
+              "division": 33.9,
+              "playoffs": 51.9,
+              "wins": 9.206,
+              "superBowl": 3
+            },
+            "7": {
+              "conference": 6.2,
+              "division": 24.82,
+              "playoffs": 54.2,
+              "wins": 9.183,
+              "superBowl": 2.6
+            },
+            "8": {
+              "conference": 11,
+              "division": 40.44,
+              "playoffs": 71.39999999999999,
+              "wins": 10.452,
+              "superBowl": 5.2
+            },
+            "9": {
+              "conference": 9,
+              "division": 31.13,
+              "playoffs": 61.9,
+              "wins": 9.889,
+              "superBowl": 4.7
+            },
+            "10": {
+              "conference": 0.6,
+              "division": 4.599999999999994,
+              "playoffs": 9.6,
+              "wins": 6.322,
+              "superBowl": 0.3
+            },
+            "11": {
+              "conference": 2.9000000000000004,
+              "division": 22,
+              "playoffs": 39.2,
+              "wins": 8.383,
+              "superBowl": 1.0999999999999999
+            },
+            "12": {
+              "conference": 10.299999999999999,
+              "division": 37.74,
+              "playoffs": 68,
+              "wins": 9.873,
+              "superBowl": 4.9
+            },
+            "13": {
+              "conference": 0.5,
+              "division": 1.3,
+              "playoffs": 5,
+              "wins": 5.674,
+              "superBowl": 0.3
+            },
+            "14": {
+              "conference": 26.8,
+              "division": 50.4,
+              "playoffs": 84.89999999999999,
+              "wins": 11.26,
+              "superBowl": 17
+            },
+            "15": {
+              "conference": 0,
+              "division": 0.5,
+              "playoffs": 1.6,
+              "wins": 4.516,
+              "superBowl": 0
+            },
+            "16": {
+              "conference": 1.7999999999999998,
+              "division": 9.91000000000001,
+              "playoffs": 29.7,
+              "wins": 8.262,
+              "superBowl": 0.7000000000000001
+            },
+            "17": {
+              "conference": 6.7,
+              "division": 30.4,
+              "playoffs": 59.4,
+              "wins": 9.348,
+              "superBowl": 2.9000000000000004
+            },
+            "18": {
+              "conference": 1.2,
+              "division": 20.7,
+              "playoffs": 25.7,
+              "wins": 7.419,
+              "superBowl": 0.5
+            },
+            "19": {
+              "conference": 1.0999999999999999,
+              "division": 10.3,
+              "playoffs": 19.7,
+              "wins": 7.465,
+              "superBowl": 0.4
+            },
+            "20": {
+              "conference": 0.2,
+              "division": 2,
+              "playoffs": 6.5,
+              "wins": 5.975,
+              "superBowl": 0.1
+            },
+            "21": {
+              "conference": 9,
+              "division": 46.3,
+              "playoffs": 62.8,
+              "wins": 9.758,
+              "superBowl": 4.5
+            },
+            "22": {
+              "conference": 0,
+              "division": 0.1,
+              "playoffs": 1.4000000000000001,
+              "wins": 4.91,
+              "superBowl": 0
+            },
+            "23": {
+              "conference": 3.1,
+              "division": 13.189999999999998,
+              "playoffs": 39.2,
+              "wins": 8.503,
+              "superBowl": 1.2
+            },
+            "24": {
+              "conference": 10.8,
+              "division": 36.14,
+              "playoffs": 66.2,
+              "wins": 9.754,
+              "superBowl": 5.3
+            },
+            "25": {
+              "conference": 10.4,
+              "division": 23.2,
+              "playoffs": 63.800000000000004,
+              "wins": 10.007,
+              "superBowl": 5.3
+            },
+            "26": {
+              "conference": 11.700000000000001,
+              "division": 26.299999999999997,
+              "playoffs": 68,
+              "wins": 10.183,
+              "superBowl": 6.2
+            },
+            "27": {
+              "conference": 3,
+              "division": 39.5,
+              "playoffs": 45.4,
+              "wins": 8.303,
+              "superBowl": 1.3
+            },
+            "28": {
+              "conference": 1.0999999999999999,
+              "division": 9.5,
+              "playoffs": 18.9,
+              "wins": 7.339,
+              "superBowl": 0.4
+            },
+            "29": {
+              "conference": 1,
+              "division": 13.9,
+              "playoffs": 17.299999999999997,
+              "wins": 6.724,
+              "superBowl": 0.4
+            },
+            "30": {
+              "conference": 5.800000000000001,
+              "division": 32.9,
+              "playoffs": 52.400000000000006,
+              "wins": 9.002,
+              "superBowl": 2.4
+            },
+            "33": {
+              "conference": 15.6,
+              "division": 50.35,
+              "playoffs": 79.80000000000001,
+              "wins": 10.658,
+              "superBowl": 8.1
+            },
+            "34": {
+              "conference": 7.7,
+              "division": 40.5,
+              "playoffs": 58.9,
+              "wins": 9.311,
+              "superBowl": 3.5999999999999996
+            }
+          }
+        },
+        "draftkings": {
+          "status": "ok",
+          "note": "DraftKings sportsbook odds syndicated by ESPN, season 2026 validated from market and team references. Provider observation timestamp is not supplied; capture date is not an odds-update timestamp. American odds converted to implied percentages; normalized probabilities are estimates, not fair-value guarantees. Playoff probability and expected wins are unavailable from this endpoint. NFL - Super Bowl Winner: raw implied sum 122.18%, overround 22.18 percentage points; proportional normalization to 100%. Pro Football (A) South Division - Winner: raw implied sum 107.92%, overround 7.92 percentage points; proportional normalization to 100%. Pro Football (A) North Division - Winner: raw implied sum 108.32%, overround 8.32 percentage points; proportional normalization to 100%. Pro Football (A) West Division - Winner: raw implied sum 108.54%, overround 8.54 percentage points; proportional normalization to 100%. Pro Football (A) East  Division - Winner: raw implied sum 109.51%, overround 9.51 percentage points; proportional normalization to 100%. Pro Football (A) Conference Winner: raw implied sum 114.98%, overround 14.98 percentage points; proportional normalization to 100%. Pro Football (N) Conference - Winner: raw implied sum 114.81%, overround 14.81 percentage points; proportional normalization to 100%. Pro Football (N) North Division - Winner: raw implied sum 108.65%, overround 8.65 percentage points; proportional normalization to 100%. Pro Football (N) East Division - Winner: raw implied sum 108.83%, overround 8.83 percentage points; proportional normalization to 100%. Pro Football (N) West Division: raw implied sum 108.65%, overround 8.65 percentage points; proportional normalization to 100%. Pro Football (N) South Division: raw implied sum 108.27%, overround 8.27 percentage points; proportional normalization to 100%. Season 2026 kickoff from ESPN's first regular-season event; week boundaries from ESPN calendar where available.",
+          "projections": {
+            "1": {
+              "superBowl": 0.62,
+              "conference": 1.64,
+              "division": 18.47
+            },
+            "2": {
+              "superBowl": 7.44,
+              "division": 52.62,
+              "conference": 14.5
+            },
+            "3": {
+              "superBowl": 3.27,
+              "conference": 6.45,
+              "division": 22.73
+            },
+            "4": {
+              "superBowl": 4.31,
+              "division": 34.97,
+              "conference": 9.15
+            },
+            "5": {
+              "superBowl": 0.41,
+              "division": 4.2,
+              "conference": 0.95
+            },
+            "6": {
+              "superBowl": 3.15,
+              "conference": 6.45,
+              "division": 32.35
+            },
+            "7": {
+              "superBowl": 3.9,
+              "division": 29.72,
+              "conference": 8.13
+            },
+            "8": {
+              "superBowl": 4.09,
+              "conference": 8.46,
+              "division": 33.47
+            },
+            "9": {
+              "superBowl": 3.9,
+              "conference": 7.57,
+              "division": 27.07
+            },
+            "10": {
+              "superBowl": 0.62,
+              "division": 10.289999999999992,
+              "conference": 1.55
+            },
+            "11": {
+              "superBowl": 1.34,
+              "division": 17.65,
+              "conference": 2.8
+            },
+            "12": {
+              "superBowl": 4.81,
+              "division": 34.12,
+              "conference": 9.88
+            },
+            "13": {
+              "superBowl": 0.54,
+              "division": 4.39,
+              "conference": 1.3
+            },
+            "14": {
+              "superBowl": 13.64,
+              "conference": 22.33,
+              "division": 47.14
+            },
+            "15": {
+              "superBowl": 0.23,
+              "division": 2.23,
+              "conference": 0.54
+            },
+            "16": {
+              "superBowl": 1.61,
+              "conference": 3.48,
+              "division": 16.72999999999999
+            },
+            "17": {
+              "superBowl": 4.31,
+              "division": 40.58,
+              "conference": 8.97
+            },
+            "18": {
+              "superBowl": 0.9,
+              "conference": 2.13,
+              "division": 26.02
+            },
+            "19": {
+              "superBowl": 1.15,
+              "conference": 2.42,
+              "division": 13.13
+            },
+            "20": {
+              "superBowl": 0.41,
+              "division": 4.570000000000007,
+              "conference": 0.96
+            },
+            "21": {
+              "superBowl": 4.55,
+              "conference": 9.17,
+              "division": 41.39
+            },
+            "22": {
+              "superBowl": 0.16,
+              "conference": 0.43,
+              "division": 0.91
+            },
+            "23": {
+              "superBowl": 1.61,
+              "division": 15.129999999999995,
+              "conference": 3.48
+            },
+            "24": {
+              "superBowl": 4.55,
+              "division": 31.77000000000001,
+              "conference": 9.350000000000023
+            },
+            "25": {
+              "superBowl": 4.09,
+              "conference": 8.3,
+              "division": 22.73
+            },
+            "26": {
+              "superBowl": 6.299999999999997,
+              "conference": 12.440000000000012,
+              "division": 29.22
+            },
+            "27": {
+              "superBowl": 1.46,
+              "conference": 3.79,
+              "division": 34.99000000000001
+            },
+            "28": {
+              "superBowl": 1.34,
+              "conference": 2.81,
+              "division": 13.129999999999995
+            },
+            "29": {
+              "superBowl": 0.9,
+              "conference": 2.13,
+              "division": 20.52
+            },
+            "30": {
+              "superBowl": 2.64,
+              "division": 26.86,
+              "conference": 5.44
+            },
+            "33": {
+              "superBowl": 7.44,
+              "division": 45.7,
+              "conference": 14.03
+            },
+            "34": {
+              "superBowl": 4.31,
+              "division": 45.2,
+              "conference": 8.97
+            }
+          }
+        }
+      },
+      "leaders": {
+        "status": "not-started",
+        "note": "2026 regular-season leaders not started: HTTP 404 from sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2026/types/2/leaders. Preseason/postseason statistics and previous-season totals are never substituted.",
+        "categories": []
+      }
+    }
+  ]
+}

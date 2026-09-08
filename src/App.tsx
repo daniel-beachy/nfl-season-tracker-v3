@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import { Activity, ArrowDownToLine, ArrowUpRight, BarChart3, CalendarDays, Check, ChevronRight, Clock3, Github, Info, Moon, RefreshCw, Sun, TrendingUp, TriangleAlert } from 'lucide-react';
 import AboutDialog from './components/AboutDialog';
+import SourceNotice from './components/SourceNotice';
 import { formatDate, seasonBanner } from './lib/presentation.mjs';
 import { isManifest, isSeason, useData } from './lib/useData';
 import type { Theme } from './types';
@@ -32,7 +33,6 @@ export default function App() {
     : fullData, [fullData, snapshotIndex]);
   const source = data?.sources.find(item => item.id === sourceId) ?? data?.sources[0];
   const latest = data?.snapshots.at(-1);
-  const sourceSnapshot = source ? latest?.sources[source.id] : undefined;
   const banner = data ? seasonBanner(data) : null;
   const phase = latest?.phase ?? entry?.phase;
   const newestCapture = fullData?.snapshots.at(-1);
@@ -88,7 +88,7 @@ export default function App() {
               <span className="explorer-position" data-testid="snapshot-position">{data.snapshots.length} / {fullData.snapshots.length}</span>
               <button aria-label="Return to latest snapshot" disabled={data.snapshots.length === fullData.snapshots.length} onClick={() => setSnapshotIndex(null)}>Latest <ChevronRight size={13} /></button>
             </div>}
-            {tab === 'projections' && (sourceSnapshot?.note || sourceSnapshot?.status !== 'ok') && <div className={`source-notice ${sourceSnapshot?.status !== 'ok' ? 'source-unavailable' : ''}`}><Info size={16} /><div><strong>{source.name}{sourceSnapshot?.status !== 'ok' ? ' · not available in this capture' : ' · source notes'}</strong><p>{sourceSnapshot?.note ?? 'No observations were returned for this source. Other providers may have data; no estimated values have been substituted.'}</p></div></div>}
+            {tab === 'projections' && <SourceNotice key={`${data.season}-${source.id}`} source={source} snapshot={latest} mocked={data.kind === 'mock'} />}
             <div id="dashboard-panel" role="tabpanel" aria-labelledby={tab === 'projections' ? 'projections-tab' : 'leaders-tab'}>
               <Suspense fallback={<Loading />}>{tab === 'projections' ? <Projections key={`${data.season}-${source.id}`} data={data} source={source} theme={theme} /> : <StatLeaders key={data.season} data={data} theme={theme} />}</Suspense>
             </div>

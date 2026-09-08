@@ -24,6 +24,7 @@ interface TipEntry {
   value?: string | number | readonly (string | number)[];
   color?: string;
   dataKey?: unknown;
+  payload?: Record<string, unknown>;
 }
 
 function ChartTooltip({ active, payload, label, unit, metric, hold }: {
@@ -32,11 +33,13 @@ function ChartTooltip({ active, payload, label, unit, metric, hold }: {
   if (!active || !payload?.length) return null;
   const entries = payload.filter(entry => typeof entry.value === 'number')
     .sort((a, b) => Number(b.value) - Number(a.value));
+  const capturedAt = payload[0]?.payload?.capturedAt;
   return (
     <div className="chart-tooltip" onMouseEnter={() => hold(true)} onMouseLeave={() => hold(false)}
       onMouseMove={event => event.stopPropagation()} onFocus={() => hold(true)}
       onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) hold(false); }}>
       <strong>{label}</strong>
+      {typeof capturedAt === 'string' && <span className="tooltip-date">{formatDate(capturedAt)}</span>}
       <div className="tooltip-values" role="region" aria-label="Snapshot values" tabIndex={0}
         onKeyDown={event => { event.stopPropagation(); if (event.key === 'Escape') { hold(false); event.currentTarget.blur(); } }}>
         {entries.map(entry => (

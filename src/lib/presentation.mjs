@@ -67,8 +67,19 @@ export function readableTeamColor(team, theme) {
   const primary = luminance(team.color);
   const alternate = luminance(team.alternateColor);
   if (primary === null) return 'var(--cp-text-soft)';
-  const useAlternate = alternate !== null && contrast(primary) < 3 && contrast(alternate) > contrast(primary);
-  return `#${(useAlternate ? team.alternateColor : team.color).replace('#', '')}`;
+  if (contrast(primary) >= 3) return `#${team.color.replace('#', '')}`;
+  if (alternate !== null && contrast(alternate) >= 3) return `#${team.alternateColor.replace('#', '')}`;
+  // Some teams have two dark colors. Preserve a brand hue while lifting contrast.
+  const useAlternate = alternate !== null && alternate > 0.005 && contrast(alternate) > contrast(primary);
+  const hex = (useAlternate ? team.alternateColor : team.color).replace('#', '');
+  const channels = [0, 2, 4].map(index => parseInt(hex.slice(index, index + 2), 16));
+  const target = theme === 'dark' ? 255 : 0;
+  for (let step = 1; step <= 100; step++) {
+    const adjusted = channels.map(channel => Math.round(channel + (target - channel) * step / 100).toString(16).padStart(2, '0')).join('');
+    const light = luminance(adjusted);
+    if (light !== null && contrast(light) >= 3.1) return `#${adjusted}`;
+  }
+  return 'var(--cp-text-soft)';
 }
 
 /** @param {{kind: string, startsAt: string}} season @param {Date} [now] */

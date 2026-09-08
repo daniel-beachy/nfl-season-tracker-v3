@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "currentSeason": 2026,
+  "generatedAt": "2026-09-08T17:01:21.276Z",
+  "seasons": [
+    {
+      "year": 2026,
+      "label": "2026 — live",
+      "kind": "live",
+      "phase": "preseason",
+      "startsAt": "2026-09-10T00:20:00.000Z",
+      "snapshotCount": 1,
+      "lastCapturedAt": "2026-09-08T16:56:42.327Z",
+      "file": "seasons/2026.json"
+    },
+    {
+      "year": 2025,
+      "label": "2025 — mocked — not fully accurate",
+      "kind": "mock",
+      "phase": "postseason",
+      "startsAt": "2025-09-05T00:20:00.000Z",
+      "snapshotCount": 24,
+      "lastCapturedAt": "2026-02-11T14:15:00.000Z",
+      "file": "seasons/2025.json"
+    }
+  ]
+}

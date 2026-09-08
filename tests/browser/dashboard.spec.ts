@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test('current season is default, theme persists, and mock history is explicit', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('heading', { name: 'The season, in perspective.' })).toBeVisible();
-  const year = await page.getByLabel('Season').inputValue();
+  const year = await page.getByLabel('Season', { exact: true }).inputValue();
   const response = await page.request.get('./data/manifest.json');
   const manifest = await response.json();
   expect(Number(year)).toBe(manifest.currentSeason);
@@ -12,7 +12,7 @@ test('current season is default, theme persists, and mock history is explicit', 
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('data-theme', theme!);
   const mock = manifest.seasons.find((season: { kind: string }) => season.kind === 'mock');
-  await page.getByLabel('Season').selectOption(String(mock.year));
+  await page.getByLabel('Season', { exact: true }).selectOption(String(mock.year));
   await expect(page.getByTestId('season-banner')).toContainText('mocked — not fully accurate');
   await expect(page.getByRole('heading', { name: 'Road to the Lombardi' })).toBeVisible();
   await expect(page.locator('.recharts-line-curve').first()).toBeVisible();
@@ -22,7 +22,7 @@ test('every projection view and cumulative stat category is reachable', async ({
   await page.goto('/');
   const manifest = await (await page.request.get('./data/manifest.json')).json();
   const mock = manifest.seasons.find((season: { kind: string }) => season.kind === 'mock');
-  await page.getByLabel('Season').selectOption(String(mock.year));
+  await page.getByLabel('Season', { exact: true }).selectOption(String(mock.year));
   await page.getByRole('button', { name: 'Divisions', exact: true }).click();
   await expect(page.locator('.chart-card')).toHaveCount(8);
   await page.getByRole('button', { name: 'Conference', exact: true }).click();
@@ -41,7 +41,7 @@ test('every projection view and cumulative stat category is reachable', async ({
 test('phone layout has no horizontal overflow and methodology dialog is accessible', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
-  await expect(page.getByLabel('Season')).toBeVisible();
+  await expect(page.getByLabel('Season', { exact: true })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await page.getByRole('button', { name: 'About the data', exact: true }).last().click();
   await expect(page.getByRole('dialog')).toBeVisible();
@@ -53,7 +53,7 @@ test('snapshot explorer rewinds totals without inventing new observations', asyn
   await page.goto('/');
   const manifest = await (await page.request.get('./data/manifest.json')).json();
   const mock = manifest.seasons.find((season: { kind: string }) => season.kind === 'mock');
-  await page.getByLabel('Season').selectOption(String(mock.year));
+  await page.getByLabel('Season', { exact: true }).selectOption(String(mock.year));
   const slider = page.getByRole('slider', { name: 'Snapshot history' });
   await expect(slider).toBeVisible();
   await slider.fill('5');

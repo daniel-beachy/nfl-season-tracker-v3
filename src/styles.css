@@ -134,6 +134,15 @@ select:disabled { cursor: default; opacity: 0.72; }
 .source-notice strong { color: var(--cp-text); font-size: 11px; font-weight: 600; }
 .source-notice p { line-height: 1.6; margin-top: 3px; overflow-wrap: anywhere; }
 .source-unavailable { border-left: 3px solid var(--cp-warning); }
+.source-notice-content { flex: 1; min-width: 0; }
+.source-notice-summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 5px 14px; line-height: 1.6; }
+.source-notice-summary > span { font-size: 11px; }
+.source-notice-summary > .delayed-note { color: var(--cp-text); font-weight: 550; }
+.source-details { margin-top: 6px; }
+.source-details summary { list-style: none; display: flex; align-items: center; gap: 5px; width: fit-content; font-size: 10px; cursor: pointer; }
+.source-details summary::-webkit-details-marker { display: none; }
+.source-details[open] summary > svg { transform: rotate(180deg); }
+.source-details p { padding-top: 6px; }
 .summary-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-bottom: 37px; }
 .summary-card { min-width: 0; border: 1px solid var(--cp-border); border-radius: 16px; padding: 19px 20px 17px; background: var(--cp-surface); position: relative; overflow: hidden; }
 .summary-accent { border-top: 3px solid var(--cp-accent); padding-top: 17px; }
@@ -179,6 +188,7 @@ select:disabled { cursor: default; opacity: 0.72; }
 .plot.plot-tall { height: 320px; }
 .chart-tooltip { padding: 13px 16px; background: var(--cp-panel-strong); border: 1px solid var(--cp-border); border-radius: 10px; box-shadow: var(--cp-shadow); min-width: 230px; max-width: 330px; font-size: 11px; color: var(--cp-text); }
 .chart-tooltip > strong { display: block; margin-bottom: 9px; font-size: 12px; }
+.tooltip-date { display: block; color: var(--cp-text-soft); font-size: 10px; margin: -4px 0 9px; }
 .tooltip-values { max-height: 285px; overflow-y: auto; }
 .tooltip-values > div { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
 .tooltip-values b { margin-left: auto; padding-left: 14px; font-variant-numeric: tabular-nums; }
