@@ -73,6 +73,7 @@ button { transition: background 140ms ease, color 140ms ease, border-color 140ms
 .rail button:hover, .rail-bottom a:hover { background: var(--cp-surface-soft); color: var(--cp-text); }
 .rail button.active { background: var(--cp-accent-soft); color: var(--cp-accent); }
 .rail-bottom { margin-top: auto; display: grid; gap: 12px; justify-items: center; }
+.rail-bottom a.portfolio-link { width: 54px; height: 52px; display: flex; flex-direction: column; justify-content: center; gap: 5px; font-size: 8px; font-weight: 600; }
 .rail-season { font-family: Consolas, "Courier New", Courier, monospace; font-size: 10px; font-weight: 700; letter-spacing: 2px; color: var(--cp-text-muted); padding-bottom: 12px; }
 .app-shell { margin-left: 76px; }
 .masthead { height: 88px; padding: 0 44px; border-bottom: 1px solid var(--cp-border); display: flex; align-items: center; gap: 22px; background: var(--cp-bg-elevated); }
@@ -228,6 +229,7 @@ thead { color: var(--cp-text-soft); background: var(--cp-surface-soft); }
 .bottom-note a:hover { color: var(--cp-accent); }
 .footer { border-top: 1px solid var(--cp-border); padding: 24px 44px; display: flex; justify-content: space-between; align-items: center; gap: 20px; color: var(--cp-text-soft); font-size: 10px; }
 .footer > div { display: flex; align-items: center; gap: 17px; }
+.footer > div:last-child { flex-wrap: wrap; justify-content: flex-end; row-gap: 10px; }
 .footer-brand { color: var(--cp-text); font-size: 12px; font-weight: 650; letter-spacing: -0.3px; }
 .footer a, .footer-keys { display: flex; align-items: center; gap: 4px; }
 .footer a:hover { color: var(--cp-accent); }

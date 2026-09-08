@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
-import { Activity, ArrowDownToLine, ArrowUpRight, BarChart3, CalendarDays, Check, ChevronRight, Clock3, Github, Info, Moon, RefreshCw, Sun, TrendingUp, TriangleAlert } from 'lucide-react';
+import { Activity, ArrowDownToLine, ArrowUpRight, BarChart3, CalendarDays, Check, ChevronRight, Clock3, Github, Home, Info, Moon, RefreshCw, Sun, TrendingUp, TriangleAlert } from 'lucide-react';
 import AboutDialog from './components/AboutDialog';
 import SourceNotice from './components/SourceNotice';
 import { formatDate, seasonBanner } from './lib/presentation.mjs';
@@ -9,6 +9,7 @@ import type { Theme } from './types';
 const Projections = lazy(() => import('./components/Projections'));
 const StatLeaders = lazy(() => import('./components/StatLeaders'));
 const repository = 'https://github.com/daniel-beachy/nfl-season-tracker-v3';
+const portfolio = 'https://daniel-beachy.github.io/';
 const phaseNames = { preseason: 'Preseason', regular: 'Regular season', postseason: 'Playoffs', offseason: 'Offseason' };
 
 function Loading() {
@@ -55,7 +56,7 @@ export default function App() {
           <button title="Projections" aria-label="Open projections" className={tab === 'projections' ? 'active' : ''} onClick={() => setTab('projections')}><TrendingUp size={21} /></button>
           <button title="Stat Leaders" aria-label="Open stat leaders" className={tab === 'leaders' ? 'active' : ''} onClick={() => setTab('leaders')}><BarChart3 size={21} /></button>
         </div>
-        <div className="rail-bottom"><span className="rail-season">NFL</span><button aria-label="About the data" title="About the data" onClick={() => setAboutOpen(true)}><Info size={20} /></button><a href={repository} target="_blank" rel="noreferrer" aria-label="GitHub repository"><Github size={20} /></a></div>
+        <div className="rail-bottom"><span className="rail-season">NFL</span><a className="portfolio-link" href={portfolio} title="Back to portfolio" aria-label="Portfolio"><Home size={20} /><span>Portfolio</span></a><button aria-label="About the data" title="About the data" onClick={() => setAboutOpen(true)}><Info size={20} /></button><a href={repository} target="_blank" rel="noreferrer" aria-label="GitHub repository"><Github size={20} /></a></div>
       </aside>
       <div className="app-shell">
         <header className="masthead">
@@ -95,7 +96,7 @@ export default function App() {
             <section className="bottom-note"><div className="note-icon"><CalendarDays size={20} /></div><div><h3>A snapshot, not a crystal ball.</h3><p>{data.kind === 'mock' ? 'You’re exploring simulated history. Switch to the current season for actual provider captures.' : 'New observations are saved weekly in-season and monthly in the offseason. This is the long view — not a live odds ticker.'}</p></div><a href={`${import.meta.env.BASE_URL}data/${entry?.file}`} download><ArrowDownToLine size={15} /> Snapshot JSON</a></section>
           </>}
         </main>
-        <footer className="footer"><div><span className="footer-brand">sunday signal.</span><span>Independent. Open source. In it for the season.</span></div><div><span className="footer-keys"><Check size={12} /> No keys. No subscriptions.</span><a href={repository} target="_blank" rel="noreferrer">View on GitHub <ChevronRight size={13} /></a></div></footer>
+        <footer className="footer"><div><span className="footer-brand">sunday signal.</span><span>Independent. Open source. In it for the season.</span></div><div><span className="footer-keys"><Check size={12} /> No keys. No subscriptions.</span><a href={portfolio}><Home size={13} /> Portfolio</a><a href={repository} target="_blank" rel="noreferrer">View on GitHub <ChevronRight size={13} /></a></div></footer>
       </div>
       <AboutDialog open={aboutOpen} close={() => setAboutOpen(false)} data={data} />
     </>

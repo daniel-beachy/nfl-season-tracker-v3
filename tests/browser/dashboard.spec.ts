@@ -68,3 +68,16 @@ test('failed JSON requests surface an error instead of silently loading mock dat
   await expect(page.getByRole('alert')).toContainText('No substitute data has been shown');
   await expect(page.getByRole('button', { name: 'Try again' })).toBeVisible();
 });
+
+test('portfolio navigation is available in the desktop rail and mobile footer', async ({ page }) => {
+  await page.goto('/');
+  const railLink = page.getByRole('complementary').getByRole('link', { name: 'Portfolio', exact: true });
+  await expect(railLink).toBeVisible();
+  await expect(railLink).toHaveAttribute('href', 'https://daniel-beachy.github.io/');
+  await page.setViewportSize({ width: 390, height: 844 });
+  const footerLink = page.getByRole('contentinfo').getByRole('link', { name: 'Portfolio', exact: true });
+  await footerLink.scrollIntoViewIfNeeded();
+  await expect(footerLink).toBeVisible();
+  await expect(footerLink).toHaveAttribute('href', 'https://daniel-beachy.github.io/');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+});
