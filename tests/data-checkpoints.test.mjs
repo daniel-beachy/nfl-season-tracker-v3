@@ -69,15 +69,15 @@ const run = async (date, options = {}, customize) => {
   } finally { await rm(root, { recursive: true, force: true }); }
 };
 
-test('the pre-kickoff Wednesday is captured even when it is not the first Wednesday of September', async () => {
-  const result = await run('2026-09-09T16:00Z', { scheduled: true });
+test('the pre-kickoff Tuesday is captured even when it is not the first Tuesday of September', async () => {
+  const result = await run('2026-09-08T14:00Z', { scheduled: true });
   assert.equal(result.skipped, false);
   assert.equal(result.data.snapshots[0].label, 'Preseason');
   assert.equal(result.data.snapshots[0].week, null);
 });
 
 test('Wednesday after the full opening week is Week 1, not the upcoming Week 2', async () => {
-  const result = await run('2026-09-16T16:00Z', { scheduled: true });
+  const result = await run('2026-09-16T16:00Z');
   const snapshot = result.data.snapshots[0];
   assert.equal(snapshot.week, 1);
   assert.equal(snapshot.label, 'Week 1');
@@ -91,13 +91,14 @@ test('manual opening-game updates cannot masquerade as preseason or a completed 
   assert.ok(result.urls.every(url => url.includes('/scoreboard')));
 });
 
-test('a manual Tuesday capture after all games finish also describes the completed week', async () => {
-  const result = await run('2026-09-15T16:00Z');
+test('Tuesday morning captures the completed Week 1 immediately after Monday night', async () => {
+  const result = await run('2026-09-15T14:00Z', { scheduled: true });
+  assert.equal(result.skipped, false);
   assert.equal(result.data.snapshots[0].label, 'Week 1');
 });
 
-test('Thanksgiving-eve capture labels the preceding completed week before Wednesday kickoff', async () => {
-  const result = await run('2026-11-25T16:00Z', { scheduled: true });
+test('Thanksgiving-week Tuesday captures the completed week before Wednesday kickoff', async () => {
+  const result = await run('2026-11-24T14:00Z', { scheduled: true });
   assert.equal(result.data.snapshots[0].label, 'Week 11');
 });
 
@@ -127,31 +128,32 @@ test('missing or wrong-period schedule rows fail explicitly instead of inventing
 });
 
 test('the first playoff capture is the completed regular-season Week 18', async () => {
-  const result = await run('2027-01-13T16:00Z', { scheduled: true });
+  const result = await run('2027-01-12T14:00Z', { scheduled: true });
   assert.equal(result.data.snapshots[0].phase, 'regular');
   assert.equal(result.data.snapshots[0].week, 18);
 });
 
 test('the Pro Bowl does not become an NFL championship checkpoint', async () => {
-  const result = await run('2027-02-10T16:00Z', { scheduled: true });
+  const result = await run('2027-02-09T14:00Z', { scheduled: true });
   assert.equal(result.data.snapshots[0].label, 'Postseason week 3');
   assert.ok(result.urls.every(url => !url.includes('seasontype=3&week=4')));
 });
 
-test('the first Wednesday after the Super Bowl is captured despite the offseason boundary', async () => {
-  const result = await run('2027-02-17T16:00Z', { scheduled: true });
+test('the first Tuesday after the Super Bowl is captured despite the offseason boundary', async () => {
+  const result = await run('2027-02-16T14:00Z', { scheduled: true });
   assert.equal(result.skipped, false);
   assert.equal(result.data.snapshots[0].label, 'Postseason week 5');
 });
 
-test('Wednesday cadence includes the final pre-kickoff baseline without enabling all preseason weeks', () => {
-  assert.equal(shouldCapture(new Date('2026-09-09T16:00Z'), 'preseason', '2026-09-10T00:20Z'), true);
-  assert.equal(shouldCapture(new Date('2026-08-12T16:00Z'), 'preseason', '2026-09-10T00:20Z'), false);
+test('Tuesday cadence includes the final pre-kickoff baseline without enabling all preseason weeks', () => {
+  assert.equal(shouldCapture(new Date('2026-09-08T14:00Z'), 'preseason', '2026-09-10T00:20Z'), true);
+  assert.equal(shouldCapture(new Date('2026-08-11T14:00Z'), 'preseason', '2026-09-10T00:20Z'), false);
+  assert.equal(shouldCapture(new Date('2026-09-16T14:00Z'), 'regular'), false);
 });
 
-test('workflow starts before Wednesday night games at the documented UTC time', async () => {
+test('workflow captures Tuesday mornings before Wednesday night games', async () => {
   const workflow = await readFile(new URL('../.github/workflows/site.yml', import.meta.url), 'utf8');
-  assert.match(workflow, /cron: '0 16 \* \* 3'/);
+  assert.match(workflow, /cron: '0 14 \* \* 2'/);
 });
 
 test('a collection crossing the next kickoff is rejected even if it began before the game', () => {
@@ -183,14 +185,14 @@ test('January through August snapshots run on the first, regardless of weekday o
 test('September gets a monthly preseason point plus a final pre-kickoff baseline when dates differ', async () => {
   const result = await run('2026-09-01T16:00Z', { scheduled: true });
   assert.equal(result.data.snapshots[0].label, 'September');
-  assert.equal((await run('2026-09-09T16:00Z', { scheduled: true })).data.snapshots[0].label, 'Preseason');
+  assert.equal((await run('2026-09-08T14:00Z', { scheduled: true })).data.snapshots[0].label, 'Preseason');
 });
 
-test('monthly cron is January through September on day one, not the first Wednesday', async () => {
+test('monthly cron is January through September on day one, not the first Tuesday', async () => {
   assert.equal(shouldCapture(new Date('2027-04-01T16:00Z'), 'offseason', '2027-09-10T00:20Z'), true);
   assert.equal(shouldCapture(new Date('2027-04-07T16:00Z'), 'offseason', '2027-09-10T00:20Z'), false);
   const workflow = await readFile(new URL('../.github/workflows/site.yml', import.meta.url), 'utf8');
-  assert.match(workflow, /cron: '0 16 1 1-9 \*'/);
+  assert.match(workflow, /cron: '0 14 1 1-9 \*'/);
 });
 
 test('the September 11 partial capture is removed and the September 8 baseline is named explicitly', async () => {
@@ -218,7 +220,7 @@ test('automatic capture initializes the calendar year in January while preservin
 
 test('January weekly runs preserve playoffs and advance capture time between season requests', async t => {
   const root = await mkdtemp(join(process.cwd(), 'scripts', '.checkpoint-test-'));
-  const now = new Date('2027-01-20T16:00Z');
+  const now = new Date('2027-01-19T14:00Z');
   let elapsed = 0;
   t.mock.method(performance, 'now', () => elapsed += 1000);
   const schedule = scheduleFixture(now);

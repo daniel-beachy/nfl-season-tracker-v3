@@ -5,12 +5,12 @@ on:
     branches: [main]
   workflow_dispatch:
   schedule:
-    # Wednesday, noon EDT / 11:00 EST, before Wednesday night games.
+    # Tuesday, 10 a.m. EDT / 9 a.m. EST, after Monday night games.
     # The collector verifies completed weeks and skips runs after the next kickoff.
-    # Also includes the final pre-kickoff and post-Super-Bowl Wednesdays.
-    - cron: '0 16 * * 3'
+    # Also includes the final pre-kickoff and post-Super-Bowl Tuesdays.
+    - cron: '0 14 * * 2'
     # January creates the new season; preseason history runs on day one through September.
-    - cron: '0 16 1 1-9 *'
+    - cron: '0 14 1 1-9 *'
 
 permissions:
   contents: read

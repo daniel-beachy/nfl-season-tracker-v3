@@ -50,7 +50,8 @@ test('monthly preseason history can be hidden without losing completed weeks or 
   await expect(page.getByTestId('snapshot-position')).toHaveText('3 / 3');
 });
 
-test('September Preseason shows sourced pre-opener Maye odds without the September 11 update', async ({ page }) => {
+test('September Preseason puts the numbers first and keeps optional provenance collapsed', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
   const data = JSON.parse(await readFile(new URL('../../public/data/seasons/2026.json', import.meta.url), 'utf8'));
   data.snapshots = data.snapshots.filter((snapshot: { capturedAt: string }) => snapshot.capturedAt <= '2026-09-11T01:15:27.503Z');
   await page.route('**/data/manifest.json', route => route.fulfill({ json: {
@@ -59,13 +60,22 @@ test('September Preseason shows sourced pre-opener Maye odds without the Septemb
   } }));
   await page.route('**/data/seasons/2026.json', route => route.fulfill({ json: data }));
   await page.goto('/');
-  await expect(page.getByRole('note')).toContainText('retrospectively');
+  await expect(page.locator('.capture-strip')).toContainText('Collected Sep 8, 2026');
+  await expect(page.getByRole('note')).toHaveCount(0);
+  await expect(page.getByText('Week N = after the entire week.')).toHaveCount(0);
   await page.getByRole('tab', { name: 'Awards', exact: true }).click();
   await expect(page.locator('.award-market')).toHaveCount(8);
   await expect(page.getByRole('slider', { name: 'Snapshot history' })).toHaveCount(0);
   await expect(page.getByText('September Preseason', { exact: true })).toBeVisible();
-  await expect(page.locator('.historical-awards')).toContainText('Published preseason odds');
-  await expect(page.locator('.historical-awards')).toContainText('not a complete market');
+  await expect(page.locator('.historical-awards')).toHaveCount(0);
   await expect(page.locator('.award-candidate').filter({ hasText: 'Drake Maye' })).toContainText('+1000');
-  await expect(page.locator('.historical-awards a')).toHaveCount(2);
+  await page.evaluate(() => window.scrollTo(0, 0));
+  expect((await page.locator('.award-market').first().boundingBox())!.y).toBeLessThanOrEqual(400);
+  await page.setViewportSize({ width: 360, height: 800 });
+  await page.evaluate(() => window.scrollTo(0, 0));
+  expect((await page.locator('.award-market').first().boundingBox())!.y).toBeLessThanOrEqual(500);
+  await expect(page.locator('.history-references')).not.toBeVisible();
+  await page.locator('.award-source-details summary').click();
+  await expect(page.locator('.history-references a')).toHaveCount(2);
+  await expect(page.locator('.history-references')).toBeVisible();
 });

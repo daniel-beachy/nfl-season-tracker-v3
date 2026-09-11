@@ -39,7 +39,7 @@ export async function capture({ season, scheduled = false, now = new Date(), roo
   let metadata = deriveSeasonMetadata(season, now, schedule);
   console.log(JSON.stringify({ season, phase: metadata.phase, week: metadata.week, startsAt: metadata.startsAt, scheduled, schedule: metadata.note + scheduleWarning }));
   if (scheduled && !shouldCapture(now, metadata.phase, metadata.startsAt, metadata.endsAt)) {
-    console.log('Capture skipped by cadence gate: Wednesdays during play, final pre-kickoff and first post-Super-Bowl Wednesdays; January-September monthly on day 1.');
+    console.log('Capture skipped by cadence gate: Tuesdays during play, final pre-kickoff and first post-Super-Bowl Tuesdays; January-September monthly on day 1.');
     return { skipped: true, reason: 'cadence', metadata };
   }
   const existing = await readJson(join(root, 'seasons', `${season}.json`));

@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
-import { Activity, ArrowDownToLine, ArrowUpRight, BarChart3, CalendarDays, Check, ChevronRight, Clock3, Github, Home, Info, Moon, RefreshCw, Sun, TrendingUp, TriangleAlert, Trophy } from 'lucide-react';
+import { Activity, ArrowDownToLine, BarChart3, CalendarDays, Check, ChevronRight, Clock3, Github, Home, Info, Moon, RefreshCw, Sun, TrendingUp, TriangleAlert, Trophy } from 'lucide-react';
 import AboutDialog from './components/AboutDialog';
 import SourceNotice from './components/SourceNotice';
 import { formatDate, isPreseasonSnapshot, seasonBanner } from './lib/presentation.mjs';
@@ -76,7 +76,7 @@ export default function App() {
         </header>
         <main id="main">
           <section className="hero">
-            <div className="hero-copy"><span className="hero-eyebrow"><span className="small-football">◈</span> NFL SEASON TRACKER <span className="eyebrow-rule" /></span><h1>The season,<br className="mobile-break" /> in perspective.</h1><p>Track the contenders. Follow the numbers. Watch the story unfold.</p></div>
+            <div className="hero-copy"><h1>The season, in perspective.</h1></div>
             <div className="hero-controls">
               <label className="select-field season-select"><span><CalendarDays size={12} /> SEASON</span><select aria-label="Season" value={currentYear ?? ''} disabled={!manifest.data} onChange={event => { setYear(Number(event.target.value)); setSnapshotIndex(null); }}>{manifest.data?.seasons.map(item => <option key={item.year} value={item.year}>{item.kind === 'mock' ? `${item.year} — mocked — not fully accurate` : `${item.year} season`}</option>)}</select></label>
               <label className="select-field source-select"><span><Activity size={12} /> {tab === 'leaders' ? 'STATS SOURCE' : tab === 'awards' ? 'AWARDS SOURCE' : 'PROJECTION SOURCE'}</span>
@@ -104,15 +104,17 @@ export default function App() {
               </div>
               <div className="snapshot-status"><span className={stale ? 'status-dot status-warning' : 'status-dot'} /><span>{data.snapshots.length} {data.snapshots.length === 1 ? 'snapshot' : 'snapshots'}</span><span className="status-divider">/</span><span>{phase ? phaseNames[phase] : 'Awaiting capture'}</span></div>
             </div>
-            <div className="capture-strip"><span><Clock3 size={13} />{latest ? `Captured ${formatDate(latest.capturedAt)}` : 'No snapshots in this view'}{stale && <b className="stale-label"> · Refresh overdue</b>}</span><button onClick={() => setAboutOpen(true)}>About the data <ArrowUpRight size={13} /></button></div>
-            <div className="history-controls"><span>Week N = after the entire week.</span>{hasPreseason && <label><input type="checkbox" checked={showPreseason} onChange={event => { setShowPreseason(event.target.checked); setSnapshotIndex(null); }} />Show preseason history</label>}</div>
+            <div className="capture-strip">
+              <span><Clock3 size={13} />{latest ? `Collected ${formatDate(latest.capturedAt)}` : 'No snapshots in this view'}{stale && <b className="stale-label"> · Refresh overdue</b>}</span>
+              {hasPreseason && <label className="preseason-toggle"><input type="checkbox" checked={showPreseason} onChange={event => { setShowPreseason(event.target.checked); setSnapshotIndex(null); }} />Show preseason history</label>}
+              <button aria-label="About the data" title="About the data" onClick={() => setAboutOpen(true)}><span>About the data</span><Info size={13} /></button>
+            </div>
             {fullData && fullData.snapshots.length > 1 && <div className="snapshot-explorer">
               <div className="explorer-label"><span className="eyebrow">REWIND THE SEASON</span><strong>{latest?.label}</strong></div>
               <input type="range" aria-label="Snapshot history" aria-valuetext={`${latest?.label}, ${latest ? formatDate(latest.capturedAt) : ''}`} min={0} max={fullData.snapshots.length - 1} value={snapshotIndex ?? fullData.snapshots.length - 1} onChange={event => setSnapshotIndex(Number(event.target.value))} />
               <span className="explorer-position" data-testid="snapshot-position">{data.snapshots.length} / {fullData.snapshots.length}</span>
               <button aria-label="Return to latest snapshot" disabled={data.snapshots.length === fullData.snapshots.length} onClick={() => setSnapshotIndex(null)}>Latest <ChevronRight size={13} /></button>
             </div>}
-            {latest?.note && <div className="source-notice" role="note"><Info size={17} /><span>{latest.note}</span></div>}
             {!data.snapshots.length && !showPreseason ? <div className="stats-empty history-empty" role="status"><span className="empty-icon"><CalendarDays size={28} /></span><h3>No completed-week snapshots yet.</h3><p>Preseason history is hidden. Turn it back on to see the available baseline.</p><button className="primary-button" onClick={() => { setShowPreseason(true); setSnapshotIndex(null); }}>Show preseason</button></div> : <>
             {tab === 'projections' && <SourceNotice key={`${data.season}-${source.id}`} source={source} snapshot={latest} mocked={data.kind === 'mock'} />}
             <div id="dashboard-panel" role="tabpanel" aria-labelledby={tab === 'projections' ? 'projections-tab' : tab === 'leaders' ? 'leaders-tab' : 'awards-tab'}>
@@ -120,7 +122,7 @@ export default function App() {
                 : tab === 'leaders' ? <StatLeaders key={data.season} data={data} theme={theme} />
                 : <Awards key={`${data.season}-${awardSource?.id}`} data={data} source={awardSource} theme={theme} />}</Suspense>
             </div>
-            <section className="bottom-note"><div className="note-icon"><CalendarDays size={20} /></div><div><h3>A snapshot, not a crystal ball.</h3><p>{data.kind === 'mock' ? 'You’re exploring simulated history. Switch to the current season for actual provider captures.' : 'New observations are saved weekly in-season and monthly in the offseason. This is the long view — not a live odds ticker.'}</p></div><a href={`${import.meta.env.BASE_URL}data/${entry?.file}`} download><ArrowDownToLine size={15} /> Snapshot JSON</a></section>
+            <section className="bottom-note"><div className="note-icon"><CalendarDays size={20} /></div><div><h3>A snapshot, not a crystal ball.</h3><p>{data.kind === 'mock' ? 'You’re exploring simulated history. Switch to the current season for actual provider captures.' : 'Captured Tuesday mornings after the week’s games, and monthly in the offseason.'}</p></div><a href={`${import.meta.env.BASE_URL}data/${entry?.file}`} download><ArrowDownToLine size={15} /> Snapshot JSON</a></section>
             </>}
           </>}
         </main>

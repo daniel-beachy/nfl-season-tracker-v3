@@ -47,7 +47,7 @@ export function shouldCapture(date, phase, startsAt, endsAt) {
   const untilKickoff = Date.parse(startsAt) - +date;
   const afterSeason = +date - Date.parse(endsAt);
   if ((phase === 'preseason' || phase === 'offseason') && date.getUTCMonth() <= 8 && date.getUTCDate() === 1) return true;
-  return date.getUTCDay() === 3 &&
+  return date.getUTCDay() === 2 &&
     (phase === 'regular' || phase === 'postseason' ||
       untilKickoff > 0 && untilKickoff <= 7 * DAY || afterSeason >= 0 && afterSeason < 7 * DAY);
 }
