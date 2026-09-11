@@ -5,11 +5,13 @@ import { TEAMS, adaptTeams } from './teams.mjs';
 import { SOURCES, URLS, adaptFpi, fetchFutures, fetchLeaders, isolatedSource, loadFutures } from './providers.mjs';
 import { fetchAwards } from './awards.mjs';
 import { createHttpClient } from './http.mjs';
+import { assertBeforeNextKickoff, resolveCheckpoint } from './checkpoints.mjs';
 
 export { shouldCapture, seasonForDate, deriveSeasonMetadata } from './data-core.mjs';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', 'public', 'data');
 
 export async function capture({ season, scheduled = false, now = new Date(), root = ROOT, get = createHttpClient() } = {}) {
+  const started = performance.now();
   season ??= seasonForDate(now);
   if (season !== seasonForDate(now)) {
     throw new Error(`Live capture supports the current NFL season ${seasonForDate(now)} only; --season ${season} cannot create historical live data.`);
@@ -18,10 +20,10 @@ export async function capture({ season, scheduled = false, now = new Date(), roo
   let scheduleWarning = '';
   try { schedule = await get(URLS.scoreboard(season)); }
   catch (error) { scheduleWarning = ` ESPN schedule lookup failed: ${error.message}.`; }
-  const metadata = deriveSeasonMetadata(season, now, schedule);
+  let metadata = deriveSeasonMetadata(season, now, schedule);
   console.log(JSON.stringify({ season, phase: metadata.phase, week: metadata.week, startsAt: metadata.startsAt, scheduled, schedule: metadata.note + scheduleWarning }));
-  if (scheduled && !shouldCapture(now, metadata.phase)) {
-    console.log('Capture skipped by cadence gate: Wednesdays weekly in regular/postseason, first Wednesday monthly otherwise.');
+  if (scheduled && !shouldCapture(now, metadata.phase, metadata.startsAt, metadata.endsAt)) {
+    console.log('Capture skipped by cadence gate: Wednesdays during play, final pre-kickoff and first post-Super-Bowl Wednesdays; March-September monthly on day 1.');
     return { skipped: true, reason: 'cadence', metadata };
   }
   const existing = await readJson(join(root, 'seasons', `${season}.json`));
@@ -34,6 +36,12 @@ export async function capture({ season, scheduled = false, now = new Date(), roo
       return { skipped: true, reason: 'existing', metadata, data: existing };
     }
   }
+  metadata.note += scheduleWarning;
+  metadata = await resolveCheckpoint(season, now, schedule, metadata, get);
+  if (!metadata.eligible) {
+    console.log(metadata.note);
+    return { skipped: true, reason: metadata.reason, metadata };
+  }
   let teams = existing?.teams ?? structuredClone(TEAMS);
   let teamWarning = '';
   try { teams = adaptTeams(await get(URLS.teams)); }
@@ -45,18 +53,18 @@ export async function capture({ season, scheduled = false, now = new Date(), roo
     fetchLeaders(season, metadata, teams, get),
     fetchAwards(season, teams, get, futures),
   ]);
-  for (const source of [fpi, draftkings]) source.note = `${source.note} ${metadata.note}${scheduleWarning}${teamWarning}`;
+  for (const source of [fpi, draftkings]) source.note = `${source.note} ${metadata.note}${teamWarning}`;
   const snapshot = {
     id: snapshotId(season, now), capturedAt: now.toISOString(), season,
     phase: metadata.phase, week: metadata.week,
-    label: metadata.phase === 'regular' ? `Week ${metadata.week}` :
-      metadata.phase === 'postseason' ? `Postseason week ${metadata.week}` : metadata.phase === 'preseason' ? 'Preseason' : 'Offseason',
+    label: metadata.label,
     sources: { 'espn-fpi': fpi, draftkings }, leaders, awards: { draftkings: awards },
   };
   const data = existing ? { ...existing, teams, sources: structuredClone(SOURCES), startsAt: metadata.startsAt } : {
     schemaVersion: 1, season, kind: 'live', startsAt: metadata.startsAt,
     teams, sources: structuredClone(SOURCES), snapshots: [],
   };
+  assertBeforeNextKickoff(+now + performance.now() - started, metadata.closesAt);
   appendSnapshot(data, snapshot);
   const persisted = await writeSeason(root, data, seasonForDate(now), now);
   console.log(JSON.stringify({

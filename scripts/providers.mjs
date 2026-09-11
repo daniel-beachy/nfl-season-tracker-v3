@@ -4,7 +4,7 @@ import { mapLimit, safeReference } from './http.mjs';
 export const URLS = {
   fpi: 'https://site.web.api.espn.com/apis/fitt/v3/sports/football/nfl/powerindex',
   teams: 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams',
-  scoreboard: year => `https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=${year}&seasontype=2&week=1&limit=100`,
+  scoreboard: (year, type = 2, week = 1) => `https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=${year}&seasontype=${type}&week=${week}&limit=100`,
   leaders: year => `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/${year}/types/2/leaders?limit=10`,
   futures: year => `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/${year}/futures?limit=100`,
 };

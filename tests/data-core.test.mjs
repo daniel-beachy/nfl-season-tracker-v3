@@ -48,7 +48,7 @@ test('season rollover uses previous year in January and February', () => {
   assert.equal(seasonForDate(new Date('2027-03-01T00:00Z')), 2027);
 });
 
-test('cadence is Wednesdays weekly during play and first Wednesday outside play, in UTC', () => {
+test('cadence is Wednesdays during play and March-September day one outside play, in UTC', () => {
   assert.equal(shouldCapture(new Date('2026-09-09T14:15Z'), 'regular'), true);
   assert.equal(shouldCapture(new Date('2026-09-09T14:15Z'), 'preseason'), false);
   assert.equal(shouldCapture(new Date('2026-07-01T14:15Z'), 'offseason'), true);

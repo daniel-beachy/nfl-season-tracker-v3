@@ -89,6 +89,11 @@ export function seasonBanner(season, now = new Date()) {
   return null;
 }
 
+/** @param {Snapshot} snapshot @param {string} startsAt */
+export function isPreseasonSnapshot(snapshot, startsAt) {
+  return Date.parse(snapshot.capturedAt) < Date.parse(startsAt);
+}
+
 /** @param {Snapshot[]} snapshots @param {string} source @param {Team[]} teams */
 export function largestMover(snapshots, source, teams) {
   if (snapshots.length < 2) return null;

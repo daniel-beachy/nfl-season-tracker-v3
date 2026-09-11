@@ -122,6 +122,10 @@ select:disabled { cursor: default; opacity: 0.72; }
 .capture-strip button { border: 0; padding: 3px 0; background: transparent; font-size: 10px; color: var(--cp-text-soft); }
 .capture-strip button:hover { color: var(--cp-accent); }
 .stale-label { color: var(--cp-danger); }
+.history-controls { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin: 0 0 14px; color: var(--cp-text-soft); font-size: 11px; }
+.history-controls label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.history-controls input { accent-color: var(--cp-accent); width: 16px; height: 16px; }
+.history-empty .primary-button { margin: 20px auto 0; }
 .snapshot-explorer { display: flex; align-items: center; gap: 22px; padding: 13px 18px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-bg-elevated); margin-bottom: 20px; }
 .explorer-label { width: 135px; flex-shrink: 0; }
 .explorer-label .eyebrow { font-size: 8px; }

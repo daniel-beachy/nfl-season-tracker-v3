@@ -4,7 +4,7 @@ This app publishes static JSON, not a backend. Capture scripts use Node 22+ buil
 
 ## What was actually captured
 
-`public/data/seasons/2026.json` contains **one real snapshot**, captured **2026-09-08T16:56:42.327Z**, with 32 teams. No current-year history was invented.
+`public/data/seasons/2026.json` contains the genuine preseason capture at **2026-09-08T16:56:42.327Z** and a partial **Opening-week update** at **2026-09-11T01:15:27.503Z**. The table below describes the original preseason capture. No current-year history was invented.
 
 | Source | Observed result | Persisted coverage |
 | --- | --- | --- |
@@ -90,7 +90,7 @@ The futures endpoint supplied **no verified odds observation timestamp**. `obser
 
 Awards share the keyless season-specific ESPN futures endpoint with the DraftKings team adapter. A single fetched/resolved futures payload is reused in each capture. Only DraftKings markets with a verified requested-season futures reference are accepted.
 
-The first live awards record was captured **2026-09-11T01:15:27.503Z**, after regular-season kickoff. It is a genuine opening-week observation, **not a historical preseason estimate**. The September 8 snapshot and all 2025 mocked checkpoints remain unchanged. Future scheduled/manual captures append awards under the same weekly/monthly cadence.
+The first live awards record was captured **2026-09-11T01:15:27.503Z**, after regular-season kickoff. It is a genuine opening-week observation, **not a historical preseason estimate**. A one-time labeling correction replaces the misleading `Week 1` with **Opening-week update**, sets `week: null`, and adds a visible explanatory `note`. Its original prices, stats, and timestamps are unchanged; it is not merged into preseason or passed off as a completed week. The September 8 snapshot and all 2025 mocked checkpoints remain unchanged. Future captures enforce the completed-week window.
 
 | Award | Stable ID | Captured / listed candidates in first capture |
 | --- | --- | --- |
@@ -115,7 +115,9 @@ The first live awards record was captured **2026-09-11T01:15:27.503Z**, after re
 
 <https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=2026&seasontype=2&week=1&limit=100>
 
-The earliest validated season-type-2 opening-week event determines `startsAt`; calendar entries determine regular/postseason week numbers and postseason boundaries. Broad calendar week buckets do not override actual kickoff. When this lookup cannot provide a validated event, the explicit approximate fallback is the **first Thursday after Labor Day**, with 18 regular weeks and a five-week postseason if calendar boundaries are absent. Fallback status is written in snapshot source notes. This approximation is not an authoritative NFL schedule.
+The earliest validated season-type-2 opening-week event determines `startsAt`; calendar entries identify candidate regular/postseason periods. `resolveCheckpoint()` then fetches the relevant weeks with `seasontype` and `week`, verifies season/type/week on every event, and requires every game in the captured week to be completed. The next competitive week must be untouched, with its first kickoff still ahead. **A Wednesday in ESPN's Week 2 bucket is the completed Week 1 checkpoint**, not Week 2. Manual midweek captures and delayed runs after a Wednesday night kickoff are skipped. A capture that crosses kickoff while providers load is rejected before persistence. Unverified in-season schedules fail explicitly.
+
+The last Wednesday before kickoff is a **Preseason** baseline, even if it is not the first Wednesday of September. March-September day-one snapshots use month labels; their absence is not backfilled with current values. March-August snapshots can precede schedule publication: only in that pre-September window is an explicitly approximate **first Thursday after Labor Day** kickoff used. That fallback never establishes completion of a regular-season week. The Pro Bowl bucket is excluded, and the first Wednesday after the Super Bowl still captures the completed final even if ESPN has moved into offseason.
 
 ### Polymarket research
 
@@ -141,7 +143,8 @@ The exact interfaces are defined in `src/types.ts`, unchanged by the pipeline.
 - `unavailable` sources have an empty `projections` object and an explanation. The source remains selectable so outages are visible.
 - `status: "ok"` does not guarantee completeness or freshness: always surface `note`.
 - `startsAt` is regular-season kickoff, not the start of preseason.
-- Phases are `preseason`, `regular`, `postseason`, and `offseason`; regular weeks are 1–18; postseason weeks follow ESPN's 1–5 calendar convention, including its Pro Bowl/bye bucket.
+- Phases are `preseason`, `regular`, `postseason`, and `offseason`; regular weeks are completed weeks 1–18; postseason checkpoints follow ESPN's numbers 1, 2, 3, and 5, excluding the noncompetitive Pro Bowl bucket. Monthly and pre-kickoff baselines have `week: null`.
+- The preseason-history toggle filters pre-kickoff observations for all tabs and resets the history slider to the newest visible snapshot. It does not alter JSON, connect across missing provider observations, or remove completed weeks.
 
 Complete, valid nonzero division groups normalize to 100% using largest-remainder allocation in hundredths. Missing groups are not filled. A complete all-zero division becomes all-null, not 25% each. A tiny binary floating-point residual is assigned to the last nonzero member; consumers should display sensible precision and compare sums using a small epsilon rather than assuming all possible summation orders are bit-identical.
 
@@ -163,13 +166,13 @@ node --test tests/*.test.mjs
 - Default season: calendar year **March–December**, previous year **January–February**, using UTC.
 - Live `--season` must equal that active season. This flag makes the intended year explicit; it does not request historical backfill.
 - No `--date` option: fetching today's values and assigning a past capture date would fabricate history. The exported function's injected clock/client are for tests, not a historical-data API.
-- Normal capture is manual/forced with respect to cadence; it **cannot overwrite** an existing daily snapshot.
-- Scheduler configuration should run **Wednesdays at 14:15 UTC**, cron `15 14 * * 3`, and invoke `--scheduled`.
-- `shouldCapture(date, phase)` is exported from both `scripts/data-core.mjs` and `scripts/capture.mjs`: Wednesdays weekly during `regular`/`postseason`; first Wednesday of each month during `preseason`/`offseason`. The scheduler owns the 14:15 time; the function gates the day.
-- On September 9, 2026 at 14:15 UTC the kickoff is still ahead, so the scheduled preseason gate skips that run (not the month's first Wednesday). The next regular-season scheduled point is September 16. The already-persisted September 8 manual point is the honest pre-kickoff baseline.
-- `deriveSeasonMetadata()` returns `startsAt`, `phase`, `week`, and a schedule-provenance `note`; capture prints this JSON before running the gate.
+- Manual capture bypasses only the cadence gate, **not** week-completion/kickoff checks, and **cannot overwrite** an existing daily snapshot.
+- Scheduler configuration runs **Wednesdays at 16:00 UTC**, cron `0 16 * * 3`, and the **1st of March-September**, cron `0 16 1 3-9 *`, invoking `--scheduled`. That is noon EDT / 11:00 EST, before Wednesday night games.
+- `shouldCapture(date, phase, startsAt, endsAt)` is exported from both `scripts/data-core.mjs` and `scripts/capture.mjs`. It admits Wednesdays during play, the last pre-kickoff Wednesday, the first post-Super-Bowl Wednesday, and March-September day one outside play. It does not admit other preseason Wednesdays.
+- The corrected gate admits September 9, 2026 as a final pre-kickoff baseline. September 16 is the first completed **Week 1** checkpoint. The original gate incorrectly skipped September 9; changing the gate cannot reconstruct prices that were not saved.
+- `deriveSeasonMetadata()` describes calendar phase/period and kickoff/end boundaries. `resolveCheckpoint()` determines the completed snapshot phase/week/label from actual event states; these can differ from the calendar's upcoming week.
 
-Use a single workflow concurrency group for captures/publishing. Provider outages are represented in valid data and do not fail the process by themselves. Structural validation, filesystem errors, conflicting live/mock seasons, invalid arguments, and concurrent writer locks fail with a nonzero exit status.
+Use a single workflow concurrency group for captures/publishing. Price/stat provider outages are represented in valid data and do not fail the process by themselves. Unsafe/unverifiable capture windows, structural validation, filesystem errors, conflicting live/mock seasons, invalid arguments, and concurrent writer locks fail with a nonzero exit status.
 
 ## Persistence, safety, and retries
 

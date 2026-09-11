@@ -2,7 +2,7 @@ import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import { Activity, ArrowDownToLine, ArrowUpRight, BarChart3, CalendarDays, Check, ChevronRight, Clock3, Github, Home, Info, Moon, RefreshCw, Sun, TrendingUp, TriangleAlert, Trophy } from 'lucide-react';
 import AboutDialog from './components/AboutDialog';
 import SourceNotice from './components/SourceNotice';
-import { formatDate, seasonBanner } from './lib/presentation.mjs';
+import { formatDate, isPreseasonSnapshot, seasonBanner } from './lib/presentation.mjs';
 import { isManifest, isSeason, useData } from './lib/useData';
 import type { Theme } from './types';
 
@@ -22,6 +22,7 @@ export default function App() {
   const [themeWarning, setThemeWarning] = useState(false);
   const [year, setYear] = useState<number | null>(null);
   const [snapshotIndex, setSnapshotIndex] = useState<number | null>(null);
+  const [showPreseason, setShowPreseason] = useState(true);
   const [sourceId, setSourceId] = useState('espn-fpi');
   const [awardSourceId, setAwardSourceId] = useState('draftkings');
   const [tab, setTab] = useState<'projections' | 'leaders' | 'awards'>('projections');
@@ -30,7 +31,11 @@ export default function App() {
   const currentYear = year ?? manifest.data?.currentSeason;
   const entry = manifest.data?.seasons.find(item => item.year === currentYear);
   const season = useData(entry?.file ?? null, isSeason);
-  const fullData = season.data;
+  const unfilteredData = season.data;
+  const hasPreseason = unfilteredData?.snapshots.some(snapshot => isPreseasonSnapshot(snapshot, unfilteredData.startsAt));
+  const fullData = useMemo(() => unfilteredData && !showPreseason
+    ? { ...unfilteredData, snapshots: unfilteredData.snapshots.filter(snapshot => !isPreseasonSnapshot(snapshot, unfilteredData.startsAt)) }
+    : unfilteredData, [unfilteredData, showPreseason]);
   const data = useMemo(() => fullData && snapshotIndex !== null
     ? { ...fullData, snapshots: fullData.snapshots.slice(0, snapshotIndex + 1) }
     : fullData, [fullData, snapshotIndex]);
@@ -40,7 +45,7 @@ export default function App() {
   const latest = data?.snapshots.at(-1);
   const banner = data ? seasonBanner(data) : null;
   const phase = latest?.phase ?? entry?.phase;
-  const newestCapture = fullData?.snapshots.at(-1);
+  const newestCapture = unfilteredData?.snapshots.at(-1);
   const stale = fullData?.kind === 'live' && newestCapture
     && Date.now() - new Date(newestCapture.capturedAt).getTime() > (newestCapture.phase === 'regular' || newestCapture.phase === 'postseason' ? 9 : 40) * 86400000;
   const error = manifest.error ?? season.error;
@@ -99,13 +104,16 @@ export default function App() {
               </div>
               <div className="snapshot-status"><span className={stale ? 'status-dot status-warning' : 'status-dot'} /><span>{data.snapshots.length} {data.snapshots.length === 1 ? 'snapshot' : 'snapshots'}</span><span className="status-divider">/</span><span>{phase ? phaseNames[phase] : 'Awaiting capture'}</span></div>
             </div>
-            <div className="capture-strip"><span><Clock3 size={13} />{latest ? `Captured ${formatDate(latest.capturedAt)}` : 'No snapshots captured yet'}{stale && <b className="stale-label"> · Refresh overdue</b>}</span><button onClick={() => setAboutOpen(true)}>About the data <ArrowUpRight size={13} /></button></div>
+            <div className="capture-strip"><span><Clock3 size={13} />{latest ? `Captured ${formatDate(latest.capturedAt)}` : 'No snapshots in this view'}{stale && <b className="stale-label"> · Refresh overdue</b>}</span><button onClick={() => setAboutOpen(true)}>About the data <ArrowUpRight size={13} /></button></div>
+            <div className="history-controls"><span>Week N = after the entire week.</span>{hasPreseason && <label><input type="checkbox" checked={showPreseason} onChange={event => { setShowPreseason(event.target.checked); setSnapshotIndex(null); }} />Show preseason history</label>}</div>
             {fullData && fullData.snapshots.length > 1 && <div className="snapshot-explorer">
               <div className="explorer-label"><span className="eyebrow">REWIND THE SEASON</span><strong>{latest?.label}</strong></div>
               <input type="range" aria-label="Snapshot history" aria-valuetext={`${latest?.label}, ${latest ? formatDate(latest.capturedAt) : ''}`} min={0} max={fullData.snapshots.length - 1} value={snapshotIndex ?? fullData.snapshots.length - 1} onChange={event => setSnapshotIndex(Number(event.target.value))} />
               <span className="explorer-position" data-testid="snapshot-position">{data.snapshots.length} / {fullData.snapshots.length}</span>
               <button aria-label="Return to latest snapshot" disabled={data.snapshots.length === fullData.snapshots.length} onClick={() => setSnapshotIndex(null)}>Latest <ChevronRight size={13} /></button>
             </div>}
+            {latest?.note && <div className="source-notice" role="note"><Info size={17} /><span>{latest.note}</span></div>}
+            {!data.snapshots.length && !showPreseason ? <div className="stats-empty history-empty" role="status"><span className="empty-icon"><CalendarDays size={28} /></span><h3>No completed-week snapshots yet.</h3><p>Preseason history is hidden. Turn it back on to see the available baseline.</p><button className="primary-button" onClick={() => { setShowPreseason(true); setSnapshotIndex(null); }}>Show preseason</button></div> : <>
             {tab === 'projections' && <SourceNotice key={`${data.season}-${source.id}`} source={source} snapshot={latest} mocked={data.kind === 'mock'} />}
             <div id="dashboard-panel" role="tabpanel" aria-labelledby={tab === 'projections' ? 'projections-tab' : tab === 'leaders' ? 'leaders-tab' : 'awards-tab'}>
               <Suspense fallback={<Loading />}>{tab === 'projections' ? <Projections key={`${data.season}-${source.id}`} data={data} source={source} theme={theme} />
@@ -113,6 +121,7 @@ export default function App() {
                 : <Awards key={`${data.season}-${awardSource?.id}`} data={data} source={awardSource} theme={theme} />}</Suspense>
             </div>
             <section className="bottom-note"><div className="note-icon"><CalendarDays size={20} /></div><div><h3>A snapshot, not a crystal ball.</h3><p>{data.kind === 'mock' ? 'You’re exploring simulated history. Switch to the current season for actual provider captures.' : 'New observations are saved weekly in-season and monthly in the offseason. This is the long view — not a live odds ticker.'}</p></div><a href={`${import.meta.env.BASE_URL}data/${entry?.file}`} download><ArrowDownToLine size={15} /> Snapshot JSON</a></section>
+            </>}
           </>}
         </main>
         <footer className="footer"><div><span className="footer-brand">sunday signal.</span><span>Independent. Open source. In it for the season.</span></div><div><span className="footer-keys"><Check size={12} /> No keys. No subscriptions.</span><a href={portfolio}><Home size={13} /> Portfolio</a><a href={repository} target="_blank" rel="noreferrer">View on GitHub <ChevronRight size={13} /></a></div></footer>

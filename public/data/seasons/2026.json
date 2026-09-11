@@ -804,8 +804,9 @@
       "capturedAt": "2026-09-11T01:15:27.503Z",
       "season": 2026,
       "phase": "regular",
-      "week": 1,
-      "label": "Week 1",
+      "week": null,
+      "label": "Opening-week update",
+      "note": "Partial opening-week capture: these prices include games already played and are not preseason odds or a completed Week 1 checkpoint. The next scheduled capture, September 16, represents the completed Week 1. Original prices and capture time are preserved.",
       "sources": {
         "espn-fpi": {
           "status": "ok",

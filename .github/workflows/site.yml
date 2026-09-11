@@ -5,9 +5,12 @@ on:
     branches: [main]
   workflow_dispatch:
   schedule:
-    # Wednesday, 10:15 EDT / 09:15 EST. The collector gates monthly captures
-    # in the offseason/preseason to the first Wednesday of the month.
-    - cron: '15 14 * * 3'
+    # Wednesday, noon EDT / 11:00 EST, before Wednesday night games.
+    # The collector verifies completed weeks and skips runs after the next kickoff.
+    # Also includes the final pre-kickoff and post-Super-Bowl Wednesdays.
+    - cron: '0 16 * * 3'
+    # March-September preseason history, on the first regardless of weekday.
+    - cron: '0 16 1 3-9 *'
 
 permissions:
   contents: read

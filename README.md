@@ -12,6 +12,7 @@ A free NFL season tracker: the long view on championship forecasts, playoff chan
 - An **Awards** tab for MVP, OPOY, DPOY, OROY, DROY, Coach of the Year, Comeback Player of the Year, and Protector of the Year. Includes market favorites, American odds, implied-percentage trends for the latest top ten, and an expandable captured-candidate field.
 - A season selector that defaults to the current season, independent projection-source selection, and persistent light/dark mode.
 - A snapshot-history slider to rewind the charts and leaderboards to any captured week.
+- March-September preseason checkpoints on the **1st of each month**, plus a final pre-kickoff baseline. A **Show preseason history** toggle hides those points across all three tabs without deleting data.
 - Explicit **mocked — not fully accurate** labels on the illustrative previous season. Actual current-season captures are never supplemented with invented history.
 - Honest single-point, missing-source, unsupported-market, refresh-overdue, and **preseason — season not started** states.
 
@@ -54,7 +55,7 @@ Charts prefer the primary team color, switch to the official alternate when need
 
 Live sources are **ESPN FPI** and **DraftKings futures syndicated by ESPN**. The sportsbook adapter captures Super Bowl, conference, and division prices and normalizes complete markets to remove the displayed overround proportionally. It does not invent playoff probabilities or projected win totals. Although accessed through ESPN infrastructure, DraftKings is a separate odds provider, not another FPI forecast. Initial 2026 FPI observations are dated August 31 and visibly marked delayed; sportsbook update timestamps are not supplied.
 
-Award markets use **raw implied percentages**, not the normalized team-market method. They include bookmaker margin, may omit candidates, and must not be treated as fair chances or added to 100%. Up to the strongest 50 valid quotes per award are captured; both captured and listed counts are shown. The first award capture was September 11, 2026 at 01:15 UTC (September 10 in U.S. time zones), after kickoff. It is not labeled or copied into preseason history. Older snapshots, including the mocked 2025 archive, have no award odds; the history slider shows this explicitly.
+Award markets use **raw implied percentages**, not the normalized team-market method. They include bookmaker margin, may omit candidates, and must not be treated as fair chances or added to 100%. Up to the strongest 50 valid quotes per award are captured; both captured and listed counts are shown. The first award capture was September 11, 2026 at 01:15 UTC (September 10 in U.S. time zones), after kickoff. It is explicitly labeled **Opening-week update**, not preseason or completed Week 1. Its original prices and timestamp are preserved with a correction note. Older snapshots, including the mocked 2025 archive, have no award odds; the history slider shows this explicitly.
 
 Adapters publish the same five optional metrics: `superBowl`, `conference`, `division`, `playoffs`, and `wins`. A provider declares which metrics it supports. Unavailable inputs remain absent/null, never zero. Missing snapshots break lines instead of interpolating across failures. Model forecasts and market-implied probabilities are never blended. All values are percentages, except projected wins.
 
@@ -64,9 +65,11 @@ See [`src/types.ts`](src/types.ts) for the contract and [the source guide](docs/
 
 ## Automated capture and hosting
 
-The **Capture and publish** workflow runs every Wednesday at **14:15 UTC** (10:15 EDT / 09:15 EST). The collector uses a calendar gate: weekly during the regular season/playoffs, only the first Wednesday each month during the offseason/preseason. Captures are append-only by season and UTC date. A manual run bootstraps a season or records an additional snapshot. It does not invent skipped history.
+The **Capture and publish** workflow runs every Wednesday at **16:00 UTC** (noon EDT / 11:00 EST), plus the **1st of March, April, May, June, July, August, and September** at the same UTC time. The collector gates weekly runs to the regular season/playoffs, the final Wednesday before kickoff, and the first Wednesday after the Super Bowl. Other preseason Wednesdays are skipped. If the two schedules coincide, the daily snapshot key prevents duplication.
 
-Wednesday usually falls after Monday Night Football and before the next Thursday game. Special Wednesday games, byes, and league schedule changes can be exceptions. GitHub Actions cron is best-effort, not a guaranteed execution time.
+**Week 1 means after the entire first week**, not the week about to start. The collector verifies ESPN event completion for the relevant week and verifies that the next week's games have not begun, including Wednesday openers and Thanksgiving-eve games. Delayed runs or manual midweek captures are skipped rather than saving mixed-week odds/statistics; a collection that crosses the next kickoff fails explicitly. The Pro Bowl is not a competitive NFL checkpoint. GitHub Actions cron is best-effort, not a guaranteed execution time.
+
+March-August captures can run before ESPN publishes the fall schedule: the kickoff estimate is explicitly disclosed, requested-season provider validation still applies, and unavailable odds remain unavailable. From September onward, unverified schedules fail instead of inventing a completed-week label. Existing snapshots remain immutable on ordinary captures. A manual run cannot reconstruct a missed month from today's prices.
 
 1. Push to a **public GitHub repository**.
 2. Under **Settings → Pages → Build and deployment**, select **GitHub Actions**.

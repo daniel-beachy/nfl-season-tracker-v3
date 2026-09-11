@@ -78,6 +78,7 @@ export interface Snapshot {
   phase: Phase;
   week: number | null;
   label: string;
+  note?: string;
   sources: Record<string, SourceSnapshot>;
   awards?: Record<string, AwardSourceSnapshot>;
   leaders: {

@@ -42,10 +42,15 @@ export function seasonForDate(date = new Date()) {
   return date.getUTCFullYear() - (date.getUTCMonth() < 2 ? 1 : 0);
 }
 
-export function shouldCapture(date, phase) {
+export function shouldCapture(date, phase, startsAt, endsAt) {
   if (!Number.isFinite(date.getTime()) || !PHASES.includes(phase)) return false;
+  const untilKickoff = Date.parse(startsAt) - +date;
+  const afterSeason = +date - Date.parse(endsAt);
+  if ((phase === 'preseason' || phase === 'offseason') && date.getUTCMonth() >= 2 &&
+    date.getUTCMonth() <= 8 && date.getUTCDate() === 1) return true;
   return date.getUTCDay() === 3 &&
-    (phase === 'regular' || phase === 'postseason' || date.getUTCDate() <= 7);
+    (phase === 'regular' || phase === 'postseason' ||
+      untilKickoff > 0 && untilKickoff <= 7 * DAY || afterSeason >= 0 && afterSeason < 7 * DAY);
 }
 
 export function fallbackKickoff(season) {
@@ -79,6 +84,7 @@ export function deriveSeasonMetadata(season, now = new Date(), scoreboard = null
     phase === 'postseason' ? Math.min(5, Math.floor((time - postStart) / (7 * DAY)) + 1) : null;
   return {
     startsAt: new Date(kickoff).toISOString(),
+    endsAt: new Date(postEnd).toISOString(),
     phase,
     week: entry ? Number(entry.value) : approximateWeek,
     note: kickoffEvents.length
@@ -139,6 +145,7 @@ export function validateSeason(data) {
     prior = snapshot.capturedAt;
     if (snapshot.awards !== undefined) requireValid(isAwards(snapshot.awards, [...sourceIds], [...teamIds]), 'awards snapshot');
     requireValid(PHASES.includes(snapshot.phase) && isText(snapshot.label), 'snapshot phase or label');
+    requireValid(snapshot.note === undefined || isText(snapshot.note), 'snapshot note');
     requireValid(snapshot.week === null || Number.isInteger(snapshot.week) && snapshot.week >= 1 && snapshot.week <= 18, 'snapshot week');
     requireValid(snapshot.sources && Object.keys(snapshot.sources).length > 0, 'snapshot sources');
     for (const [sourceId, source] of Object.entries(snapshot.sources)) {

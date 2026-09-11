@@ -26,6 +26,7 @@ export function isSeason(value: unknown): value is SeasonData {
       && typeof source.id === 'string' && Array.isArray(source.metrics))
     && Array.isArray(value.snapshots) && value.snapshots.every(snapshot => isRecord(snapshot)
       && typeof snapshot.capturedAt === 'string' && isRecord(snapshot.sources)
+      && (snapshot.note === undefined || typeof snapshot.note === 'string')
       && isRecord(snapshot.leaders) && Array.isArray(snapshot.leaders.categories)
       && (snapshot.awards === undefined || isAwards(snapshot.awards,
         sources.map(source => source.id), teams.map(team => team.id))));

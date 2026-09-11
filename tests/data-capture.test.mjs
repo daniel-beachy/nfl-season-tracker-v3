@@ -11,10 +11,10 @@ const withRoot = async fn => {
   try { await fn(root); } finally { await rm(root, { recursive: true, force: true }); }
 };
 
-test('complete network outage still persists valid, explicitly unavailable live source snapshots', async () => {
+test('preseason network outage before schedule publication persists explicitly unavailable sources', async () => {
   await withRoot(async root => {
     const result = await capture({
-      root, season: 2026, now: new Date('2026-09-08T17:00Z'),
+      root, season: 2026, now: new Date('2026-08-04T17:00Z'),
       get: async () => { throw new Error('offline fixture'); },
     });
     assert.equal(result.data.kind, 'live');
@@ -52,12 +52,12 @@ test('scheduled offseason capture is gated before creating files or fetching pre
 test('same-date captures do not retry and overwrite even an unavailable stored snapshot', async () => {
   await withRoot(async root => {
     const first = await capture({
-      root, season: 2026, now: new Date('2026-09-08T17:00Z'),
+      root, season: 2026, now: new Date('2026-08-04T17:00Z'),
       get: async () => { throw new Error('first outage'); },
     });
     const bytes = await readFile(join(root, 'seasons', '2026.json'), 'utf8');
     const retry = await capture({
-      root, season: 2026, now: new Date('2026-09-08T18:00Z'),
+      root, season: 2026, now: new Date('2026-08-04T18:00Z'),
       get: async () => { throw new Error('second outage'); },
     });
     assert.equal(retry.reason, 'existing');
@@ -89,17 +89,17 @@ test('manual season argument cannot mislabel current upstream data as a historic
   }), /current NFL season/);
 });
 
-test('one shared futures request captures awards on the real opening-week date without backfilling', async () => {
+test('one shared futures request captures awards on the real preseason date without backfilling', async () => {
   await withRoot(async root => {
     await capture({
-      root, season: 2026, now: new Date('2026-09-08T17:00Z'),
+      root, season: 2026, now: new Date('2026-08-04T17:00Z'),
       get: async () => { throw new Error('initial outage'); },
     });
     const before = JSON.parse(await readFile(join(root, 'seasons', '2026.json'), 'utf8')).snapshots[0];
     let futuresRequests = 0;
     const ref = (kind, id) => `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2026/${kind}/${id}`;
     const result = await capture({
-      root, season: 2026, now: new Date('2026-09-11T01:00Z'),
+      root, season: 2026, now: new Date('2026-08-05T01:00Z'),
       get: async url => {
         if (url.includes('/futures?')) {
           futuresRequests++;
@@ -114,8 +114,8 @@ test('one shared futures request captures awards on the real opening-week date w
     });
     const latest = result.data.snapshots.at(-1);
     assert.equal(futuresRequests, 1);
-    assert.equal(latest.phase, 'regular');
-    assert.equal(latest.capturedAt, '2026-09-11T01:00:00.000Z');
+    assert.equal(latest.phase, 'preseason');
+    assert.equal(latest.capturedAt, '2026-08-05T01:00:00.000Z');
     assert.equal(latest.awards.draftkings.status, 'ok');
     assert.deepEqual(result.data.snapshots[0], before);
   });
