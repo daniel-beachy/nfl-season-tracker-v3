@@ -246,3 +246,162 @@ export async function fetchLeaders(season, metadata, teams, get) {
     };
   }
 }
+
+export function adaptPolymarket(events, teams, season) {
+  if (!Array.isArray(events) || !events.length) {
+    return unavailable(`Polymarket ${season}: no events returned.`);
+  }
+  const projections = {};
+  for (const team of teams) {
+    projections[team.id] = { superBowl: null, conference: null, division: null };
+  }
+  const byName = new Map(teams.map(t => [t.name.toLowerCase(), t]));
+
+  const parseMarketGroup = event => {
+    const map = new Map();
+    for (const m of event?.markets ?? []) {
+      const team = byName.get((m.groupItemTitle || '').trim().toLowerCase());
+      if (!team) continue;
+      try {
+        const prices = JSON.parse(m.outcomePrices);
+        const p = parseFloat(prices[0]);
+        if (Number.isFinite(p) && p >= 0 && p <= 1) {
+          map.set(team.id, p * 100);
+        }
+      } catch {}
+    }
+    return map;
+  };
+
+  const sbEvent = events.find(e => /champion/i.test(e.title) && !/afc|nfc|east|north|south|west/i.test(e.title));
+  if (sbEvent) {
+    const map = parseMarketGroup(sbEvent);
+    if (map.size === teams.length) {
+      const normalized = normalizePercentages(teams.map(t => map.get(t.id) ?? 0));
+      teams.forEach((t, i) => { projections[t.id].superBowl = normalized[i]; });
+    } else {
+      for (const [id, val] of map) projections[id].superBowl = val;
+    }
+  }
+
+  for (const conf of ['AFC', 'NFC']) {
+    const confEvent = events.find(e => new RegExp(`${conf} Champion`, 'i').test(e.title) && !/east|north|south|west/i.test(e.title));
+    if (confEvent) {
+      const map = parseMarketGroup(confEvent);
+      const confTeams = teams.filter(t => t.conference === conf);
+      if (confTeams.every(t => map.has(t.id))) {
+        const normalized = normalizePercentages(confTeams.map(t => map.get(t.id) ?? 0));
+        confTeams.forEach((t, i) => { projections[t.id].conference = normalized[i]; });
+      } else {
+        for (const [id, val] of map) projections[id].conference = val;
+      }
+    }
+  }
+
+  for (const conf of ['AFC', 'NFC']) {
+    for (const div of ['East', 'North', 'South', 'West']) {
+      const divEvent = events.find(e => new RegExp(`${conf} ${div} Champion`, 'i').test(e.title));
+      if (divEvent) {
+        const map = parseMarketGroup(divEvent);
+        const divTeams = teams.filter(t => t.conference === conf && t.division === div);
+        if (divTeams.every(t => map.has(t.id))) {
+          const normalized = normalizePercentages(divTeams.map(t => map.get(t.id) ?? 0));
+          divTeams.forEach((t, i) => { projections[t.id].division = normalized[i]; });
+        } else {
+          for (const [id, val] of map) projections[id].division = val;
+        }
+      }
+    }
+  }
+
+  const hasAny = Object.values(projections).some(p => ['superBowl', 'conference', 'division'].some(m => p[m] !== null));
+  if (!hasAny) {
+    return unavailable(`Polymarket ${season}: no matching championship markets found.`);
+  }
+
+  return {
+    status: 'ok',
+    note: `Polymarket prediction market contracts for season ${season}. Real-time probabilities derived from on-chain trading prices. Complete markets normalized to 100%. Playoff chances and win totals unavailable.`,
+    projections,
+  };
+}
+
+const POLYMARKET_AWARDS = [
+  { id: 'mvp', name: 'Most Valuable Player', abbreviation: 'MVP', candidateType: 'player', match: /MVP Winner/i },
+  { id: 'opoy', name: 'Offensive Player of the Year', abbreviation: 'OPOY', candidateType: 'player', match: /Offensive Player of the Year/i },
+  { id: 'dpoy', name: 'Defensive Player of the Year', abbreviation: 'DPOY', candidateType: 'player', match: /Defensive Player of the Year/i },
+  { id: 'oroy', name: 'Offensive Rookie of the Year', abbreviation: 'OROY', candidateType: 'player', match: /Offensive Rookie of the Year/i },
+  { id: 'droy', name: 'Defensive Rookie of the Year', abbreviation: 'DROY', candidateType: 'player', match: /Defensive Rookie of the Year/i },
+  { id: 'coy', name: 'Coach of the Year', abbreviation: 'COY', candidateType: 'coach', match: /Coach of the Year/i },
+  { id: 'cpoy', name: 'Comeback Player of the Year', abbreviation: 'CPOY', candidateType: 'player', match: /Comeback Player of the Year/i },
+];
+
+export function adaptPolymarketAwards(events, teams, season) {
+  if (!Array.isArray(events) || !events.length) {
+    return unavailable(`Polymarket ${season}: no events returned.`);
+  }
+  const categories = [];
+  for (const def of POLYMARKET_AWARDS) {
+    const event = events.find(e => def.match.test(e.title));
+    if (!event || !Array.isArray(event.markets) || !event.markets.length) continue;
+    const candidates = [];
+    for (const m of event.markets) {
+      const name = (m.groupItemTitle || '').trim();
+      if (!name) continue;
+      let p = 0;
+      try {
+        const prices = JSON.parse(m.outcomePrices);
+        p = parseFloat(prices[0]);
+      } catch { continue; }
+      if (!Number.isFinite(p) || p <= 0) continue;
+      const impliedProbability = Math.round(p * 10000) / 100;
+      const americanOdds = p < 0.5 ? Math.round((1 - p) / p * 100) : -Math.round(p / (1 - p) * 100);
+      candidates.push({
+        id: name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        name,
+        teamId: null,
+        americanOdds,
+        impliedProbability,
+      });
+    }
+    candidates.sort((a, b) => b.impliedProbability - a.impliedProbability);
+    if (candidates.length) {
+      categories.push({
+        id: def.id,
+        name: def.name,
+        abbreviation: def.abbreviation,
+        candidateType: def.candidateType,
+        probabilityBasis: 'raw-implied',
+        listedCount: candidates.length,
+        note: `Polymarket real-time market prices for ${def.name}.`,
+        candidates: candidates.slice(0, 50),
+      });
+    }
+  }
+  if (!categories.length) {
+    return unavailable(`Polymarket ${season}: no award categories found.`);
+  }
+  return {
+    status: 'ok',
+    note: `Polymarket prediction market contracts for season ${season}. Raw implied probabilities from contract prices; bookmaker margin/overround not applicable.`,
+    categories,
+  };
+}
+
+export async function fetchPolymarket(season, teams, get) {
+  try {
+    const events = await get(URLS.polymarket);
+    return adaptPolymarket(events, teams, season);
+  } catch (error) {
+    return unavailable(`Polymarket unavailable: ${error.message}.`);
+  }
+}
+
+export async function fetchPolymarketAwards(season, teams, get, eventsPromise = null) {
+  try {
+    const events = eventsPromise ? await eventsPromise : await get(URLS.polymarket);
+    return adaptPolymarketAwards(events, teams, season);
+  } catch (error) {
+    return unavailable(`Polymarket awards unavailable: ${error.message}.`);
+  }
+}

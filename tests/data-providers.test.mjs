@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { TEAMS } from '../scripts/teams.mjs';
-import { SOURCES, adaptFpi, adaptFutures, americanToPercent, fetchLeaders, isolatedSource } from '../scripts/providers.mjs';
+import { SOURCES, adaptFpi, adaptFutures, adaptPolymarket, adaptPolymarketAwards, americanToPercent, fetchLeaders, isolatedSource } from '../scripts/providers.mjs';
 import { safeReference, createHttpClient, mapLimit } from '../scripts/http.mjs';
 
 const ref = (kind, id, year = 2026) =>
@@ -208,4 +208,76 @@ test('registered sources include Bovada and Polymarket and HTTP client allows th
   assert.equal(polymarket.kind, 'market');
   assert.deepEqual(polymarket.metrics, ['superBowl', 'conference', 'division']);
   assert.equal(polymarket.awards, true);
+});
+
+test('adaptPolymarket parses championship, conference, and division markets correctly', () => {
+  const events = [
+    {
+      title: 'Pro Football: 2027 Champion',
+      slug: 'pro-football-2027-champion-2026',
+      markets: TEAMS.map((team, i) => ({
+        groupItemTitle: team.name,
+        outcomePrices: JSON.stringify([(1 / 32).toFixed(4), (31 / 32).toFixed(4)]),
+        active: true,
+      })),
+    },
+    {
+      title: 'Pro Football: 2027 AFC Champion ',
+      slug: 'pro-football-2027-afc-champion',
+      markets: TEAMS.filter(t => t.conference === 'AFC').map(team => ({
+        groupItemTitle: team.name,
+        outcomePrices: JSON.stringify([(1 / 16).toFixed(4), (15 / 16).toFixed(4)]),
+        active: true,
+      })),
+    },
+    {
+      title: 'Pro Football: 2027 NFC Champion ',
+      slug: 'pro-football-2027-nfc-champion',
+      markets: TEAMS.filter(t => t.conference === 'NFC').map(team => ({
+        groupItemTitle: team.name,
+        outcomePrices: JSON.stringify([(1 / 16).toFixed(4), (15 / 16).toFixed(4)]),
+        active: true,
+      })),
+    },
+    {
+      title: 'Pro Football: AFC East Champion',
+      slug: 'pro-football-afc-east-champion',
+      markets: TEAMS.filter(t => t.conference === 'AFC' && t.division === 'East').map(team => ({
+        groupItemTitle: team.name,
+        outcomePrices: JSON.stringify([(0.25).toFixed(4), (0.75).toFixed(4)]),
+        active: true,
+      })),
+    },
+  ];
+
+  const result = adaptPolymarket(events, TEAMS, 2026);
+  assert.equal(result.status, 'ok');
+  assert.equal(typeof result.projections[TEAMS[0].id].superBowl, 'number');
+  assert.equal(typeof result.projections[TEAMS[0].id].conference, 'number');
+  // AFC East team has division
+  const bills = TEAMS.find(t => t.name === 'Buffalo Bills');
+  assert.equal(typeof result.projections[bills.id].division, 'number');
+});
+
+test('adaptPolymarketAwards parses award markets and calculates american odds', () => {
+  const events = [
+    {
+      title: 'Pro Football: 2026 MVP Winner',
+      markets: [
+        { groupItemTitle: 'Josh Allen', outcomePrices: JSON.stringify(['0.15', '0.85']) },
+        { groupItemTitle: 'Drake Maye', outcomePrices: JSON.stringify(['0.10', '0.90']) },
+      ],
+    },
+  ];
+
+  const result = adaptPolymarketAwards(events, TEAMS, 2026);
+  assert.equal(result.status, 'ok');
+  assert.equal(result.categories.length, 1);
+  const mvp = result.categories[0];
+  assert.equal(mvp.id, 'mvp');
+  assert.equal(mvp.candidates.length, 2);
+  const maye = mvp.candidates.find(c => c.name === 'Drake Maye');
+  assert.ok(maye);
+  assert.equal(maye.impliedProbability, 10);
+  assert.equal(maye.americanOdds, 900);
 });
