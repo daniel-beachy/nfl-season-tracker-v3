@@ -80,3 +80,44 @@ test('portfolio navigation is available in the desktop rail and mobile footer', 
   await expect(footerLink).toHaveAttribute('href', 'https://daniel-beachy.github.io/');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 });
+
+test('Bovada and Polymarket sources are selectable in projections and awards with accurate market coverage', async ({ page }) => {
+  await page.goto('/');
+  // 1. Projections tab: check all 4 sources
+  const projSource = page.getByLabel('Projection source');
+  await expect(projSource).toBeVisible();
+  await expect(projSource.locator('option')).toHaveCount(4);
+
+  // Switch to Bovada
+  await projSource.selectOption('bovada');
+  await expect(page.getByText('Bovada · market-implied odds')).toBeVisible();
+
+  // Bovada has playoffs and win totals
+  await page.getByRole('button', { name: 'Playoffs', exact: true }).click();
+  await expect(page.locator('.chart-card')).toHaveCount(2);
+
+  await page.getByRole('button', { name: 'Win totals', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Wins on the horizon' })).toBeVisible();
+
+  // Switch to Polymarket
+  await projSource.selectOption('polymarket');
+  await expect(page.getByText('Polymarket · market-implied odds')).toBeVisible();
+  await page.getByRole('button', { name: 'Super Bowl', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Road to the Lombardi' })).toBeVisible();
+
+  // 2. Awards tab: check all 3 sources (DraftKings, Bovada, Polymarket)
+  await page.getByRole('tab', { name: 'Awards', exact: true }).click();
+  const awardsSource = page.getByLabel('Awards source');
+  await expect(awardsSource).toBeVisible();
+  await expect(awardsSource.locator('option')).toHaveCount(3);
+
+  // Switch to Bovada awards
+  await awardsSource.selectOption('bovada');
+  await expect(page.getByText(/Bovada ·/)).toBeVisible();
+  await expect(page.locator('.award-candidate')).toHaveCount(10);
+
+  // Switch to Polymarket awards
+  await awardsSource.selectOption('polymarket');
+  await expect(page.getByText(/Polymarket ·/)).toBeVisible();
+  await expect(page.locator('.award-candidate')).toHaveCount(10);
+});

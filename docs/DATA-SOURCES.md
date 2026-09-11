@@ -124,13 +124,26 @@ The earliest validated season-type-2 opening-week event determines `startsAt`; c
 
 The last Tuesday before kickoff is a **Preseason** baseline, even if it is not the first Tuesday of September. January-September day-one snapshots use month labels; their absence is not backfilled with current values. January-August snapshots for the new calendar year can precede schedule publication: only in that pre-September window is an explicitly approximate **first Thursday after Labor Day** kickoff used. That fallback never establishes completion of a regular-season week. The Pro Bowl bucket is excluded, and the first Tuesday after the Super Bowl still captures the completed final even if ESPN has moved into offseason.
 
-### Polymarket research
+### Bovada — `bovada`, `kind: "market"`
 
-- Public API documentation: <https://docs.polymarket.com/>
-- Gamma endpoint attempted: <https://gamma-api.polymarket.com/events?slug=super-bowl-champion-2027>
-- Result on September 8, 2026: successful HTTP request, empty JSON array.
+- JSON endpoint: `https://www.bovada.lv/services/sports/event/v2/events/A/description/football`
+- Attribution: `https://www.bovada.lv/sports/football/nfl`
+- Capabilities: `superBowl`, `conference`, `division`, `playoffs`, `wins`; plus `awards: true`.
+- Keyless, open public JSON feed requiring no API keys, accounts, or private tokens.
+- **Playoff odds**: Two-way "To Make the Playoffs" (Yes / No) American moneyline markets for all 32 teams. Probabilities are de-vigged between Yes and No: `yesProb / (yesProb + noProb)`.
+- **Regular season win totals**: Over/under win total lines extracted from team season prop markets (e.g. `Over 9.5`). Teams with games in progress or completed may have lines pulled by the book; missing teams remain `null` per the data contract.
+- **Futures & divisions**: All 32 teams for Super Bowl winner, 16 AFC teams, 16 NFC teams, and all 4 teams in each of the 8 divisions. Complete groups are de-vigged to 100%.
+- **Award futures**: 7 major award markets (`mvp`, `opoy`, `dpoy`, `oroy`, `droy`, `coy`, `cpoy`). Candidate American odds and raw implied probabilities are preserved without artificial normalization.
 
-There was no need to assume another slug, use private keys, purchase data, bypass access controls, or present unsupported Gamma values after the ESPN-syndicated sportsbook endpoint succeeded. No Gamma call is made on routine capture runs.
+### Polymarket — `polymarket`, `kind: "market"`
+
+- JSON endpoint: `https://gamma-api.polymarket.com/events?tag_slug=nfl&closed=false&limit=100`
+- Attribution: `https://polymarket.com/sports/nfl`
+- Capabilities: `superBowl`, `conference`, `division`; plus `awards: true`.
+- Decentralized prediction market running on Polygon. Probabilities are derived directly from on-chain order book token prices (`outcomePrices`), representing raw crowd-implied probability without traditional bookmaker vig/margin.
+- **Futures & divisions**: All 32 teams for Super Bowl champion, AFC champion, NFC champion, and all 8 divisions. Complete markets are normalized to 100%.
+- **Playoffs & win totals**: Polymarket does not offer full 32-team season playoff props or win total over/unders. In accordance with design principles, these markets remain unsupported and left blank.
+- **Award futures**: 7 major award markets (`mvp`, `opoy`, `dpoy`, `oroy`, `droy`, `coy`, `cpoy`). Raw contract prices are mapped to candidate probabilities and American odds equivalents.
 
 ## JSON contract and UI integration
 

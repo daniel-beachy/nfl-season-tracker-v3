@@ -35,6 +35,7 @@ export const SOURCES = [
 ];
 
 const unavailable = note => ({ status: 'unavailable', note, projections: {} });
+const unavailableAwards = note => ({ status: 'unavailable', note, categories: [] });
 const validNumber = value => typeof value === 'number' && Number.isFinite(value);
 const metricNumber = (value, metric) => validNumber(value) && value >= 0 && value <= (metric === 'wins' ? 17 : 100) ? value : null;
 const isoDate = value => typeof value === 'string' && Number.isFinite(Date.parse(value)) ? new Date(value).toISOString() : undefined;
@@ -338,13 +339,14 @@ const POLYMARKET_AWARDS = [
 
 export function adaptPolymarketAwards(events, teams, season) {
   if (!Array.isArray(events) || !events.length) {
-    return unavailable(`Polymarket ${season}: no events returned.`);
+    return unavailableAwards(`Polymarket ${season}: no events returned.`);
   }
   const categories = [];
   for (const def of POLYMARKET_AWARDS) {
     const event = events.find(e => def.match.test(e.title));
     if (!event || !Array.isArray(event.markets) || !event.markets.length) continue;
     const candidates = [];
+    const seen = new Set();
     for (const m of event.markets) {
       const name = (m.groupItemTitle || '').trim();
       if (!name) continue;
@@ -353,11 +355,18 @@ export function adaptPolymarketAwards(events, teams, season) {
         const prices = JSON.parse(m.outcomePrices);
         p = parseFloat(prices[0]);
       } catch { continue; }
-      if (!Number.isFinite(p) || p <= 0) continue;
-      const impliedProbability = Math.round(p * 10000) / 100;
-      const americanOdds = p < 0.5 ? Math.round((1 - p) / p * 100) : -Math.round(p / (1 - p) * 100);
+      if (!Number.isFinite(p) || p <= 0 || p >= 1) continue;
+      const id = name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      if (seen.has(id)) continue;
+      seen.add(id);
+
+      const rawOdds = p < 0.5 ? (1 - p) / p * 100 : -p / (1 - p) * 100;
+      let americanOdds = Math.round(rawOdds);
+      if (Math.abs(americanOdds) < 100) americanOdds = americanOdds >= 0 ? 100 : -100;
+      const impliedProbability = americanOdds > 0 ? 10000 / (americanOdds + 100) : -americanOdds / (-americanOdds + 100) * 100;
+
       candidates.push({
-        id: name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        id,
         name,
         teamId: null,
         americanOdds,
@@ -379,7 +388,7 @@ export function adaptPolymarketAwards(events, teams, season) {
     }
   }
   if (!categories.length) {
-    return unavailable(`Polymarket ${season}: no award categories found.`);
+    return unavailableAwards(`Polymarket ${season}: no award categories found.`);
   }
   return {
     status: 'ok',
@@ -388,9 +397,9 @@ export function adaptPolymarketAwards(events, teams, season) {
   };
 }
 
-export async function fetchPolymarket(season, teams, get) {
+export async function fetchPolymarket(season, teams, get, eventsPromise = null) {
   try {
-    const events = await get(URLS.polymarket);
+    const events = eventsPromise ? await eventsPromise : await get(URLS.polymarket);
     return adaptPolymarket(events, teams, season);
   } catch (error) {
     return unavailable(`Polymarket unavailable: ${error.message}.`);
@@ -402,7 +411,7 @@ export async function fetchPolymarketAwards(season, teams, get, eventsPromise = 
     const events = eventsPromise ? await eventsPromise : await get(URLS.polymarket);
     return adaptPolymarketAwards(events, teams, season);
   } catch (error) {
-    return unavailable(`Polymarket awards unavailable: ${error.message}.`);
+    return unavailableAwards(`Polymarket awards unavailable: ${error.message}.`);
   }
 }
 
@@ -426,6 +435,14 @@ export function adaptBovada(groups, teams, season) {
   };
 
   const getOutcomes = group => {
+    for (const event of group?.events ?? []) {
+      for (const dg of event?.displayGroups ?? []) {
+        for (const m of dg?.markets ?? []) {
+          const matchCount = (m.outcomes ?? []).filter(o => byName.has((o.description || '').trim().toLowerCase())).length;
+          if (matchCount >= 4) return m.outcomes;
+        }
+      }
+    }
     return group?.events?.[0]?.displayGroups?.[0]?.markets?.[0]?.outcomes ?? [];
   };
 
@@ -562,7 +579,7 @@ const BOVADA_AWARDS = [
 
 export function adaptBovadaAwards(groups, teams, season) {
   if (!Array.isArray(groups) || !groups.length) {
-    return unavailable(`Bovada ${season}: no events returned.`);
+    return unavailableAwards(`Bovada ${season}: no events returned.`);
   }
   const byAbbr = new Map(teams.map(t => [t.abbreviation.toLowerCase(), t]));
   const categories = [];
@@ -574,6 +591,7 @@ export function adaptBovadaAwards(groups, teams, season) {
     if (!outcomes.length) continue;
 
     const candidates = [];
+    const seen = new Set();
     for (const o of outcomes) {
       const rawDesc = (o.description || '').trim();
       if (!rawDesc) continue;
@@ -587,13 +605,16 @@ export function adaptBovadaAwards(groups, teams, season) {
       const implied = americanToPercent(american);
       if (implied === null) continue;
       const americanNum = /^(EVEN|EVENS)$/i.test(String(american).trim()) ? 100 : Number(american);
+      const id = name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      if (seen.has(id)) continue;
+      seen.add(id);
 
       candidates.push({
-        id: name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        id,
         name,
         teamId,
         americanOdds: americanNum,
-        impliedProbability: Math.round(implied * 100) / 100,
+        impliedProbability: implied,
       });
     }
 
@@ -613,7 +634,7 @@ export function adaptBovadaAwards(groups, teams, season) {
   }
 
   if (!categories.length) {
-    return unavailable(`Bovada ${season}: no award categories found.`);
+    return unavailableAwards(`Bovada ${season}: no award categories found.`);
   }
 
   return {
@@ -623,9 +644,9 @@ export function adaptBovadaAwards(groups, teams, season) {
   };
 }
 
-export async function fetchBovada(season, teams, get) {
+export async function fetchBovada(season, teams, get, payloadPromise = null) {
   try {
-    const payload = await get(URLS.bovada);
+    const payload = payloadPromise ? await payloadPromise : await get(URLS.bovada);
     return adaptBovada(payload, teams, season);
   } catch (error) {
     return unavailable(`Bovada unavailable: ${error.message}.`);
@@ -637,6 +658,6 @@ export async function fetchBovadaAwards(season, teams, get, payloadPromise = nul
     const payload = payloadPromise ? await payloadPromise : await get(URLS.bovada);
     return adaptBovadaAwards(payload, teams, season);
   } catch (error) {
-    return unavailable(`Bovada awards unavailable: ${error.message}.`);
+    return unavailableAwards(`Bovada awards unavailable: ${error.message}.`);
   }
 }

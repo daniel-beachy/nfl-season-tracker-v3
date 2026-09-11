@@ -33,7 +33,7 @@ export async function mapLimit(values, limit, fn) {
   return result;
 }
 
-export function createHttpClient({ fetchImpl = fetch, timeoutMs = 15000, maxBytes = 8 * 1024 * 1024 } = {}) {
+export function createHttpClient({ fetchImpl = fetch, timeoutMs = 15000, maxBytes = 16 * 1024 * 1024 } = {}) {
   const cache = new Map();
   return function getJson(input) {
     const url = safeReference(input);
