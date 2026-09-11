@@ -405,3 +405,238 @@ export async function fetchPolymarketAwards(season, teams, get, eventsPromise = 
     return unavailable(`Polymarket awards unavailable: ${error.message}.`);
   }
 }
+
+export function adaptBovada(groups, teams, season) {
+  if (!Array.isArray(groups) || !groups.length) {
+    return unavailable(`Bovada ${season}: no events returned.`);
+  }
+  const projections = {};
+  for (const team of teams) {
+    projections[team.id] = { superBowl: null, conference: null, division: null, playoffs: null, wins: null };
+  }
+  const byName = new Map(teams.map(t => [t.name.toLowerCase(), t]));
+
+  const findPathGroup = (name, parentName = null) => {
+    return groups.find(g => {
+      const descriptions = (g.path ?? []).map(p => (p.description || '').toLowerCase());
+      const hasName = descriptions.some(d => d.includes(name.toLowerCase()));
+      const hasParent = !parentName || descriptions.some(d => d.includes(parentName.toLowerCase()));
+      return hasName && hasParent;
+    });
+  };
+
+  const getOutcomes = group => {
+    return group?.events?.[0]?.displayGroups?.[0]?.markets?.[0]?.outcomes ?? [];
+  };
+
+  // 1. Super Bowl Winner
+  const sbGroup = findPathGroup('Super Bowl Winner', 'NFL Futures');
+  if (sbGroup) {
+    const outcomes = getOutcomes(sbGroup);
+    const map = new Map();
+    for (const o of outcomes) {
+      const team = byName.get((o.description || '').trim().toLowerCase());
+      const value = americanToPercent(o.price?.american);
+      if (team && value !== null) map.set(team.id, value);
+    }
+    if (map.size === teams.length) {
+      const normalized = normalizePercentages(teams.map(t => map.get(t.id) ?? 0));
+      teams.forEach((t, i) => { projections[t.id].superBowl = normalized[i]; });
+    } else {
+      for (const [id, val] of map) projections[id].superBowl = val;
+    }
+  }
+
+  // 2. Conferences
+  for (const conf of ['AFC', 'NFC']) {
+    const confGroup = findPathGroup(`${conf} Championship`, 'NFL Futures');
+    if (confGroup) {
+      const outcomes = getOutcomes(confGroup);
+      const map = new Map();
+      for (const o of outcomes) {
+        const team = byName.get((o.description || '').trim().toLowerCase());
+        const value = americanToPercent(o.price?.american);
+        if (team && value !== null) map.set(team.id, value);
+      }
+      const confTeams = teams.filter(t => t.conference === conf);
+      if (confTeams.every(t => map.has(t.id))) {
+        const normalized = normalizePercentages(confTeams.map(t => map.get(t.id) ?? 0));
+        confTeams.forEach((t, i) => { projections[t.id].conference = normalized[i]; });
+      } else {
+        for (const [id, val] of map) projections[id].conference = val;
+      }
+    }
+  }
+
+  // 3. Divisions
+  for (const conf of ['AFC', 'NFC']) {
+    for (const div of ['East', 'North', 'South', 'West']) {
+      const divGroup = findPathGroup(`${conf} ${div}`, 'NFL Futures');
+      if (divGroup) {
+        const outcomes = getOutcomes(divGroup);
+        const map = new Map();
+        for (const o of outcomes) {
+          const team = byName.get((o.description || '').trim().toLowerCase());
+          const value = americanToPercent(o.price?.american);
+          if (team && value !== null) map.set(team.id, value);
+        }
+        const divTeams = teams.filter(t => t.conference === conf && t.division === div);
+        if (divTeams.every(t => map.has(t.id))) {
+          const normalized = normalizePercentages(divTeams.map(t => map.get(t.id) ?? 0));
+          divTeams.forEach((t, i) => { projections[t.id].division = normalized[i]; });
+        } else {
+          for (const [id, val] of map) projections[id].division = val;
+        }
+      }
+    }
+  }
+
+  // 4. To Make the Playoffs (Yes/No)
+  const playoffGroup = findPathGroup('To Make the Playoffs', 'NFL Season Props');
+  if (playoffGroup) {
+    const markets = playoffGroup?.events?.[0]?.displayGroups?.[0]?.markets ?? [];
+    for (const m of markets) {
+      const teamName = (m.description || '').replace(/\s+to make the playoffs/i, '').trim().toLowerCase();
+      const team = byName.get(teamName);
+      if (!team) continue;
+      const yesOutcome = m.outcomes?.find(o => /^yes$/i.test((o.description || '').trim()));
+      const noOutcome = m.outcomes?.find(o => /^no$/i.test((o.description || '').trim()));
+      const yesOdds = americanToPercent(yesOutcome?.price?.american);
+      const noOdds = americanToPercent(noOutcome?.price?.american);
+      if (yesOdds !== null) {
+        if (noOdds !== null && yesOdds + noOdds > 0) {
+          projections[team.id].playoffs = Math.round((yesOdds / (yesOdds + noOdds)) * 10000) / 100;
+        } else {
+          projections[team.id].playoffs = Math.round(yesOdds * 100) / 100;
+        }
+      }
+    }
+  }
+
+  // 5. NFL Regular Season Wins (Over/Under)
+  const winGroups = groups.filter(g => (g.path ?? []).some(p => /NFL Regular Season Wins/i.test(p.description)));
+  for (const g of winGroups) {
+    const teamDesc = (g.path?.[0]?.description || '').trim().toLowerCase();
+    const team = byName.get(teamDesc);
+    if (!team) continue;
+    const market = g.events?.[0]?.displayGroups?.[0]?.markets?.[0];
+    const match = (market?.description || '').match(/\((\d+(?:\.\d+)?)\)/);
+    if (match) {
+      const line = parseFloat(match[1]);
+      if (Number.isFinite(line) && line >= 0 && line <= 17) {
+        projections[team.id].wins = line;
+      }
+    } else {
+      const over = market?.outcomes?.find(o => /over\s+(\d+(?:\.\d+)?)/i.test(o.description));
+      const lineMatch = over?.description?.match(/over\s+(\d+(?:\.\d+)?)/i);
+      if (lineMatch) {
+        const line = parseFloat(lineMatch[1]);
+        if (Number.isFinite(line) && line >= 0 && line <= 17) {
+          projections[team.id].wins = line;
+        }
+      }
+    }
+  }
+
+  const hasAny = Object.values(projections).some(p => ['superBowl', 'conference', 'division', 'playoffs', 'wins'].some(m => p[m] !== null));
+  if (!hasAny) {
+    return unavailable(`Bovada ${season}: no matching markets found.`);
+  }
+
+  return {
+    status: 'ok',
+    note: `Bovada sportsbook futures and season props for season ${season}. Championship, conference, and division markets de-vigged to 100%. Playoff chances use two-way Yes/No de-vigged implied probabilities; win totals reflect regular-season over/under lines.`,
+    projections,
+  };
+}
+
+const BOVADA_AWARDS = [
+  { id: 'mvp', name: 'Most Valuable Player', abbreviation: 'MVP', candidateType: 'player', match: /Regular Season MVP/i },
+  { id: 'opoy', name: 'Offensive Player of the Year', abbreviation: 'OPOY', candidateType: 'player', match: /Offensive Player of the Year/i },
+  { id: 'dpoy', name: 'Defensive Player of the Year', abbreviation: 'DPOY', candidateType: 'player', match: /Defensive Player of the Year/i },
+  { id: 'oroy', name: 'Offensive Rookie of the Year', abbreviation: 'OROY', candidateType: 'player', match: /Offensive Rookie of the Year/i },
+  { id: 'droy', name: 'Defensive Rookie of the Year', abbreviation: 'DROY', candidateType: 'player', match: /Defensive Rookie of the Year/i },
+  { id: 'coy', name: 'Coach of the Year', abbreviation: 'COY', candidateType: 'coach', match: /Coach of the Year/i },
+  { id: 'cpoy', name: 'Comeback Player of the Year', abbreviation: 'CPOY', candidateType: 'player', match: /Comeback Player of the Year/i },
+];
+
+export function adaptBovadaAwards(groups, teams, season) {
+  if (!Array.isArray(groups) || !groups.length) {
+    return unavailable(`Bovada ${season}: no events returned.`);
+  }
+  const byAbbr = new Map(teams.map(t => [t.abbreviation.toLowerCase(), t]));
+  const categories = [];
+
+  for (const def of BOVADA_AWARDS) {
+    const group = groups.find(g => (g.path ?? []).some(p => def.match.test(p.description)));
+    if (!group) continue;
+    const outcomes = group.events?.[0]?.displayGroups?.[0]?.markets?.[0]?.outcomes ?? [];
+    if (!outcomes.length) continue;
+
+    const candidates = [];
+    for (const o of outcomes) {
+      const rawDesc = (o.description || '').trim();
+      if (!rawDesc) continue;
+      const match = rawDesc.match(/^(.*?)(?:\s*\(([A-Z]{2,3})\))?$/);
+      const name = (match?.[1] || rawDesc).trim();
+      const teamAbbr = (match?.[2] || '').toLowerCase();
+      const team = byAbbr.get(teamAbbr);
+      const teamId = def.candidateType === 'coach' ? null : (team?.id ?? null);
+
+      const american = o.price?.american;
+      const implied = americanToPercent(american);
+      if (implied === null) continue;
+      const americanNum = /^(EVEN|EVENS)$/i.test(String(american).trim()) ? 100 : Number(american);
+
+      candidates.push({
+        id: name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        name,
+        teamId,
+        americanOdds: americanNum,
+        impliedProbability: Math.round(implied * 100) / 100,
+      });
+    }
+
+    candidates.sort((a, b) => b.impliedProbability - a.impliedProbability);
+    if (candidates.length) {
+      categories.push({
+        id: def.id,
+        name: def.name,
+        abbreviation: def.abbreviation,
+        candidateType: def.candidateType,
+        probabilityBasis: 'raw-implied',
+        listedCount: candidates.length,
+        note: `Bovada American odds for ${def.name}.`,
+        candidates: candidates.slice(0, 50),
+      });
+    }
+  }
+
+  if (!categories.length) {
+    return unavailable(`Bovada ${season}: no award categories found.`);
+  }
+
+  return {
+    status: 'ok',
+    note: `Bovada sportsbook award futures for season ${season}. Raw American odds and implied probabilities.`,
+    categories,
+  };
+}
+
+export async function fetchBovada(season, teams, get) {
+  try {
+    const payload = await get(URLS.bovada);
+    return adaptBovada(payload, teams, season);
+  } catch (error) {
+    return unavailable(`Bovada unavailable: ${error.message}.`);
+  }
+}
+
+export async function fetchBovadaAwards(season, teams, get, payloadPromise = null) {
+  try {
+    const payload = payloadPromise ? await payloadPromise : await get(URLS.bovada);
+    return adaptBovadaAwards(payload, teams, season);
+  } catch (error) {
+    return unavailable(`Bovada awards unavailable: ${error.message}.`);
+  }
+}

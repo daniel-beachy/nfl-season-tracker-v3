@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { TEAMS } from '../scripts/teams.mjs';
-import { SOURCES, adaptFpi, adaptFutures, adaptPolymarket, adaptPolymarketAwards, americanToPercent, fetchLeaders, isolatedSource } from '../scripts/providers.mjs';
+import { SOURCES, adaptBovada, adaptBovadaAwards, adaptFpi, adaptFutures, adaptPolymarket, adaptPolymarketAwards, americanToPercent, fetchLeaders, isolatedSource } from '../scripts/providers.mjs';
 import { safeReference, createHttpClient, mapLimit } from '../scripts/http.mjs';
 
 const ref = (kind, id, year = 2026) =>
@@ -280,4 +280,90 @@ test('adaptPolymarketAwards parses award markets and calculates american odds', 
   assert.ok(maye);
   assert.equal(maye.impliedProbability, 10);
   assert.equal(maye.americanOdds, 900);
+});
+
+test('adaptBovada parses Super Bowl, division, playoffs, and win totals correctly', () => {
+  const steelers = TEAMS.find(t => t.name === 'Pittsburgh Steelers');
+  const bills = TEAMS.find(t => t.name === 'Buffalo Bills');
+
+  const events = [
+    {
+      path: [{ description: 'Super Bowl Winner' }, { description: 'NFL Futures' }, { description: 'Football' }],
+      events: [{
+        displayGroups: [{
+          markets: [{
+            outcomes: TEAMS.map(t => ({ description: t.name, price: { american: '+2500' } })),
+          }],
+        }],
+      }],
+    },
+    {
+      path: [{ description: 'To Make the Playoffs' }, { description: 'NFL Season Props' }, { description: 'Football' }],
+      events: [{
+        displayGroups: [{
+          markets: TEAMS.map(t => ({
+            description: `${t.name} To Make the Playoffs`,
+            outcomes: [
+              { description: 'Yes', price: { american: t.name === 'Buffalo Bills' ? '-450' : '+150' } },
+              { description: 'No', price: { american: t.name === 'Buffalo Bills' ? '+320' : '-190' } },
+            ],
+          })),
+        }],
+      }],
+    },
+    {
+      path: [{ description: 'Pittsburgh Steelers' }, { description: 'AFC North' }, { description: 'NFL Regular Season Wins' }, { description: 'Football' }],
+      events: [{
+        displayGroups: [{
+          markets: [{
+            description: 'Steelers Regular Season Wins (7.5)',
+            outcomes: [
+              { description: 'Over 7.5', price: { american: '-165' } },
+              { description: 'Under 7.5', price: { american: '+140' } },
+            ],
+          }],
+        }],
+      }],
+    },
+  ];
+
+  const result = adaptBovada(events, TEAMS, 2026);
+  assert.equal(result.status, 'ok');
+  assert.equal(typeof result.projections[bills.id].superBowl, 'number');
+  // Playoffs metric parsed
+  assert.ok(result.projections[bills.id].playoffs > 70);
+  assert.ok(result.projections[steelers.id].playoffs < 50);
+  // Win totals metric parsed
+  assert.equal(result.projections[steelers.id].wins, 7.5);
+  // Missing win total for Bills stays null
+  assert.equal(result.projections[bills.id].wins, null);
+});
+
+test('adaptBovadaAwards parses award markets with player and team info', () => {
+  const events = [
+    {
+      path: [{ description: 'Regular Season MVP' }, { description: 'NFL Awards' }, { description: 'Football' }],
+      events: [{
+        displayGroups: [{
+          markets: [{
+            outcomes: [
+              { description: 'Josh Allen (BUF)', price: { american: '+650' } },
+              { description: 'Drake Maye (NE)', price: { american: '+1800' } },
+            ],
+          }],
+        }],
+      }],
+    },
+  ];
+
+  const result = adaptBovadaAwards(events, TEAMS, 2026);
+  assert.equal(result.status, 'ok');
+  assert.equal(result.categories.length, 1);
+  const mvp = result.categories[0];
+  assert.equal(mvp.id, 'mvp');
+  assert.equal(mvp.candidates.length, 2);
+  const allen = mvp.candidates.find(c => c.name === 'Josh Allen');
+  assert.ok(allen);
+  assert.equal(allen.teamId, '2'); // BUF is 2
+  assert.equal(allen.americanOdds, 650);
 });
