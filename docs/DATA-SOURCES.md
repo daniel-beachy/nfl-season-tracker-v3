@@ -86,6 +86,31 @@ The futures endpoint supplied **no verified odds observation timestamp**. `obser
 - Before kickoff, status is `not-started`. After kickoff, failure/no valid statistics is `unavailable`. Valid partial data is `ok` with a note.
 - After the regular season, only the `types/2` endpoint is queried. Totals therefore do not add postseason statistics, although ESPN may still make official corrections to regular-season totals.
 
+### Award futures — added September 10, 2026 (U.S. time)
+
+Awards share the keyless season-specific ESPN futures endpoint with the DraftKings team adapter. A single fetched/resolved futures payload is reused in each capture. Only DraftKings markets with a verified requested-season futures reference are accepted.
+
+The first live awards record was captured **2026-09-11T01:15:27.503Z**, after regular-season kickoff. It is a genuine opening-week observation, **not a historical preseason estimate**. The September 8 snapshot and all 2025 mocked checkpoints remain unchanged. Future scheduled/manual captures append awards under the same weekly/monthly cadence.
+
+| Award | Stable ID | Captured / listed candidates in first capture |
+| --- | --- | --- |
+| Most Valuable Player | `mvp` | 50 / 102 |
+| Offensive Player of the Year | `opoy` | 50 / 108 |
+| Defensive Player of the Year | `dpoy` | 50 / 102 |
+| Offensive Rookie of the Year | `oroy` | 42 / 42 |
+| Defensive Rookie of the Year | `droy` | 50 / 50 |
+| Coach of the Year | `coy` | 12 / 12 |
+| Comeback Player of the Year | `cpoy` | 41 / 41 |
+| Protector of the Year | `protector` | 50 / 78 |
+
+- Categories preserve American odds as numeric `americanOdds`, with `EVEN` represented by `+100`. `impliedProbability` uses the American-odds formulas above **without normalization**. All award categories declare `probabilityBasis: "raw-implied"`. Even a fully resolved listed field need not represent every possible candidate.
+- Up to the strongest **50 valid quotes per award** are resolved, with a single **six-worker** pool across all categories and a shared candidate-reference cache. Capture notes disclose truncation, invalid/duplicate quotes, unresolved candidates, and missing markets. The dashboard plots the latest top ten and can show all captured candidates.
+- Candidate IDs and names resolve from season-specific athlete references. Wrong-season refs, mismatched IDs, invalid odds, and failed resolutions are omitted, not replaced by placeholders or stale names.
+- ESPN models Coach of the Year entries as athlete refs, sometimes to the coach's former playing record. Those records can carry a **wrong current coaching team**. Coach team IDs are therefore null and displayed as unverified; former team colors are not used. Missing/inactive player team metadata also remains null.
+- There is no verified odds-update timestamp. Capture time is always the actual collection time, not a claim about the bookmaker's last update.
+- Optional `Snapshot.awards` maps source IDs to `{status, note, categories}`. Source metadata declares `awards: true`; `Source.metrics` remains exclusively for team projections. Old snapshots without the optional property still validate and show an explicit not-captured state. Unavailable captures have empty categories and explanatory notes, never forward-filled values.
+- Runtime and persistence validation enforce unique market/candidate IDs, valid named candidates, known-or-null teams, sorted rankings, consistent American/implied values, and explicit unavailable states. Another source can implement this same award contract without modifying chart logic.
+
 ### Schedule/calendar
 
 <https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=2026&seasontype=2&week=1&limit=100>

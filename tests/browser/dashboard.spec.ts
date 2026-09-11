@@ -3,10 +3,9 @@ import { test, expect } from '@playwright/test';
 test('current season is default, theme persists, and mock history is explicit', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('heading', { name: 'The season, in perspective.' })).toBeVisible();
-  const year = await page.getByLabel('Season', { exact: true }).inputValue();
   const response = await page.request.get('./data/manifest.json');
   const manifest = await response.json();
-  expect(Number(year)).toBe(manifest.currentSeason);
+  await expect(page.getByLabel('Season', { exact: true })).toHaveValue(String(manifest.currentSeason));
   await page.getByRole('button', { name: /switch to .* mode/i }).click();
   const theme = await page.locator('html').getAttribute('data-theme');
   await page.reload();

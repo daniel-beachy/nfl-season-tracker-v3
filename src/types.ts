@@ -21,6 +21,7 @@ export interface Source {
   description: string;
   url: string;
   metrics: Metric[];
+  awards?: boolean;
 }
 
 export interface SourceSnapshot {
@@ -44,6 +45,32 @@ export interface LeaderCategory {
   players: Player[];
 }
 
+export interface AwardCandidate {
+  id: string;
+  name: string;
+  teamId: string | null;
+  americanOdds: number;
+  impliedProbability: number;
+}
+
+export interface AwardCategory {
+  id: string;
+  name: string;
+  abbreviation: string;
+  candidateType: 'player' | 'coach';
+  probabilityBasis: 'raw-implied';
+  listedCount: number;
+  note: string;
+  candidates: AwardCandidate[];
+}
+
+export interface AwardSourceSnapshot {
+  status: 'ok' | 'unavailable';
+  observedAt?: string;
+  note: string;
+  categories: AwardCategory[];
+}
+
 export interface Snapshot {
   id: string;
   capturedAt: string;
@@ -52,6 +79,7 @@ export interface Snapshot {
   week: number | null;
   label: string;
   sources: Record<string, SourceSnapshot>;
+  awards?: Record<string, AwardSourceSnapshot>;
   leaders: {
     status: 'ok' | 'unavailable' | 'not-started';
     note?: string;

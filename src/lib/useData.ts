@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { Manifest, SeasonData } from '../types';
+import { isAwards } from './awards.mjs';
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -14,16 +15,20 @@ export function isManifest(value: unknown): value is Manifest {
 }
 
 export function isSeason(value: unknown): value is SeasonData {
+  if (!isRecord(value)) return false;
+  const { sources, teams } = value;
   return isRecord(value) && value.schemaVersion === 1 && typeof value.season === 'number'
     && (value.kind === 'live' || value.kind === 'mock') && typeof value.startsAt === 'string'
-    && Array.isArray(value.teams) && value.teams.length === 32
-    && value.teams.every(team => isRecord(team) && typeof team.id === 'string'
+    && Array.isArray(teams) && teams.length === 32
+    && teams.every(team => isRecord(team) && typeof team.id === 'string'
       && typeof team.name === 'string' && typeof team.color === 'string' && typeof team.alternateColor === 'string')
-    && Array.isArray(value.sources) && value.sources.every(source => isRecord(source)
+    && Array.isArray(sources) && sources.every(source => isRecord(source)
       && typeof source.id === 'string' && Array.isArray(source.metrics))
     && Array.isArray(value.snapshots) && value.snapshots.every(snapshot => isRecord(snapshot)
       && typeof snapshot.capturedAt === 'string' && isRecord(snapshot.sources)
-      && isRecord(snapshot.leaders) && Array.isArray(snapshot.leaders.categories));
+      && isRecord(snapshot.leaders) && Array.isArray(snapshot.leaders.categories)
+      && (snapshot.awards === undefined || isAwards(snapshot.awards,
+        sources.map(source => source.id), teams.map(team => team.id))));
 }
 
 export function useData<T>(path: string | null, validate: (value: unknown) => value is T) {

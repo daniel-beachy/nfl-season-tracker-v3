@@ -235,6 +235,33 @@ thead { color: var(--cp-text-soft); background: var(--cp-surface-soft); }
 .footer a:hover { color: var(--cp-accent); }
 .footer-keys svg { color: var(--cp-success); }
 .stats-section > .section-heading { margin: 15px 0 26px; }
+.awards-section > .section-heading { margin: 15px 0 24px; }
+.award-category-select { width: 270px; flex-shrink: 0; }
+.awards-market-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.award-market { border: 1px solid var(--cp-border); background: var(--cp-surface); border-radius: 12px; padding: 16px; text-align: left; min-width: 0; }
+.award-market:hover { border-color: var(--cp-accent); }
+.award-market.active { border-color: var(--cp-accent); background: var(--cp-accent-soft); }
+.award-market-label { display: flex; align-items: center; justify-content: space-between; color: var(--cp-text-soft); font-size: 10px; font-weight: 600; letter-spacing: 1px; }
+.award-market.active .award-market-label { color: var(--cp-accent); }
+.award-market > strong { display: block; margin: 13px 0 8px; font-size: 14px; font-weight: 600; }
+.award-market-quote { display: flex; align-items: center; gap: 6px; font-size: 12px; font-variant-numeric: tabular-nums; flex-wrap: wrap; }
+.award-market-quote > span:last-child { color: var(--cp-text-soft); margin-left: auto; font-size: 10px; }
+.award-provenance { display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--cp-text-soft); font-size: 10px; margin: 24px 0 14px; flex-wrap: wrap; }
+.award-provenance > span:first-child { display: flex; align-items: center; gap: 6px; }
+.awards-section .plot { margin-top: 20px; }
+.award-first-observation { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; padding: 10px 0 0; font-size: 10px; color: var(--cp-text-soft); line-height: 1.6; text-align: center; }
+.award-first-observation strong { color: var(--cp-text); font-weight: 600; }
+.award-table-key { display: flex; justify-content: space-between; font-size: 9px; letter-spacing: .5px; color: var(--cp-text-soft); margin: -5px 0 12px; }
+.award-table-key > span:last-child > span { margin-left: 6px; }
+.award-candidate .leader-total { flex-shrink: 0; }
+.award-candidate .leader-person > strong { white-space: normal; }
+.award-expand { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; margin-top: 14px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-bg-elevated); color: var(--cp-text-soft); padding: 11px; font-size: 11px; }
+.award-expand:hover { border-color: var(--cp-accent); color: var(--cp-accent); }
+.award-source-details { margin-top: 16px; border-top: 1px solid var(--cp-border); padding-top: 14px; font-size: 11px; color: var(--cp-text-soft); }
+.award-source-details summary { display: flex; align-items: center; gap: 6px; cursor: pointer; list-style: none; }
+.award-source-details summary::-webkit-details-marker { display: none; }
+.award-source-details p { margin-top: 12px; line-height: 1.8; }
+.award-source-details a { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; color: var(--cp-accent); }
 .category-select { min-width: 210px; }
 .stats-section .plot { margin-top: 25px; }
 .player-legend { display: flex; flex-wrap: wrap; gap: 14px 24px; margin-top: 20px; padding: 18px 0; border-top: 1px solid var(--cp-border); }
@@ -324,6 +351,7 @@ thead { color: var(--cp-text-soft); background: var(--cp-surface-soft); }
   .season-select { width: 170px; }
   .source-select { width: 210px; }
   .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .awards-market-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .summary-label { font-size: 9px; }
   .summary-team { font-size: 14px; }
   .summary-caption { font-size: 10px; }
@@ -359,7 +387,7 @@ thead { color: var(--cp-text-soft); background: var(--cp-surface-soft); }
   .season-banner > span { margin-left: 25px; flex-basis: calc(100% - 25px); line-height: 1.6; }
   .main-tabs { gap: 20px; }
   .main-tabs button { font-size: 12px; gap: 6px; }
-  .snapshot-status { font-size: 9px; gap: 5px; }
+  .snapshot-status { display: none; }
   .snapshot-status .status-divider, .snapshot-status > span:last-child { display: none; }
   .capture-strip { font-size: 9px; padding: 14px 0; }
   .capture-strip button { font-size: 9px; }
@@ -416,6 +444,15 @@ thead { color: var(--cp-text-soft); background: var(--cp-surface-soft); }
   .footer > div:first-child { flex-direction: column; align-items: flex-start; gap: 6px; max-width: 200px; }
   .footer-brand { font-size: 11px; }
   .stats-section > .section-heading { flex-direction: column; gap: 18px; }
+  .awards-section > .section-heading { flex-direction: column; gap: 18px; }
+  .award-category-select { width: 100%; }
+  .awards-market-grid { gap: 10px; }
+  .award-market { padding: 13px; }
+  .award-market > strong { font-size: 12px; min-height: 30px; margin-bottom: 5px; }
+  .award-market-label { font-size: 9px; }
+  .award-market-quote { font-size: 11px; }
+  .award-market-quote > span:last-child { font-size: 9px; margin-left: 0; width: 100%; padding-left: 12px; }
+  .award-provenance { font-size: 9px; gap: 7px; }
   .category-select { width: 100%; }
   .stats-empty { padding: 42px 20px; }
   .stats-empty h3, .unavailable-panel h3 { font-size: 21px; }

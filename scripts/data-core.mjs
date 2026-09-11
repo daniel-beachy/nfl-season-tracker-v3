@@ -1,6 +1,7 @@
 import { mkdir, open, readFile, readdir, rename, rm } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { randomUUID } from 'node:crypto';
+import { isAwards } from '../src/lib/awards.mjs';
 
 export const METRICS = ['superBowl', 'conference', 'division', 'playoffs', 'wins'];
 const PHASES = ['preseason', 'regular', 'postseason', 'offseason'];
@@ -124,6 +125,7 @@ export function validateSeason(data) {
   for (const source of data.sources) {
     requireValid(isText(source.id) && isText(source.name) && isText(source.description) && /^https:\/\//.test(source.url), 'source metadata');
     requireValid(['forecast', 'market'].includes(source.kind) && Array.isArray(source.metrics) && source.metrics.every(m => METRICS.includes(m)), 'source metrics');
+    requireValid(source.awards === undefined || typeof source.awards === 'boolean', 'source awards capability');
   }
   requireValid(Array.isArray(data.snapshots), 'snapshots');
   const ids = new Set();
@@ -135,6 +137,7 @@ export function validateSeason(data) {
     ids.add(id);
     requireValid(snapshot.id === id && snapshot.capturedAt >= prior, 'snapshot ID or chronological order');
     prior = snapshot.capturedAt;
+    if (snapshot.awards !== undefined) requireValid(isAwards(snapshot.awards, [...sourceIds], [...teamIds]), 'awards snapshot');
     requireValid(PHASES.includes(snapshot.phase) && isText(snapshot.label), 'snapshot phase or label');
     requireValid(snapshot.week === null || Number.isInteger(snapshot.week) && snapshot.week >= 1 && snapshot.week <= 18, 'snapshot week');
     requireValid(snapshot.sources && Object.keys(snapshot.sources).length > 0, 'snapshot sources');

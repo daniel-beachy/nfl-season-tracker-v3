@@ -18,7 +18,7 @@ export const SOURCES = [
   {
     id: 'draftkings', name: 'DraftKings via ESPN', kind: 'market',
     description: 'DraftKings sportsbook American futures odds syndicated by ESPN, independent of FPI. Complete Super Bowl, conference and division markets are proportionally de-vigged to 100%; incomplete markets retain raw implied probabilities. No playoff or win-total estimates are invented.',
-    url: 'https://www.espn.com/nfl/futures', metrics: ['superBowl', 'conference', 'division'],
+    url: 'https://www.espn.com/nfl/futures', metrics: ['superBowl', 'conference', 'division'], awards: true,
   },
 ];
 
@@ -85,7 +85,7 @@ export function americanToPercent(value) {
   return odds > 0 ? 10000 / (odds + 100) : -odds / (-odds + 100) * 100;
 }
 
-function referenceId(reference, kind, season) {
+export function referenceId(reference, kind, season) {
   if (!reference) return null;
   let url;
   try { url = new URL(safeReference(reference)); } catch { return null; }
@@ -158,14 +158,21 @@ export function adaptFutures(payload, teams, season) {
   };
 }
 
-export async function fetchFutures(season, teams, get) {
+export async function loadFutures(season, get) {
   const payload = await get(URLS.futures(season));
+  let resolutionFailures = 0;
   const items = await mapLimit((payload.items ?? []).slice(0, 100), 6, async item => {
     if (item.futures) return item;
-    try { return await get(item.$ref); } catch { return item; }
+    try { return await get(item.$ref); } catch { resolutionFailures++; return item; }
   });
-  const result = adaptFutures({ ...payload, items }, teams, season);
-  if (Number(payload.pageCount) > 1) result.note += ' Endpoint returned multiple pages; only the first 100 markets were inspected.';
+  return { ...payload, items, resolutionFailures };
+}
+
+export async function fetchFutures(season, teams, get, payloadPromise = loadFutures(season, get)) {
+  const payload = await payloadPromise;
+  const result = adaptFutures(payload, teams, season);
+  if (Number(payload.pageCount) > 1 || Number(payload.count) > 100) result.note += ' Only the first 100 markets were inspected; additional markets may be missing.';
+  if (payload.resolutionFailures) result.note += ` Partial data: ${payload.resolutionFailures} market references could not be resolved.`;
   return result;
 }
 

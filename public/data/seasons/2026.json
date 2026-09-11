@@ -382,7 +382,8 @@
         "superBowl",
         "conference",
         "division"
-      ]
+      ],
+      "awards": true
     }
   ],
   "snapshots": [
@@ -796,6 +797,3503 @@
         "status": "not-started",
         "note": "2026 regular-season leaders not started: HTTP 404 from sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2026/types/2/leaders. Preseason/postseason statistics and previous-season totals are never substituted.",
         "categories": []
+      }
+    },
+    {
+      "id": "2026-2026-09-11",
+      "capturedAt": "2026-09-11T01:15:27.503Z",
+      "season": 2026,
+      "phase": "regular",
+      "week": 1,
+      "label": "Week 1",
+      "sources": {
+        "espn-fpi": {
+          "status": "ok",
+          "observedAt": "2026-09-10T16:21:00.000Z",
+          "note": "ESPN reports season 2026. Probabilities are supplied in percent, not fractions. Conference = make Super Bowl (probmaketitlegame), not make conference championship. Complete nonzero division groups normalized to exactly 100%. Provider lastUpdated 2026-09-10T16:21:00.000Z; captured 2026-09-11T01:15:27.503Z. Season 2026 kickoff from ESPN's first regular-season event; week boundaries from ESPN calendar where available.",
+          "projections": {
+            "1": {
+              "conference": 2,
+              "division": 26.37,
+              "playoffs": 32,
+              "wins": 7.649,
+              "superBowl": 0.7000000000000001
+            },
+            "2": {
+              "conference": 20.5,
+              "division": 73.17,
+              "playoffs": 86.6,
+              "wins": 10.767,
+              "superBowl": 10.8
+            },
+            "3": {
+              "conference": 4.8,
+              "division": 17.78,
+              "playoffs": 46,
+              "wins": 9.09,
+              "superBowl": 2.3
+            },
+            "4": {
+              "conference": 9.9,
+              "division": 35.1,
+              "playoffs": 69.69999999999999,
+              "wins": 10.038,
+              "superBowl": 4.5
+            },
+            "5": {
+              "conference": 0.2,
+              "division": 1.1,
+              "playoffs": 6,
+              "wins": 5.857,
+              "superBowl": 0
+            },
+            "6": {
+              "conference": 6.9,
+              "division": 35.9,
+              "playoffs": 53.400000000000006,
+              "wins": 9.272,
+              "superBowl": 3.3000000000000003
+            },
+            "7": {
+              "conference": 5.8999999999999995,
+              "division": 23.5,
+              "playoffs": 54.400000000000006,
+              "wins": 9.21,
+              "superBowl": 2.7
+            },
+            "8": {
+              "conference": 11.1,
+              "division": 40.06,
+              "playoffs": 71.2,
+              "wins": 10.484,
+              "superBowl": 5.800000000000001
+            },
+            "9": {
+              "conference": 10.299999999999999,
+              "division": 31.87,
+              "playoffs": 63.9,
+              "wins": 9.994,
+              "superBowl": 5.1
+            },
+            "10": {
+              "conference": 0.3,
+              "division": 5.289999999999992,
+              "playoffs": 11.5,
+              "wins": 6.447,
+              "superBowl": 0.1
+            },
+            "11": {
+              "conference": 3,
+              "division": 21.18,
+              "playoffs": 39.1,
+              "wins": 8.319,
+              "superBowl": 1.2
+            },
+            "12": {
+              "conference": 11.1,
+              "division": 38.1,
+              "playoffs": 69.5,
+              "wins": 9.931,
+              "superBowl": 5.4
+            },
+            "13": {
+              "conference": 0.1,
+              "division": 1.3,
+              "playoffs": 5.800000000000001,
+              "wins": 5.852,
+              "superBowl": 0
+            },
+            "14": {
+              "conference": 26.700000000000003,
+              "division": 52.75,
+              "playoffs": 85.39999999999999,
+              "wins": 11.304,
+              "superBowl": 16.6
+            },
+            "15": {
+              "conference": 0,
+              "division": 0.5,
+              "playoffs": 1.6,
+              "wins": 4.566,
+              "superBowl": 0
+            },
+            "16": {
+              "conference": 1.7000000000000002,
+              "division": 10.289999999999992,
+              "playoffs": 30.4,
+              "wins": 8.305,
+              "superBowl": 0.7000000000000001
+            },
+            "17": {
+              "conference": 5.800000000000001,
+              "division": 24.63,
+              "playoffs": 51.7,
+              "wins": 8.86,
+              "superBowl": 2.3
+            },
+            "18": {
+              "conference": 0.8,
+              "division": 19.38,
+              "playoffs": 24.4,
+              "wins": 7.349,
+              "superBowl": 0.3
+            },
+            "19": {
+              "conference": 1,
+              "division": 11.4,
+              "playoffs": 20.9,
+              "wins": 7.57,
+              "superBowl": 0.4
+            },
+            "20": {
+              "conference": 0.1,
+              "division": 1.7000000000000028,
+              "playoffs": 5.4,
+              "wins": 5.788,
+              "superBowl": 0
+            },
+            "21": {
+              "conference": 8.4,
+              "division": 42,
+              "playoffs": 59.199999999999996,
+              "wins": 9.614,
+              "superBowl": 4.1000000000000005
+            },
+            "22": {
+              "conference": 0,
+              "division": 0.3,
+              "playoffs": 1.7000000000000002,
+              "wins": 5.105,
+              "superBowl": 0
+            },
+            "23": {
+              "conference": 2.8000000000000003,
+              "division": 13.599999999999994,
+              "playoffs": 39.300000000000004,
+              "wins": 8.474,
+              "superBowl": 1.0999999999999999
+            },
+            "24": {
+              "conference": 11.1,
+              "division": 37.1,
+              "playoffs": 68.5,
+              "wins": 9.895,
+              "superBowl": 5.4
+            },
+            "25": {
+              "conference": 11.4,
+              "division": 26.07,
+              "playoffs": 67,
+              "wins": 10.158,
+              "superBowl": 5.8999999999999995
+            },
+            "26": {
+              "conference": 9.9,
+              "division": 20.879999999999995,
+              "playoffs": 60.699999999999996,
+              "wins": 9.833,
+              "superBowl": 5.2
+            },
+            "27": {
+              "conference": 3.4000000000000004,
+              "division": 40.260000000000005,
+              "playoffs": 46.2,
+              "wins": 8.361,
+              "superBowl": 1.5
+            },
+            "28": {
+              "conference": 1.2,
+              "division": 10.700000000000003,
+              "playoffs": 20.200000000000003,
+              "wins": 7.425,
+              "superBowl": 0.5
+            },
+            "29": {
+              "conference": 0.5,
+              "division": 13.99,
+              "playoffs": 17.7,
+              "wins": 6.74,
+              "superBowl": 0.2
+            },
+            "30": {
+              "conference": 5.5,
+              "division": 32.77,
+              "playoffs": 52.1,
+              "wins": 8.948,
+              "superBowl": 2.4
+            },
+            "33": {
+              "conference": 15.8,
+              "division": 50.2,
+              "playoffs": 78.8,
+              "wins": 10.579,
+              "superBowl": 8.1
+            },
+            "34": {
+              "conference": 7.9,
+              "division": 40.76,
+              "playoffs": 60.099999999999994,
+              "wins": 9.305,
+              "superBowl": 3.6999999999999997
+            }
+          }
+        },
+        "draftkings": {
+          "status": "ok",
+          "note": "DraftKings sportsbook via ESPN, verified season 2026. Update time not supplied; capture is not observation. American-odds implied percentages; complete markets proportionally normalized to 100% (estimated de-vig, not guaranteed fair odds). Raw implied sums: Super Bowl 122.56%; conference 115.34–118.31%; division 108.13–110.91%. Overround = raw sum minus 100 percentage points. Playoff probability and expected wins unavailable. Season 2026 kickoff from ESPN's first regular-season event; week boundaries from ESPN calendar where available.",
+          "projections": {
+            "1": {
+              "superBowl": 0.62,
+              "conference": 1.41,
+              "division": 18.47
+            },
+            "2": {
+              "superBowl": 7.42,
+              "division": 55.66,
+              "conference": 14.45
+            },
+            "3": {
+              "superBowl": 3.26,
+              "conference": 6.26,
+              "division": 22.73
+            },
+            "4": {
+              "superBowl": 4.29,
+              "division": 34.97,
+              "conference": 9.13
+            },
+            "5": {
+              "superBowl": 0.41,
+              "division": 4.2,
+              "conference": 0.95
+            },
+            "6": {
+              "superBowl": 3.14,
+              "conference": 6.5,
+              "division": 32.35
+            },
+            "7": {
+              "superBowl": 3.89,
+              "division": 29.72,
+              "conference": 8.1
+            },
+            "8": {
+              "superBowl": 4.08,
+              "conference": 9.29,
+              "division": 33.47
+            },
+            "9": {
+              "superBowl": 3.88,
+              "conference": 8.29,
+              "division": 27.07
+            },
+            "10": {
+              "superBowl": 0.62,
+              "division": 10.049999999999997,
+              "conference": 1.55
+            },
+            "11": {
+              "superBowl": 1.34,
+              "division": 17.45,
+              "conference": 2.8
+            },
+            "12": {
+              "superBowl": 4.8,
+              "division": 34.12,
+              "conference": 10.2
+            },
+            "13": {
+              "superBowl": 0.54,
+              "division": 4.39,
+              "conference": 1.29
+            },
+            "14": {
+              "superBowl": 13.6,
+              "conference": 21.4,
+              "division": 46.18
+            },
+            "15": {
+              "superBowl": 0.23,
+              "division": 2.69,
+              "conference": 0.54
+            },
+            "16": {
+              "superBowl": 1.6,
+              "conference": 4.02,
+              "division": 16.72999999999999
+            },
+            "17": {
+              "superBowl": 4.08,
+              "division": 35.13,
+              "conference": 9.13
+            },
+            "18": {
+              "superBowl": 0.9,
+              "conference": 2.06,
+              "division": 26.02
+            },
+            "19": {
+              "superBowl": 1.15,
+              "conference": 1.57,
+              "division": 13.13
+            },
+            "20": {
+              "superBowl": 0.41,
+              "division": 6.52000000000001,
+              "conference": 0.95
+            },
+            "21": {
+              "superBowl": 4.53,
+              "conference": 9.6,
+              "division": 41.39
+            },
+            "22": {
+              "superBowl": 0.16,
+              "conference": 0.42,
+              "division": 0.89
+            },
+            "23": {
+              "superBowl": 1.6,
+              "division": 15.129999999999995,
+              "conference": 3.47
+            },
+            "24": {
+              "superBowl": 4.53,
+              "division": 31.77000000000001,
+              "conference": 9.319999999999993
+            },
+            "25": {
+              "superBowl": 4.08,
+              "conference": 8.71,
+              "division": 22.26
+            },
+            "26": {
+              "superBowl": 6.800000000000011,
+              "conference": 12.810000000000002,
+              "division": 30.67
+            },
+            "27": {
+              "superBowl": 1.46,
+              "conference": 2.91,
+              "division": 34.99000000000001
+            },
+            "28": {
+              "superBowl": 1.34,
+              "conference": 3.02,
+              "division": 13.129999999999995
+            },
+            "29": {
+              "superBowl": 0.9,
+              "conference": 1.73,
+              "division": 20.52
+            },
+            "30": {
+              "superBowl": 2.63,
+              "division": 27.61,
+              "conference": 5.42
+            },
+            "33": {
+              "superBowl": 7.42,
+              "division": 45.7,
+              "conference": 13.76
+            },
+            "34": {
+              "superBowl": 4.29,
+              "division": 44.89,
+              "conference": 8.94
+            }
+          }
+        }
+      },
+      "leaders": {
+        "status": "ok",
+        "note": "ESPN season 2026, regular season only (types/2); cumulative totals freeze during the postseason. Provider observation timestamp is not supplied. Partial data: missing categories rushingTouchdowns; 11 categories have fewer than ten players; 0 athlete references could not be resolved.",
+        "categories": [
+          {
+            "id": "passingYards",
+            "name": "Passing Yards",
+            "unit": "YDS",
+            "players": [
+              {
+                "id": "3924327",
+                "name": "Drew Lock",
+                "teamId": "26",
+                "value": 187
+              },
+              {
+                "id": "4431452",
+                "name": "Drake Maye",
+                "teamId": "17",
+                "value": 178
+              },
+              {
+                "id": "3912547",
+                "name": "Sam Darnold",
+                "teamId": "26",
+                "value": 13
+              }
+            ]
+          },
+          {
+            "id": "rushingYards",
+            "name": "Rushing Yards",
+            "unit": "YDS",
+            "players": [
+              {
+                "id": "4685512",
+                "name": "Jadarian Price",
+                "teamId": "26",
+                "value": 52
+              },
+              {
+                "id": "4569173",
+                "name": "Rhamondre Stevenson",
+                "teamId": "17",
+                "value": 51
+              },
+              {
+                "id": "4431452",
+                "name": "Drake Maye",
+                "teamId": "17",
+                "value": 47
+              },
+              {
+                "id": "4429835",
+                "name": "George Holani",
+                "teamId": "26",
+                "value": 29
+              },
+              {
+                "id": "3924327",
+                "name": "Drew Lock",
+                "teamId": "26",
+                "value": 13
+              },
+              {
+                "id": "4431431",
+                "name": "Corey Kiner",
+                "teamId": "17",
+                "value": 11
+              },
+              {
+                "id": "4887558",
+                "name": "Emanuel Wilson",
+                "teamId": "26",
+                "value": 3
+              }
+            ]
+          },
+          {
+            "id": "receivingYards",
+            "name": "Receiving Yards",
+            "unit": "YDS",
+            "players": [
+              {
+                "id": "4430878",
+                "name": "Jaxon Smith-Njigba",
+                "teamId": "26",
+                "value": 122
+              },
+              {
+                "id": "2991662",
+                "name": "Mack Hollins",
+                "teamId": "17",
+                "value": 51
+              },
+              {
+                "id": "4569173",
+                "name": "Rhamondre Stevenson",
+                "teamId": "17",
+                "value": 44
+              },
+              {
+                "id": "2977187",
+                "name": "Cooper Kupp",
+                "teamId": "26",
+                "value": 35
+              },
+              {
+                "id": "3046439",
+                "name": "Hunter Henry",
+                "teamId": "17",
+                "value": 26
+              },
+              {
+                "id": "4047646",
+                "name": "A.J. Brown",
+                "teamId": "17",
+                "value": 26
+              },
+              {
+                "id": "4243176",
+                "name": "Brady Russell",
+                "teamId": "26",
+                "value": 20
+              },
+              {
+                "id": "4427095",
+                "name": "DeMario Douglas",
+                "teamId": "17",
+                "value": 20
+              },
+              {
+                "id": "4576297",
+                "name": "AJ Barner",
+                "teamId": "26",
+                "value": 13
+              },
+              {
+                "id": "4698253",
+                "name": "Lan Larison",
+                "teamId": "17",
+                "value": 9
+              }
+            ]
+          },
+          {
+            "id": "passingTouchdowns",
+            "name": "Passing Touchdowns",
+            "unit": "TD",
+            "players": [
+              {
+                "id": "3924327",
+                "name": "Drew Lock",
+                "teamId": "26",
+                "value": 1
+              },
+              {
+                "id": "4431452",
+                "name": "Drake Maye",
+                "teamId": "17",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "id": "receivingTouchdowns",
+            "name": "Receiving Touchdowns",
+            "unit": "TD",
+            "players": [
+              {
+                "id": "4430878",
+                "name": "Jaxon Smith-Njigba",
+                "teamId": "26",
+                "value": 1
+              },
+              {
+                "id": "4831959",
+                "name": "Eli Raridon",
+                "teamId": "17",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "id": "totalTackles",
+            "name": "Total Tackles",
+            "unit": "TOT",
+            "players": [
+              {
+                "id": "4362851",
+                "name": "Ernest Jones IV",
+                "teamId": "26",
+                "value": 13
+              },
+              {
+                "id": "4428659",
+                "name": "Drake Thomas",
+                "teamId": "26",
+                "value": 9
+              },
+              {
+                "id": "3129446",
+                "name": "Robert Spillane",
+                "teamId": "17",
+                "value": 8
+              },
+              {
+                "id": "4046675",
+                "name": "Julian Love",
+                "teamId": "26",
+                "value": 6
+              },
+              {
+                "id": "4372020",
+                "name": "Josh Jobe",
+                "teamId": "26",
+                "value": 6
+              },
+              {
+                "id": "4567222",
+                "name": "Nehemiah Pritchett",
+                "teamId": "26",
+                "value": 6
+              },
+              {
+                "id": "2574056",
+                "name": "Kevin Byard",
+                "teamId": "17",
+                "value": 5
+              },
+              {
+                "id": "3120358",
+                "name": "Uchenna Nwosu",
+                "teamId": "26",
+                "value": 5
+              },
+              {
+                "id": "4428930",
+                "name": "Craig Woodson",
+                "teamId": "17",
+                "value": 5
+              },
+              {
+                "id": "4575431",
+                "name": "Devon Witherspoon",
+                "teamId": "26",
+                "value": 5
+              }
+            ]
+          },
+          {
+            "id": "sacks",
+            "name": "Sacks",
+            "unit": "SACK",
+            "players": [
+              {
+                "id": "2971622",
+                "name": "Leonard Williams",
+                "teamId": "26",
+                "value": 1
+              },
+              {
+                "id": "3915525",
+                "name": "Dre'Mont Jones",
+                "teamId": "17",
+                "value": 1
+              },
+              {
+                "id": "4428659",
+                "name": "Drake Thomas",
+                "teamId": "26",
+                "value": 1
+              },
+              {
+                "id": "4567226",
+                "name": "Derick Hall",
+                "teamId": "26",
+                "value": 1
+              },
+              {
+                "id": "4837244",
+                "name": "Gabe Jacas",
+                "teamId": "17",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "id": "kickoffYards",
+            "name": "Kickoff Yards",
+            "unit": "KYDS",
+            "players": [
+              {
+                "id": "2473037",
+                "name": "Jason Myers",
+                "teamId": "26",
+                "value": 255
+              },
+              {
+                "id": "4569923",
+                "name": "Andy Borregales",
+                "teamId": "17",
+                "value": 192
+              }
+            ]
+          },
+          {
+            "id": "interceptions",
+            "name": "Interceptions",
+            "unit": "INT",
+            "players": [
+              {
+                "id": "4046675",
+                "name": "Julian Love",
+                "teamId": "26",
+                "value": 1
+              },
+              {
+                "id": "4372020",
+                "name": "Josh Jobe",
+                "teamId": "26",
+                "value": 1
+              },
+              {
+                "id": "4567222",
+                "name": "Nehemiah Pritchett",
+                "teamId": "26",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "id": "quarterbackRating",
+            "name": "Quarterback Rating",
+            "unit": "RAT",
+            "players": [
+              {
+                "id": "3924327",
+                "name": "Drew Lock",
+                "teamId": "26",
+                "value": 113.25800323486328
+              },
+              {
+                "id": "3912547",
+                "name": "Sam Darnold",
+                "teamId": "26",
+                "value": 70.83300018310547
+              },
+              {
+                "id": "4431452",
+                "name": "Drake Maye",
+                "teamId": "17",
+                "value": 54.861000061035156
+              },
+              {
+                "id": "2977187",
+                "name": "Cooper Kupp",
+                "teamId": "26",
+                "value": 39.58300018310547
+              },
+              {
+                "id": "2991662",
+                "name": "Mack Hollins",
+                "teamId": "17",
+                "value": 39.58300018310547
+              },
+              {
+                "id": "3046439",
+                "name": "Hunter Henry",
+                "teamId": "17",
+                "value": 39.58300018310547
+              },
+              {
+                "id": "4032473",
+                "name": "Rashid Shaheed",
+                "teamId": "26",
+                "value": 39.58300018310547
+              },
+              {
+                "id": "4047646",
+                "name": "A.J. Brown",
+                "teamId": "17",
+                "value": 39.58300018310547
+              },
+              {
+                "id": "4243176",
+                "name": "Brady Russell",
+                "teamId": "26",
+                "value": 39.58300018310547
+              },
+              {
+                "id": "4361432",
+                "name": "Romeo Doubs",
+                "teamId": "17",
+                "value": 39.58300018310547
+              }
+            ]
+          },
+          {
+            "id": "receptions",
+            "name": "Receptions",
+            "unit": "REC",
+            "players": [
+              {
+                "id": "4430878",
+                "name": "Jaxon Smith-Njigba",
+                "teamId": "26",
+                "value": 8
+              },
+              {
+                "id": "4427095",
+                "name": "DeMario Douglas",
+                "teamId": "17",
+                "value": 5
+              },
+              {
+                "id": "4569173",
+                "name": "Rhamondre Stevenson",
+                "teamId": "17",
+                "value": 5
+              },
+              {
+                "id": "2991662",
+                "name": "Mack Hollins",
+                "teamId": "17",
+                "value": 4
+              },
+              {
+                "id": "3046439",
+                "name": "Hunter Henry",
+                "teamId": "17",
+                "value": 3
+              },
+              {
+                "id": "4047646",
+                "name": "A.J. Brown",
+                "teamId": "17",
+                "value": 3
+              },
+              {
+                "id": "2977187",
+                "name": "Cooper Kupp",
+                "teamId": "26",
+                "value": 2
+              },
+              {
+                "id": "4243176",
+                "name": "Brady Russell",
+                "teamId": "26",
+                "value": 2
+              },
+              {
+                "id": "4576297",
+                "name": "AJ Barner",
+                "teamId": "26",
+                "value": 2
+              },
+              {
+                "id": "4685512",
+                "name": "Jadarian Price",
+                "teamId": "26",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "id": "totalPoints",
+            "name": "Total Points",
+            "unit": "TP",
+            "players": [
+              {
+                "id": "2473037",
+                "name": "Jason Myers",
+                "teamId": "26",
+                "value": 7
+              },
+              {
+                "id": "4430878",
+                "name": "Jaxon Smith-Njigba",
+                "teamId": "26",
+                "value": 6
+              },
+              {
+                "id": "4831959",
+                "name": "Eli Raridon",
+                "teamId": "17",
+                "value": 6
+              },
+              {
+                "id": "4569923",
+                "name": "Andy Borregales",
+                "teamId": "17",
+                "value": 4
+              }
+            ]
+          },
+          {
+            "id": "totalTouchdowns",
+            "name": "Total Touchdowns",
+            "unit": "TTD",
+            "players": [
+              {
+                "id": "4430878",
+                "name": "Jaxon Smith-Njigba",
+                "teamId": "26",
+                "value": 1
+              },
+              {
+                "id": "4831959",
+                "name": "Eli Raridon",
+                "teamId": "17",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "id": "puntYards",
+            "name": "Punt Yards",
+            "unit": "PYDS",
+            "players": [
+              {
+                "id": "3929851",
+                "name": "Michael Dickson",
+                "teamId": "26",
+                "value": 227
+              },
+              {
+                "id": "4035685",
+                "name": "Mitch Wishnowsky",
+                "teamId": "17",
+                "value": 177
+              }
+            ]
+          },
+          {
+            "id": "passesDefended",
+            "name": "Passes Defended",
+            "unit": "PD",
+            "players": [
+              {
+                "id": "4567222",
+                "name": "Nehemiah Pritchett",
+                "teamId": "26",
+                "value": 2
+              },
+              {
+                "id": "4686772",
+                "name": "Christian Gonzalez",
+                "teamId": "17",
+                "value": 2
+              },
+              {
+                "id": "3120358",
+                "name": "Uchenna Nwosu",
+                "teamId": "26",
+                "value": 1
+              },
+              {
+                "id": "4046675",
+                "name": "Julian Love",
+                "teamId": "26",
+                "value": 1
+              },
+              {
+                "id": "4248455",
+                "name": "Rodney Thomas II",
+                "teamId": "26",
+                "value": 1
+              },
+              {
+                "id": "4372020",
+                "name": "Josh Jobe",
+                "teamId": "26",
+                "value": 1
+              }
+            ]
+          }
+        ]
+      },
+      "awards": {
+        "draftkings": {
+          "status": "ok",
+          "note": "DraftKings award futures via ESPN, season 2026. American odds and raw implied percentages include bookmaker margin, not fair-probability forecasts. Provider update time is not supplied; capture time does not establish freshness. Current quotes are not backdated as preseason observations.",
+          "categories": [
+            {
+              "id": "mvp",
+              "name": "Most Valuable Player",
+              "abbreviation": "MVP",
+              "candidateType": "player",
+              "probabilityBasis": "raw-implied",
+              "listedCount": 102,
+              "candidates": [
+                {
+                  "id": "3918298",
+                  "name": "Josh Allen",
+                  "teamId": "2",
+                  "americanOdds": 600,
+                  "impliedProbability": 14.285714285714286
+                },
+                {
+                  "id": "3916387",
+                  "name": "Lamar Jackson",
+                  "teamId": "33",
+                  "americanOdds": 800,
+                  "impliedProbability": 11.11111111111111
+                },
+                {
+                  "id": "3915511",
+                  "name": "Joe Burrow",
+                  "teamId": "4",
+                  "americanOdds": 850,
+                  "impliedProbability": 10.526315789473685
+                },
+                {
+                  "id": "4038941",
+                  "name": "Justin Herbert",
+                  "teamId": "24",
+                  "americanOdds": 950,
+                  "impliedProbability": 9.523809523809524
+                },
+                {
+                  "id": "3139477",
+                  "name": "Patrick Mahomes",
+                  "teamId": "12",
+                  "americanOdds": 1000,
+                  "impliedProbability": 9.090909090909092
+                },
+                {
+                  "id": "4431611",
+                  "name": "Caleb Williams",
+                  "teamId": "3",
+                  "americanOdds": 1100,
+                  "impliedProbability": 8.333333333333334
+                },
+                {
+                  "id": "2577417",
+                  "name": "Dak Prescott",
+                  "teamId": "6",
+                  "americanOdds": 1200,
+                  "impliedProbability": 7.6923076923076925
+                },
+                {
+                  "id": "12483",
+                  "name": "Matthew Stafford",
+                  "teamId": "14",
+                  "americanOdds": 1400,
+                  "impliedProbability": 6.666666666666667
+                },
+                {
+                  "id": "4361741",
+                  "name": "Brock Purdy",
+                  "teamId": "25",
+                  "americanOdds": 1800,
+                  "impliedProbability": 5.2631578947368425
+                },
+                {
+                  "id": "4431452",
+                  "name": "Drake Maye",
+                  "teamId": "17",
+                  "americanOdds": 1800,
+                  "impliedProbability": 5.2631578947368425
+                },
+                {
+                  "id": "4426348",
+                  "name": "Jayden Daniels",
+                  "teamId": "28",
+                  "americanOdds": 2000,
+                  "impliedProbability": 4.761904761904762
+                },
+                {
+                  "id": "4036378",
+                  "name": "Jordan Love",
+                  "teamId": "9",
+                  "americanOdds": 2000,
+                  "impliedProbability": 4.761904761904762
+                },
+                {
+                  "id": "4360310",
+                  "name": "Trevor Lawrence",
+                  "teamId": "30",
+                  "americanOdds": 2200,
+                  "impliedProbability": 4.3478260869565215
+                },
+                {
+                  "id": "4040715",
+                  "name": "Jalen Hurts",
+                  "teamId": "21",
+                  "americanOdds": 2800,
+                  "impliedProbability": 3.4482758620689653
+                },
+                {
+                  "id": "4426338",
+                  "name": "Bo Nix",
+                  "teamId": "7",
+                  "americanOdds": 3500,
+                  "impliedProbability": 2.7777777777777777
+                },
+                {
+                  "id": "3046779",
+                  "name": "Jared Goff",
+                  "teamId": "8",
+                  "americanOdds": 3500,
+                  "impliedProbability": 2.7777777777777777
+                },
+                {
+                  "id": "3912547",
+                  "name": "Sam Darnold",
+                  "teamId": "26",
+                  "americanOdds": 3500,
+                  "impliedProbability": 2.7777777777777777
+                },
+                {
+                  "id": "3917315",
+                  "name": "Kyler Murray",
+                  "teamId": "16",
+                  "americanOdds": 4000,
+                  "impliedProbability": 2.4390243902439024
+                },
+                {
+                  "id": "3052587",
+                  "name": "Baker Mayfield",
+                  "teamId": "27",
+                  "americanOdds": 4500,
+                  "impliedProbability": 2.1739130434782608
+                },
+                {
+                  "id": "4689114",
+                  "name": "Jaxson Dart",
+                  "teamId": "19",
+                  "americanOdds": 4500,
+                  "impliedProbability": 2.1739130434782608
+                },
+                {
+                  "id": "4432577",
+                  "name": "C.J. Stroud",
+                  "teamId": "34",
+                  "americanOdds": 5000,
+                  "impliedProbability": 1.9607843137254901
+                },
+                {
+                  "id": "4688380",
+                  "name": "Cam Ward",
+                  "teamId": "10",
+                  "americanOdds": 6000,
+                  "impliedProbability": 1.639344262295082
+                },
+                {
+                  "id": "3917792",
+                  "name": "Daniel Jones",
+                  "teamId": "11",
+                  "americanOdds": 9000,
+                  "impliedProbability": 1.098901098901099
+                },
+                {
+                  "id": "4360689",
+                  "name": "Tyler Shough",
+                  "teamId": "18",
+                  "americanOdds": 9000,
+                  "impliedProbability": 1.098901098901099
+                },
+                {
+                  "id": "4430807",
+                  "name": "Bijan Robinson",
+                  "teamId": "1",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4685720",
+                  "name": "Bryce Young",
+                  "teamId": "29",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4242512",
+                  "name": "Malik Willis",
+                  "teamId": "15",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4426515",
+                  "name": "Puka Nacua",
+                  "teamId": "14",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4429795",
+                  "name": "Jahmyr Gibbs",
+                  "teamId": "8",
+                  "americanOdds": 12000,
+                  "impliedProbability": 0.8264462809917356
+                },
+                {
+                  "id": "4360423",
+                  "name": "Michael Penix Jr.",
+                  "teamId": "1",
+                  "americanOdds": 12000,
+                  "impliedProbability": 0.8264462809917356
+                },
+                {
+                  "id": "3117251",
+                  "name": "Christian McCaffrey",
+                  "teamId": "25",
+                  "americanOdds": 15000,
+                  "impliedProbability": 0.6622516556291391
+                },
+                {
+                  "id": "4241389",
+                  "name": "CeeDee Lamb",
+                  "teamId": "6",
+                  "americanOdds": 20000,
+                  "impliedProbability": 0.4975124378109453
+                },
+                {
+                  "id": "4429160",
+                  "name": "De'Von Achane",
+                  "teamId": "15",
+                  "americanOdds": 20000,
+                  "impliedProbability": 0.4975124378109453
+                },
+                {
+                  "id": "3043078",
+                  "name": "Derrick Henry",
+                  "teamId": "33",
+                  "americanOdds": 20000,
+                  "impliedProbability": 0.4975124378109453
+                },
+                {
+                  "id": "3122840",
+                  "name": "Deshaun Watson",
+                  "teamId": "5",
+                  "americanOdds": 20000,
+                  "impliedProbability": 0.4975124378109453
+                },
+                {
+                  "id": "15864",
+                  "name": "Geno Smith",
+                  "teamId": "20",
+                  "americanOdds": 20000,
+                  "impliedProbability": 0.4975124378109453
+                },
+                {
+                  "id": "4362628",
+                  "name": "Ja'Marr Chase",
+                  "teamId": "4",
+                  "americanOdds": 20000,
+                  "impliedProbability": 0.4975124378109453
+                },
+                {
+                  "id": "4379399",
+                  "name": "James Cook III",
+                  "teamId": "2",
+                  "americanOdds": 20000,
+                  "impliedProbability": 0.4975124378109453
+                },
+                {
+                  "id": "4430878",
+                  "name": "Jaxon Smith-Njigba",
+                  "teamId": "26",
+                  "americanOdds": 20000,
+                  "impliedProbability": 0.4975124378109453
+                },
+                {
+                  "id": "4242335",
+                  "name": "Jonathan Taylor",
+                  "teamId": "11",
+                  "americanOdds": 20000,
+                  "impliedProbability": 0.4975124378109453
+                },
+                {
+                  "id": "4362887",
+                  "name": "Justin Fields",
+                  "teamId": "12",
+                  "americanOdds": 20000,
+                  "impliedProbability": 0.4975124378109453
+                },
+                {
+                  "id": "4262921",
+                  "name": "Justin Jefferson",
+                  "teamId": "16",
+                  "americanOdds": 20000,
+                  "impliedProbability": 0.4975124378109453
+                },
+                {
+                  "id": "14880",
+                  "name": "Kirk Cousins",
+                  "teamId": "13",
+                  "americanOdds": 20000,
+                  "impliedProbability": 0.4975124378109453
+                },
+                {
+                  "id": "3122132",
+                  "name": "Myles Garrett",
+                  "teamId": "14",
+                  "americanOdds": 20000,
+                  "impliedProbability": 0.4975124378109453
+                },
+                {
+                  "id": "3929630",
+                  "name": "Saquon Barkley",
+                  "teamId": "21",
+                  "americanOdds": 20000,
+                  "impliedProbability": 0.4975124378109453
+                },
+                {
+                  "id": "4432762",
+                  "name": "Shedeur Sanders",
+                  "teamId": "5",
+                  "americanOdds": 20000,
+                  "impliedProbability": 0.4975124378109453
+                },
+                {
+                  "id": "4685415",
+                  "name": "Travis Hunter",
+                  "teamId": "30",
+                  "americanOdds": 20000,
+                  "impliedProbability": 0.4975124378109453
+                },
+                {
+                  "id": "4241479",
+                  "name": "Tua Tagovailoa",
+                  "teamId": "1",
+                  "americanOdds": 20000,
+                  "impliedProbability": 0.4975124378109453
+                },
+                {
+                  "id": "4241464",
+                  "name": "Mac Jones",
+                  "teamId": "25",
+                  "americanOdds": 30000,
+                  "impliedProbability": 0.33222591362126247
+                },
+                {
+                  "id": "4258173",
+                  "name": "Nico Collins",
+                  "teamId": "34",
+                  "americanOdds": 30000,
+                  "impliedProbability": 0.33222591362126247
+                }
+              ],
+              "note": "50 candidates captured from 102 listed outcomes. Only the strongest 50 valid quotes are resolved per market; the rest are not captured. Raw implied percentages include bookmaker margin; the captured field is not normalized to 100%."
+            },
+            {
+              "id": "opoy",
+              "name": "Offensive Player of the Year",
+              "abbreviation": "OPOY",
+              "candidateType": "player",
+              "probabilityBasis": "raw-implied",
+              "listedCount": 108,
+              "candidates": [
+                {
+                  "id": "4429795",
+                  "name": "Jahmyr Gibbs",
+                  "teamId": "8",
+                  "americanOdds": 550,
+                  "impliedProbability": 15.384615384615385
+                },
+                {
+                  "id": "4430807",
+                  "name": "Bijan Robinson",
+                  "teamId": "1",
+                  "americanOdds": 900,
+                  "impliedProbability": 10
+                },
+                {
+                  "id": "4362628",
+                  "name": "Ja'Marr Chase",
+                  "teamId": "4",
+                  "americanOdds": 1000,
+                  "impliedProbability": 9.090909090909092
+                },
+                {
+                  "id": "4426515",
+                  "name": "Puka Nacua",
+                  "teamId": "14",
+                  "americanOdds": 1200,
+                  "impliedProbability": 7.6923076923076925
+                },
+                {
+                  "id": "4262921",
+                  "name": "Justin Jefferson",
+                  "teamId": "16",
+                  "americanOdds": 1400,
+                  "impliedProbability": 6.666666666666667
+                },
+                {
+                  "id": "3117251",
+                  "name": "Christian McCaffrey",
+                  "teamId": "25",
+                  "americanOdds": 1700,
+                  "impliedProbability": 5.555555555555555
+                },
+                {
+                  "id": "4430878",
+                  "name": "Jaxon Smith-Njigba",
+                  "teamId": "26",
+                  "americanOdds": 1800,
+                  "impliedProbability": 5.2631578947368425
+                },
+                {
+                  "id": "3929630",
+                  "name": "Saquon Barkley",
+                  "teamId": "21",
+                  "americanOdds": 2000,
+                  "impliedProbability": 4.761904761904762
+                },
+                {
+                  "id": "3043078",
+                  "name": "Derrick Henry",
+                  "teamId": "33",
+                  "americanOdds": 2200,
+                  "impliedProbability": 4.3478260869565215
+                },
+                {
+                  "id": "4379399",
+                  "name": "James Cook III",
+                  "teamId": "2",
+                  "americanOdds": 2200,
+                  "impliedProbability": 4.3478260869565215
+                },
+                {
+                  "id": "4242335",
+                  "name": "Jonathan Taylor",
+                  "teamId": "11",
+                  "americanOdds": 2200,
+                  "impliedProbability": 4.3478260869565215
+                },
+                {
+                  "id": "4374302",
+                  "name": "Amon-Ra St. Brown",
+                  "teamId": "8",
+                  "americanOdds": 2500,
+                  "impliedProbability": 3.8461538461538463
+                },
+                {
+                  "id": "4241389",
+                  "name": "CeeDee Lamb",
+                  "teamId": "6",
+                  "americanOdds": 2500,
+                  "impliedProbability": 3.8461538461538463
+                },
+                {
+                  "id": "4258173",
+                  "name": "Nico Collins",
+                  "teamId": "34",
+                  "americanOdds": 3000,
+                  "impliedProbability": 3.225806451612903
+                },
+                {
+                  "id": "4047646",
+                  "name": "A.J. Brown",
+                  "teamId": "17",
+                  "americanOdds": 3500,
+                  "impliedProbability": 2.7777777777777777
+                },
+                {
+                  "id": "4567048",
+                  "name": "Kenneth Walker III",
+                  "teamId": "12",
+                  "americanOdds": 3500,
+                  "impliedProbability": 2.7777777777777777
+                },
+                {
+                  "id": "4890973",
+                  "name": "Ashton Jeanty",
+                  "teamId": "13",
+                  "americanOdds": 4000,
+                  "impliedProbability": 2.4390243902439024
+                },
+                {
+                  "id": "4685382",
+                  "name": "Omarion Hampton",
+                  "teamId": "24",
+                  "americanOdds": 4000,
+                  "impliedProbability": 2.4390243902439024
+                },
+                {
+                  "id": "4426354",
+                  "name": "George Pickens",
+                  "teamId": "6",
+                  "americanOdds": 4500,
+                  "impliedProbability": 2.1739130434782608
+                },
+                {
+                  "id": "4595348",
+                  "name": "Malik Nabers",
+                  "teamId": "19",
+                  "americanOdds": 4500,
+                  "impliedProbability": 2.1739130434782608
+                },
+                {
+                  "id": "4428331",
+                  "name": "Rashee Rice",
+                  "teamId": "12",
+                  "americanOdds": 4500,
+                  "impliedProbability": 2.1739130434782608
+                },
+                {
+                  "id": "4426502",
+                  "name": "Drake London",
+                  "teamId": "1",
+                  "americanOdds": 5500,
+                  "impliedProbability": 1.7857142857142858
+                },
+                {
+                  "id": "4361370",
+                  "name": "Chris Olave",
+                  "teamId": "18",
+                  "americanOdds": 6500,
+                  "impliedProbability": 1.5151515151515151
+                },
+                {
+                  "id": "4241478",
+                  "name": "DeVonta Smith",
+                  "teamId": "21",
+                  "americanOdds": 6500,
+                  "impliedProbability": 1.5151515151515151
+                },
+                {
+                  "id": "4685472",
+                  "name": "Tetairoa McMillan",
+                  "teamId": "29",
+                  "americanOdds": 6500,
+                  "impliedProbability": 1.5151515151515151
+                },
+                {
+                  "id": "3918298",
+                  "name": "Josh Allen",
+                  "teamId": "2",
+                  "americanOdds": 7000,
+                  "impliedProbability": 1.408450704225352
+                },
+                {
+                  "id": "3916387",
+                  "name": "Lamar Jackson",
+                  "teamId": "33",
+                  "americanOdds": 7000,
+                  "impliedProbability": 1.408450704225352
+                },
+                {
+                  "id": "4431611",
+                  "name": "Caleb Williams",
+                  "teamId": "3",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "4429160",
+                  "name": "De'Von Achane",
+                  "teamId": "15",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "4426348",
+                  "name": "Jayden Daniels",
+                  "teamId": "28",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "4372016",
+                  "name": "Jaylen Waddle",
+                  "teamId": "7",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "4696981",
+                  "name": "Cam Skattebo",
+                  "teamId": "19",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "4567750",
+                  "name": "Emeka Egbuka",
+                  "teamId": "27",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "3915511",
+                  "name": "Joe Burrow",
+                  "teamId": "4",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "4430737",
+                  "name": "Kyren Williams",
+                  "teamId": "14",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "3139477",
+                  "name": "Patrick Mahomes",
+                  "teamId": "12",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "4361307",
+                  "name": "Trey McBride",
+                  "teamId": "22",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "4432665",
+                  "name": "Brock Bowers",
+                  "teamId": "13",
+                  "americanOdds": 9000,
+                  "impliedProbability": 1.098901098901099
+                },
+                {
+                  "id": "4596448",
+                  "name": "Bucky Irving",
+                  "teamId": "27",
+                  "americanOdds": 9000,
+                  "impliedProbability": 1.098901098901099
+                },
+                {
+                  "id": "4239996",
+                  "name": "Travis Etienne Jr.",
+                  "teamId": "18",
+                  "americanOdds": 9000,
+                  "impliedProbability": 1.098901098901099
+                },
+                {
+                  "id": "4427366",
+                  "name": "Breece Hall",
+                  "teamId": "20",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4362238",
+                  "name": "Chase Brown",
+                  "teamId": "4",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "16800",
+                  "name": "Davante Adams",
+                  "teamId": "14",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4035538",
+                  "name": "David Montgomery",
+                  "teamId": "34",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4431452",
+                  "name": "Drake Maye",
+                  "teamId": "17",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4569618",
+                  "name": "Garrett Wilson",
+                  "teamId": "20",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4040715",
+                  "name": "Jalen Hurts",
+                  "teamId": "21",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4361579",
+                  "name": "Javonte Williams",
+                  "teamId": "6",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4432710",
+                  "name": "TreVeyon Henderson",
+                  "teamId": "17",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4360310",
+                  "name": "Trevor Lawrence",
+                  "teamId": "30",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                }
+              ],
+              "note": "50 candidates captured from 108 listed outcomes. Only the strongest 50 valid quotes are resolved per market; the rest are not captured. Raw implied percentages include bookmaker margin; the captured field is not normalized to 100%."
+            },
+            {
+              "id": "dpoy",
+              "name": "Defensive Player of the Year",
+              "abbreviation": "DPOY",
+              "candidateType": "player",
+              "probabilityBasis": "raw-implied",
+              "listedCount": 102,
+              "candidates": [
+                {
+                  "id": "3122132",
+                  "name": "Myles Garrett",
+                  "teamId": "14",
+                  "americanOdds": 450,
+                  "impliedProbability": 18.181818181818183
+                },
+                {
+                  "id": "4685724",
+                  "name": "Will Anderson Jr.",
+                  "teamId": "34",
+                  "americanOdds": 500,
+                  "impliedProbability": 16.666666666666668
+                },
+                {
+                  "id": "4372099",
+                  "name": "Aidan Hutchinson",
+                  "teamId": "8",
+                  "americanOdds": 750,
+                  "impliedProbability": 11.764705882352942
+                },
+                {
+                  "id": "3916655",
+                  "name": "Maxx Crosby",
+                  "teamId": "13",
+                  "americanOdds": 1400,
+                  "impliedProbability": 6.666666666666667
+                },
+                {
+                  "id": "4360259",
+                  "name": "Nik Bonitto",
+                  "teamId": "7",
+                  "americanOdds": 1400,
+                  "impliedProbability": 6.666666666666667
+                },
+                {
+                  "id": "3045282",
+                  "name": "T.J. Watt",
+                  "teamId": "23",
+                  "americanOdds": 2000,
+                  "impliedProbability": 4.761904761904762
+                },
+                {
+                  "id": "4035631",
+                  "name": "Brian Burns",
+                  "teamId": "19",
+                  "americanOdds": 2200,
+                  "impliedProbability": 4.3478260869565215
+                },
+                {
+                  "id": "2976560",
+                  "name": "Danielle Hunter",
+                  "teamId": "34",
+                  "americanOdds": 2800,
+                  "impliedProbability": 3.4482758620689653
+                },
+                {
+                  "id": "4685759",
+                  "name": "Jalen Carter",
+                  "teamId": "21",
+                  "americanOdds": 2800,
+                  "impliedProbability": 3.4482758620689653
+                },
+                {
+                  "id": "4578085",
+                  "name": "Jared Verse",
+                  "teamId": "5",
+                  "americanOdds": 2800,
+                  "impliedProbability": 3.4482758620689653
+                },
+                {
+                  "id": "4040605",
+                  "name": "Nick Bosa",
+                  "teamId": "25",
+                  "americanOdds": 2800,
+                  "impliedProbability": 3.4482758620689653
+                },
+                {
+                  "id": "3052743",
+                  "name": "Trey Hendrickson",
+                  "teamId": "33",
+                  "americanOdds": 2800,
+                  "impliedProbability": 3.4482758620689653
+                },
+                {
+                  "id": "4725996",
+                  "name": "Abdul Carter",
+                  "teamId": "19",
+                  "americanOdds": 3500,
+                  "impliedProbability": 2.7777777777777777
+                },
+                {
+                  "id": "3138826",
+                  "name": "Fred Warner",
+                  "teamId": "25",
+                  "americanOdds": 3500,
+                  "impliedProbability": 2.7777777777777777
+                },
+                {
+                  "id": "4575517",
+                  "name": "Kyle Hamilton",
+                  "teamId": "33",
+                  "americanOdds": 4500,
+                  "impliedProbability": 2.1739130434782608
+                },
+                {
+                  "id": "4686772",
+                  "name": "Christian Gonzalez",
+                  "teamId": "17",
+                  "americanOdds": 5000,
+                  "impliedProbability": 1.9607843137254901
+                },
+                {
+                  "id": "4682618",
+                  "name": "Cooper DeJean",
+                  "teamId": "21",
+                  "americanOdds": 5000,
+                  "impliedProbability": 1.9607843137254901
+                },
+                {
+                  "id": "4426434",
+                  "name": "Derek Stingley Jr.",
+                  "teamId": "34",
+                  "americanOdds": 5000,
+                  "impliedProbability": 1.9607843137254901
+                },
+                {
+                  "id": "4575431",
+                  "name": "Devon Witherspoon",
+                  "teamId": "26",
+                  "americanOdds": 5000,
+                  "impliedProbability": 1.9607843137254901
+                },
+                {
+                  "id": "3915239",
+                  "name": "Josh Hines-Allen",
+                  "teamId": "30",
+                  "americanOdds": 5000,
+                  "impliedProbability": 1.9607843137254901
+                },
+                {
+                  "id": "4361423",
+                  "name": "Micah Parsons",
+                  "teamId": "9",
+                  "americanOdds": 5000,
+                  "impliedProbability": 1.9607843137254901
+                },
+                {
+                  "id": "4686273",
+                  "name": "Quinyon Mitchell",
+                  "teamId": "21",
+                  "americanOdds": 5000,
+                  "impliedProbability": 1.9607843137254901
+                },
+                {
+                  "id": "4426473",
+                  "name": "Laiatu Latu",
+                  "teamId": "11",
+                  "americanOdds": 5500,
+                  "impliedProbability": 1.7857142857142858
+                },
+                {
+                  "id": "4692025",
+                  "name": "Brian Branch",
+                  "teamId": "8",
+                  "americanOdds": 6000,
+                  "impliedProbability": 1.639344262295082
+                },
+                {
+                  "id": "4361767",
+                  "name": "Will McDonald IV",
+                  "teamId": "20",
+                  "americanOdds": 6000,
+                  "impliedProbability": 1.639344262295082
+                },
+                {
+                  "id": "3134690",
+                  "name": "Montez Sweat",
+                  "teamId": "3",
+                  "americanOdds": 7000,
+                  "impliedProbability": 1.408450704225352
+                },
+                {
+                  "id": "4427250",
+                  "name": "Sauce Gardner",
+                  "teamId": "11",
+                  "americanOdds": 7000,
+                  "impliedProbability": 1.408450704225352
+                },
+                {
+                  "id": "3133487",
+                  "name": "Andrew Van Ginkel",
+                  "teamId": "16",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "3116733",
+                  "name": "Bradley Chubb",
+                  "teamId": "2",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "3044859",
+                  "name": "Chris Jones",
+                  "teamId": "12",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "4426659",
+                  "name": "George Karlaftis",
+                  "teamId": "12",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "4602699",
+                  "name": "Kamari Lassiter",
+                  "teamId": "34",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "4869523",
+                  "name": "Nick Emmanwori",
+                  "teamId": "26",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "4372012",
+                  "name": "Pat Surtain II",
+                  "teamId": "7",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "4431442",
+                  "name": "Tuli Tuipulotu",
+                  "teamId": "24",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "4362847",
+                  "name": "Jaycee Horn",
+                  "teamId": "29",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "2971622",
+                  "name": "Leonard Williams",
+                  "teamId": "26",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "4426405",
+                  "name": "Trent McDuffie",
+                  "teamId": "14",
+                  "americanOdds": 9000,
+                  "impliedProbability": 1.098901098901099
+                },
+                {
+                  "id": "4037333",
+                  "name": "Alex Highsmith",
+                  "teamId": "23",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "3691739",
+                  "name": "Derwin James Jr.",
+                  "teamId": "24",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4035483",
+                  "name": "Dexter Lawrence II",
+                  "teamId": "4",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4035369",
+                  "name": "Jeffery Simmons",
+                  "teamId": "10",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "3916409",
+                  "name": "Jonathan Greenard",
+                  "teamId": "21",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4239699",
+                  "name": "Milton Williams",
+                  "teamId": "17",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4040982",
+                  "name": "Quinnen Williams",
+                  "teamId": "6",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4046523",
+                  "name": "Rashan Gary",
+                  "teamId": "6",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "3915189",
+                  "name": "Roquan Smith",
+                  "teamId": "33",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4241470",
+                  "name": "Xavier McKinney",
+                  "teamId": "9",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "3915282",
+                  "name": "Zach Allen",
+                  "teamId": "7",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "3917657",
+                  "name": "Zack Baun",
+                  "teamId": "21",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                }
+              ],
+              "note": "50 candidates captured from 102 listed outcomes. Only the strongest 50 valid quotes are resolved per market; the rest are not captured. Raw implied percentages include bookmaker margin; the captured field is not normalized to 100%."
+            },
+            {
+              "id": "oroy",
+              "name": "Offensive Rookie of the Year",
+              "abbreviation": "OROY",
+              "candidateType": "player",
+              "probabilityBasis": "raw-implied",
+              "listedCount": 42,
+              "candidates": [
+                {
+                  "id": "4685512",
+                  "name": "Jadarian Price",
+                  "teamId": "26",
+                  "americanOdds": 550,
+                  "impliedProbability": 15.384615384615385
+                },
+                {
+                  "id": "4710714",
+                  "name": "De'Zhaun Stribling",
+                  "teamId": "25",
+                  "americanOdds": 1000,
+                  "impliedProbability": 9.090909090909092
+                },
+                {
+                  "id": "4870847",
+                  "name": "Ja'Kobi Lane",
+                  "teamId": "33",
+                  "americanOdds": 1200,
+                  "impliedProbability": 7.6923076923076925
+                },
+                {
+                  "id": "4870653",
+                  "name": "KC Concepcion",
+                  "teamId": "5",
+                  "americanOdds": 1800,
+                  "impliedProbability": 5.2631578947368425
+                },
+                {
+                  "id": "4912218",
+                  "name": "Cyrus Allen",
+                  "teamId": "12",
+                  "americanOdds": 4000,
+                  "impliedProbability": 2.4390243902439024
+                },
+                {
+                  "id": "4686658",
+                  "name": "Mike Washington Jr.",
+                  "teamId": "13",
+                  "americanOdds": 4000,
+                  "impliedProbability": 2.4390243902439024
+                },
+                {
+                  "id": "5081432",
+                  "name": "Antonio Williams",
+                  "teamId": "28",
+                  "americanOdds": 5000,
+                  "impliedProbability": 1.9607843137254901
+                },
+                {
+                  "id": "5083315",
+                  "name": "Kenyon Sadiq",
+                  "teamId": "20",
+                  "americanOdds": 5000,
+                  "impliedProbability": 1.9607843137254901
+                },
+                {
+                  "id": "4682648",
+                  "name": "Malachi Fields",
+                  "teamId": "19",
+                  "americanOdds": 5000,
+                  "impliedProbability": 1.9607843137254901
+                },
+                {
+                  "id": "4702555",
+                  "name": "Jonah Coleman",
+                  "teamId": "7",
+                  "americanOdds": 5500,
+                  "impliedProbability": 1.7857142857142858
+                },
+                {
+                  "id": "4869961",
+                  "name": "Chris Bell",
+                  "teamId": "15",
+                  "americanOdds": 6000,
+                  "impliedProbability": 1.639344262295082
+                },
+                {
+                  "id": "4685261",
+                  "name": "Germie Bernard",
+                  "teamId": "23",
+                  "americanOdds": 6000,
+                  "impliedProbability": 1.639344262295082
+                },
+                {
+                  "id": "4685555",
+                  "name": "Nicholas Singleton",
+                  "teamId": "10",
+                  "americanOdds": 6000,
+                  "impliedProbability": 1.639344262295082
+                },
+                {
+                  "id": "4723820",
+                  "name": "Omar Cooper Jr.",
+                  "teamId": "20",
+                  "americanOdds": 6500,
+                  "impliedProbability": 1.5151515151515151
+                },
+                {
+                  "id": "4431574",
+                  "name": "Eli Stowers",
+                  "teamId": "21",
+                  "americanOdds": 7000,
+                  "impliedProbability": 1.408450704225352
+                },
+                {
+                  "id": "4869645",
+                  "name": "Caleb Douglas",
+                  "teamId": "15",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "4832846",
+                  "name": "Demond Claiborne",
+                  "teamId": "16",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "4714771",
+                  "name": "Drew Allar",
+                  "teamId": "23",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "4696044",
+                  "name": "Kaelon Black",
+                  "teamId": "25",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "4870612",
+                  "name": "Zachariah Branch",
+                  "teamId": "1",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "4685413",
+                  "name": "Cade Klubnik",
+                  "teamId": "20",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "5088338",
+                  "name": "Elijah Sarratt",
+                  "teamId": "33",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "4832955",
+                  "name": "Emmett Johnson",
+                  "teamId": "12",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "4685246",
+                  "name": "Kaytron Allen",
+                  "teamId": "28",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "5220680",
+                  "name": "Ted Hurst III",
+                  "teamId": "27",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "4685553",
+                  "name": "Brenen Thompson",
+                  "teamId": "24",
+                  "americanOdds": 9000,
+                  "impliedProbability": 1.098901098901099
+                },
+                {
+                  "id": "5081508",
+                  "name": "Eli Heidenreich",
+                  "teamId": "23",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4831959",
+                  "name": "Eli Raridon",
+                  "teamId": "17",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4702559",
+                  "name": "Oscar Delp",
+                  "teamId": "18",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4685526",
+                  "name": "Adam Randall",
+                  "teamId": "33",
+                  "americanOdds": 15000,
+                  "impliedProbability": 0.6622516556291391
+                },
+                {
+                  "id": "4912052",
+                  "name": "Justin Joly",
+                  "teamId": "15",
+                  "americanOdds": 15000,
+                  "impliedProbability": 0.6622516556291391
+                },
+                {
+                  "id": "4833029",
+                  "name": "Max Klare",
+                  "teamId": "14",
+                  "americanOdds": 15000,
+                  "impliedProbability": 0.6622516556291391
+                },
+                {
+                  "id": "4683153",
+                  "name": "Skyler Bell",
+                  "teamId": "2",
+                  "americanOdds": 15000,
+                  "impliedProbability": 0.6622516556291391
+                },
+                {
+                  "id": "4431325",
+                  "name": "Taylen Green",
+                  "teamId": "5",
+                  "americanOdds": 15000,
+                  "impliedProbability": 0.6622516556291391
+                },
+                {
+                  "id": "4869748",
+                  "name": "Zavion Thomas",
+                  "teamId": "3",
+                  "americanOdds": 15000,
+                  "impliedProbability": 0.6622516556291391
+                },
+                {
+                  "id": "4686248",
+                  "name": "Nate Boerkircher",
+                  "teamId": "30",
+                  "americanOdds": 20000,
+                  "impliedProbability": 0.4975124378109453
+                },
+                {
+                  "id": "4432722",
+                  "name": "Athan Kaliakmanis",
+                  "teamId": "28",
+                  "americanOdds": 25000,
+                  "impliedProbability": 0.398406374501992
+                },
+                {
+                  "id": "4879276",
+                  "name": "Bryce Lance",
+                  "teamId": "18",
+                  "americanOdds": 25000,
+                  "impliedProbability": 0.398406374501992
+                },
+                {
+                  "id": "4879250",
+                  "name": "Cole Payton",
+                  "teamId": "21",
+                  "americanOdds": 25000,
+                  "impliedProbability": 0.398406374501992
+                },
+                {
+                  "id": "4695705",
+                  "name": "Marlin Klein",
+                  "teamId": "34",
+                  "americanOdds": 25000,
+                  "impliedProbability": 0.398406374501992
+                },
+                {
+                  "id": "4685504",
+                  "name": "Sam Roush",
+                  "teamId": "3",
+                  "americanOdds": 25000,
+                  "impliedProbability": 0.398406374501992
+                },
+                {
+                  "id": "4880236",
+                  "name": "Will Kacmarek",
+                  "teamId": "15",
+                  "americanOdds": 25000,
+                  "impliedProbability": 0.398406374501992
+                }
+              ],
+              "note": "42 candidates captured from 42 listed outcomes. Raw implied percentages include bookmaker margin; the captured field is not normalized to 100%."
+            },
+            {
+              "id": "droy",
+              "name": "Defensive Rookie of the Year",
+              "abbreviation": "DROY",
+              "candidateType": "player",
+              "probabilityBasis": "raw-implied",
+              "listedCount": 50,
+              "candidates": [
+                {
+                  "id": "4685248",
+                  "name": "David Bailey",
+                  "teamId": "20",
+                  "americanOdds": 550,
+                  "impliedProbability": 15.384615384615385
+                },
+                {
+                  "id": "4870706",
+                  "name": "Caleb Downs",
+                  "teamId": "6",
+                  "americanOdds": 600,
+                  "impliedProbability": 14.285714285714286
+                },
+                {
+                  "id": "5081807",
+                  "name": "Sonny Styles",
+                  "teamId": "28",
+                  "americanOdds": 750,
+                  "impliedProbability": 11.764705882352942
+                },
+                {
+                  "id": "4880124",
+                  "name": "Mansoor Delane",
+                  "teamId": "12",
+                  "americanOdds": 1100,
+                  "impliedProbability": 8.333333333333334
+                },
+                {
+                  "id": "4429190",
+                  "name": "Akheem Mesidor",
+                  "teamId": "24",
+                  "americanOdds": 1300,
+                  "impliedProbability": 7.142857142857143
+                },
+                {
+                  "id": "4566094",
+                  "name": "Jacob Rodriguez",
+                  "teamId": "15",
+                  "americanOdds": 1300,
+                  "impliedProbability": 7.142857142857143
+                },
+                {
+                  "id": "4710067",
+                  "name": "Malachi Lawrence",
+                  "teamId": "6",
+                  "americanOdds": 2200,
+                  "impliedProbability": 4.3478260869565215
+                },
+                {
+                  "id": "4954445",
+                  "name": "Dillon Thieneman",
+                  "teamId": "3",
+                  "americanOdds": 2500,
+                  "impliedProbability": 3.8461538461538463
+                },
+                {
+                  "id": "4837244",
+                  "name": "Gabe Jacas",
+                  "teamId": "17",
+                  "americanOdds": 3000,
+                  "impliedProbability": 3.225806451612903
+                },
+                {
+                  "id": "4870598",
+                  "name": "CJ Allen",
+                  "teamId": "11",
+                  "americanOdds": 3500,
+                  "impliedProbability": 2.7777777777777777
+                },
+                {
+                  "id": "4870707",
+                  "name": "Keldric Faulk",
+                  "teamId": "10",
+                  "americanOdds": 3500,
+                  "impliedProbability": 2.7777777777777777
+                },
+                {
+                  "id": "4871063",
+                  "name": "Peter Woods",
+                  "teamId": "12",
+                  "americanOdds": 3500,
+                  "impliedProbability": 2.7777777777777777
+                },
+                {
+                  "id": "4710752",
+                  "name": "Cashius Howell",
+                  "teamId": "4",
+                  "americanOdds": 4000,
+                  "impliedProbability": 2.4390243902439024
+                },
+                {
+                  "id": "5118340",
+                  "name": "D'Angelo Ponds",
+                  "teamId": "20",
+                  "americanOdds": 5000,
+                  "impliedProbability": 1.9607843137254901
+                },
+                {
+                  "id": "4870805",
+                  "name": "Anthony Hill Jr.",
+                  "teamId": "10",
+                  "americanOdds": 6500,
+                  "impliedProbability": 1.5151515151515151
+                },
+                {
+                  "id": "5081927",
+                  "name": "R Mason Thomas",
+                  "teamId": "12",
+                  "americanOdds": 6500,
+                  "impliedProbability": 1.5151515151515151
+                },
+                {
+                  "id": "4602019",
+                  "name": "Caleb Banks",
+                  "teamId": "16",
+                  "americanOdds": 7000,
+                  "impliedProbability": 1.408450704225352
+                },
+                {
+                  "id": "4869579",
+                  "name": "Chris Johnson",
+                  "teamId": "15",
+                  "americanOdds": 7000,
+                  "impliedProbability": 1.408450704225352
+                },
+                {
+                  "id": "4839501",
+                  "name": "Zion Young",
+                  "teamId": "33",
+                  "americanOdds": 7000,
+                  "impliedProbability": 1.408450704225352
+                },
+                {
+                  "id": "5076652",
+                  "name": "Brandon Cisse",
+                  "teamId": "9",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "4877652",
+                  "name": "Jake Golday",
+                  "teamId": "16",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "4870988",
+                  "name": "Avieon Terrell",
+                  "teamId": "1",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "4685266",
+                  "name": "Jaishawn Barham",
+                  "teamId": "6",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "4875381",
+                  "name": "Jordan van den Berg",
+                  "teamId": "3",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "4870893",
+                  "name": "Kayden McDonald",
+                  "teamId": "34",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "4432244",
+                  "name": "Romello Height",
+                  "teamId": "25",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "4697757",
+                  "name": "Treydan Stukes",
+                  "teamId": "13",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "4905664",
+                  "name": "A.J. Haulcy",
+                  "teamId": "11",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "5088571",
+                  "name": "Bryce Boettcher",
+                  "teamId": "11",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4430262",
+                  "name": "Bud Clark",
+                  "teamId": "26",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4685315",
+                  "name": "Dani Dennis-Sutton",
+                  "teamId": "9",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4685461",
+                  "name": "Derrick Moore",
+                  "teamId": "8",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4685502",
+                  "name": "Harold Perkins Jr.",
+                  "teamId": "1",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4870998",
+                  "name": "Josiah Trotter",
+                  "teamId": "27",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "5093694",
+                  "name": "Keionte Scott",
+                  "teamId": "27",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4832035",
+                  "name": "Davison Igbinosun",
+                  "teamId": "2",
+                  "americanOdds": 12000,
+                  "impliedProbability": 0.8264462809917356
+                },
+                {
+                  "id": "4870960",
+                  "name": "LT Overton",
+                  "teamId": "6",
+                  "americanOdds": 12000,
+                  "impliedProbability": 0.8264462809917356
+                },
+                {
+                  "id": "4685479",
+                  "name": "Christen Miller",
+                  "teamId": "18",
+                  "americanOdds": 15000,
+                  "impliedProbability": 0.6622516556291391
+                },
+                {
+                  "id": "5082397",
+                  "name": "Jacob Thomas",
+                  "teamId": "16",
+                  "americanOdds": 15000,
+                  "impliedProbability": 0.6622516556291391
+                },
+                {
+                  "id": "5081392",
+                  "name": "Joshua Josephs",
+                  "teamId": "28",
+                  "americanOdds": 15000,
+                  "impliedProbability": 0.6622516556291391
+                },
+                {
+                  "id": "5093004",
+                  "name": "Keith Abney II",
+                  "teamId": "8",
+                  "americanOdds": 15000,
+                  "impliedProbability": 0.6622516556291391
+                },
+                {
+                  "id": "4683101",
+                  "name": "Max Llewellyn",
+                  "teamId": "15",
+                  "americanOdds": 15000,
+                  "impliedProbability": 0.6622516556291391
+                },
+                {
+                  "id": "4566384",
+                  "name": "Zakee Wheatley",
+                  "teamId": "29",
+                  "americanOdds": 15000,
+                  "impliedProbability": 0.6622516556291391
+                },
+                {
+                  "id": "4612298",
+                  "name": "Albert Regis",
+                  "teamId": "30",
+                  "americanOdds": 20000,
+                  "impliedProbability": 0.4975124378109453
+                },
+                {
+                  "id": "4685324",
+                  "name": "Caden Curry",
+                  "teamId": "11",
+                  "americanOdds": 20000,
+                  "impliedProbability": 0.4975124378109453
+                },
+                {
+                  "id": "4710865",
+                  "name": "Jakobe Thomas",
+                  "teamId": "16",
+                  "americanOdds": 20000,
+                  "impliedProbability": 0.4975124378109453
+                },
+                {
+                  "id": "5076951",
+                  "name": "Jalon Kilgore",
+                  "teamId": "2",
+                  "americanOdds": 20000,
+                  "impliedProbability": 0.4975124378109453
+                },
+                {
+                  "id": "5084514",
+                  "name": "Kaleb Proctor",
+                  "teamId": "22",
+                  "americanOdds": 20000,
+                  "impliedProbability": 0.4975124378109453
+                },
+                {
+                  "id": "4911904",
+                  "name": "Keyron Crawford",
+                  "teamId": "13",
+                  "americanOdds": 20000,
+                  "impliedProbability": 0.4975124378109453
+                },
+                {
+                  "id": "4431551",
+                  "name": "Lee Hunter",
+                  "teamId": "29",
+                  "americanOdds": 20000,
+                  "impliedProbability": 0.4975124378109453
+                }
+              ],
+              "note": "50 candidates captured from 50 listed outcomes. Raw implied percentages include bookmaker margin; the captured field is not normalized to 100%."
+            },
+            {
+              "id": "coy",
+              "name": "Coach of the Year",
+              "abbreviation": "COY",
+              "candidateType": "coach",
+              "probabilityBasis": "raw-implied",
+              "listedCount": 12,
+              "candidates": [
+                {
+                  "id": "14882",
+                  "name": "Kellen Moore",
+                  "teamId": null,
+                  "americanOdds": 1200,
+                  "impliedProbability": 7.6923076923076925
+                },
+                {
+                  "id": "2181979",
+                  "name": "Klint Kubiak",
+                  "teamId": null,
+                  "americanOdds": 1500,
+                  "impliedProbability": 6.25
+                },
+                {
+                  "id": "27",
+                  "name": "Jim Harbaugh",
+                  "teamId": null,
+                  "americanOdds": 2000,
+                  "impliedProbability": 4.761904761904762
+                },
+                {
+                  "id": "2146711",
+                  "name": "Kevin O'Connell",
+                  "teamId": null,
+                  "americanOdds": 2000,
+                  "impliedProbability": 4.761904761904762
+                },
+                {
+                  "id": "1832",
+                  "name": "Dan Campbell",
+                  "teamId": null,
+                  "americanOdds": 2500,
+                  "impliedProbability": 3.8461538461538463
+                },
+                {
+                  "id": "558",
+                  "name": "Aaron Glenn",
+                  "teamId": null,
+                  "americanOdds": 2800,
+                  "impliedProbability": 3.4482758620689653
+                },
+                {
+                  "id": "2184471",
+                  "name": "Zac Taylor",
+                  "teamId": null,
+                  "americanOdds": 2800,
+                  "impliedProbability": 3.4482758620689653
+                },
+                {
+                  "id": "17762",
+                  "name": "Dave Canales",
+                  "teamId": null,
+                  "americanOdds": 3000,
+                  "impliedProbability": 3.225806451612903
+                },
+                {
+                  "id": "9619",
+                  "name": "DeMeco Ryans",
+                  "teamId": null,
+                  "americanOdds": 3000,
+                  "impliedProbability": 3.225806451612903
+                },
+                {
+                  "id": "7157",
+                  "name": "Todd Bowles",
+                  "teamId": null,
+                  "americanOdds": 5000,
+                  "impliedProbability": 1.9607843137254901
+                },
+                {
+                  "id": "1257",
+                  "name": "Mike Vrabel",
+                  "teamId": null,
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "17567",
+                  "name": "Sean Payton",
+                  "teamId": null,
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                }
+              ],
+              "note": "12 candidates captured from 12 listed outcomes. Raw implied percentages include bookmaker margin; the captured field is not normalized to 100%. Coach teams are not inferred from former playing-team records."
+            },
+            {
+              "id": "cpoy",
+              "name": "Comeback Player of the Year",
+              "abbreviation": "CPOY",
+              "candidateType": "player",
+              "probabilityBasis": "raw-implied",
+              "listedCount": 41,
+              "candidates": [
+                {
+                  "id": "3139477",
+                  "name": "Patrick Mahomes",
+                  "teamId": "12",
+                  "americanOdds": 185,
+                  "impliedProbability": 35.08771929824562
+                },
+                {
+                  "id": "4426348",
+                  "name": "Jayden Daniels",
+                  "teamId": "28",
+                  "americanOdds": 450,
+                  "impliedProbability": 18.181818181818183
+                },
+                {
+                  "id": "3917315",
+                  "name": "Kyler Murray",
+                  "teamId": "16",
+                  "americanOdds": 600,
+                  "impliedProbability": 14.285714285714286
+                },
+                {
+                  "id": "3917792",
+                  "name": "Daniel Jones",
+                  "teamId": "11",
+                  "americanOdds": 1400,
+                  "impliedProbability": 6.666666666666667
+                },
+                {
+                  "id": "4595348",
+                  "name": "Malik Nabers",
+                  "teamId": "19",
+                  "americanOdds": 1400,
+                  "impliedProbability": 6.666666666666667
+                },
+                {
+                  "id": "4361423",
+                  "name": "Micah Parsons",
+                  "teamId": "9",
+                  "americanOdds": 1600,
+                  "impliedProbability": 5.882352941176471
+                },
+                {
+                  "id": "3138826",
+                  "name": "Fred Warner",
+                  "teamId": "25",
+                  "americanOdds": 2500,
+                  "impliedProbability": 3.8461538461538463
+                },
+                {
+                  "id": "3040151",
+                  "name": "George Kittle",
+                  "teamId": "25",
+                  "americanOdds": 2500,
+                  "impliedProbability": 3.8461538461538463
+                },
+                {
+                  "id": "4040605",
+                  "name": "Nick Bosa",
+                  "teamId": "25",
+                  "americanOdds": 2500,
+                  "impliedProbability": 3.8461538461538463
+                },
+                {
+                  "id": "4685415",
+                  "name": "Travis Hunter",
+                  "teamId": "30",
+                  "americanOdds": 2500,
+                  "impliedProbability": 3.8461538461538463
+                },
+                {
+                  "id": "4696981",
+                  "name": "Cam Skattebo",
+                  "teamId": "19",
+                  "americanOdds": 2800,
+                  "impliedProbability": 3.4482758620689653
+                },
+                {
+                  "id": "4569618",
+                  "name": "Garrett Wilson",
+                  "teamId": "20",
+                  "americanOdds": 3000,
+                  "impliedProbability": 3.225806451612903
+                },
+                {
+                  "id": "4366031",
+                  "name": "Tank Dell",
+                  "teamId": "34",
+                  "americanOdds": 3000,
+                  "impliedProbability": 3.225806451612903
+                },
+                {
+                  "id": "3052743",
+                  "name": "Trey Hendrickson",
+                  "teamId": "33",
+                  "americanOdds": 3000,
+                  "impliedProbability": 3.225806451612903
+                },
+                {
+                  "id": "4572680",
+                  "name": "Tucker Kraft",
+                  "teamId": "9",
+                  "americanOdds": 3000,
+                  "impliedProbability": 3.225806451612903
+                },
+                {
+                  "id": "3122840",
+                  "name": "Deshaun Watson",
+                  "teamId": "5",
+                  "americanOdds": 4000,
+                  "impliedProbability": 2.4390243902439024
+                },
+                {
+                  "id": "4678008",
+                  "name": "Jonathon Brooks",
+                  "teamId": "29",
+                  "americanOdds": 4000,
+                  "impliedProbability": 2.4390243902439024
+                },
+                {
+                  "id": "4241479",
+                  "name": "Tua Tagovailoa",
+                  "teamId": "1",
+                  "americanOdds": 4000,
+                  "impliedProbability": 2.4390243902439024
+                },
+                {
+                  "id": "4432665",
+                  "name": "Brock Bowers",
+                  "teamId": "13",
+                  "americanOdds": 5000,
+                  "impliedProbability": 1.9607843137254901
+                },
+                {
+                  "id": "15864",
+                  "name": "Geno Smith",
+                  "teamId": "20",
+                  "americanOdds": 5000,
+                  "impliedProbability": 1.9607843137254901
+                },
+                {
+                  "id": "4433970",
+                  "name": "J.J. McCarthy",
+                  "teamId": "16",
+                  "americanOdds": 5000,
+                  "impliedProbability": 1.9607843137254901
+                },
+                {
+                  "id": "4360423",
+                  "name": "Michael Penix Jr.",
+                  "teamId": "1",
+                  "americanOdds": 5000,
+                  "impliedProbability": 1.9607843137254901
+                },
+                {
+                  "id": "4685702",
+                  "name": "Quinshon Judkins",
+                  "teamId": "5",
+                  "americanOdds": 5000,
+                  "impliedProbability": 1.9607843137254901
+                },
+                {
+                  "id": "4430027",
+                  "name": "Sam LaPorta",
+                  "teamId": "8",
+                  "americanOdds": 5000,
+                  "impliedProbability": 1.9607843137254901
+                },
+                {
+                  "id": "4429084",
+                  "name": "Anthony Richardson Sr.",
+                  "teamId": "11",
+                  "americanOdds": 6500,
+                  "impliedProbability": 1.5151515151515151
+                },
+                {
+                  "id": "4242512",
+                  "name": "Malik Willis",
+                  "teamId": "15",
+                  "americanOdds": 7000,
+                  "impliedProbability": 1.408450704225352
+                },
+                {
+                  "id": "4241457",
+                  "name": "Najee Harris",
+                  "teamId": "19",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "16733",
+                  "name": "Odell Beckham Jr.",
+                  "teamId": "19",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "4692025",
+                  "name": "Brian Branch",
+                  "teamId": "8",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "4427250",
+                  "name": "Sauce Gardner",
+                  "teamId": "11",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "4360438",
+                  "name": "Brandon Aiyuk",
+                  "teamId": "25",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "3925357",
+                  "name": "Calvin Ridley",
+                  "teamId": "10",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "2573079",
+                  "name": "Carson Wentz",
+                  "teamId": "16",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4241985",
+                  "name": "J.K. Dobbins",
+                  "teamId": "7",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "3045147",
+                  "name": "James Conner",
+                  "teamId": "22",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4683487",
+                  "name": "Joe Alt",
+                  "teamId": "24",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4360383",
+                  "name": "Kerby Joseph",
+                  "teamId": "8",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4685623",
+                  "name": "Mykel Williams",
+                  "teamId": "25",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "3116406",
+                  "name": "Tyreek Hill",
+                  "teamId": "15",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4361418",
+                  "name": "Will Levis",
+                  "teamId": "10",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4426385",
+                  "name": "Zach Charbonnet",
+                  "teamId": "26",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                }
+              ],
+              "note": "41 candidates captured from 41 listed outcomes. Raw implied percentages include bookmaker margin; the captured field is not normalized to 100%."
+            },
+            {
+              "id": "protector",
+              "name": "Protector of the Year",
+              "abbreviation": "Protector",
+              "candidateType": "player",
+              "probabilityBasis": "raw-implied",
+              "listedCount": 78,
+              "candidates": [
+                {
+                  "id": "4373825",
+                  "name": "Penei Sewell",
+                  "teamId": "8",
+                  "americanOdds": 500,
+                  "impliedProbability": 16.666666666666668
+                },
+                {
+                  "id": "4683487",
+                  "name": "Joe Alt",
+                  "teamId": "24",
+                  "americanOdds": 800,
+                  "impliedProbability": 11.11111111111111
+                },
+                {
+                  "id": "4240589",
+                  "name": "Tristan Wirfs",
+                  "teamId": "27",
+                  "americanOdds": 950,
+                  "impliedProbability": 9.523809523809524
+                },
+                {
+                  "id": "15797",
+                  "name": "Lane Johnson",
+                  "teamId": "21",
+                  "americanOdds": 1200,
+                  "impliedProbability": 7.6923076923076925
+                },
+                {
+                  "id": "4035662",
+                  "name": "Garett Bolles",
+                  "teamId": "7",
+                  "americanOdds": 1500,
+                  "impliedProbability": 6.25
+                },
+                {
+                  "id": "4241385",
+                  "name": "Creed Humphrey",
+                  "teamId": "12",
+                  "americanOdds": 1800,
+                  "impliedProbability": 5.2631578947368425
+                },
+                {
+                  "id": "3129308",
+                  "name": "Quenton Nelson",
+                  "teamId": "11",
+                  "americanOdds": 1800,
+                  "impliedProbability": 5.2631578947368425
+                },
+                {
+                  "id": "4608138",
+                  "name": "Quinn Meinerz",
+                  "teamId": "7",
+                  "americanOdds": 1800,
+                  "impliedProbability": 5.2631578947368425
+                },
+                {
+                  "id": "13241",
+                  "name": "Trent Williams",
+                  "teamId": "25",
+                  "americanOdds": 1800,
+                  "impliedProbability": 5.2631578947368425
+                },
+                {
+                  "id": "3672833",
+                  "name": "Chris Lindstrom",
+                  "teamId": "1",
+                  "americanOdds": 2000,
+                  "impliedProbability": 4.761904761904762
+                },
+                {
+                  "id": "4334215",
+                  "name": "Jordan Mailata",
+                  "teamId": "21",
+                  "americanOdds": 2000,
+                  "impliedProbability": 4.761904761904762
+                },
+                {
+                  "id": "4242283",
+                  "name": "Rashawn Slater",
+                  "teamId": "24",
+                  "americanOdds": 2200,
+                  "impliedProbability": 4.3478260869565215
+                },
+                {
+                  "id": "4360499",
+                  "name": "Tyler Linderbaum",
+                  "teamId": "13",
+                  "americanOdds": 2200,
+                  "impliedProbability": 4.3478260869565215
+                },
+                {
+                  "id": "4040537",
+                  "name": "Aaron Brewer",
+                  "teamId": "15",
+                  "americanOdds": 3000,
+                  "impliedProbability": 3.225806451612903
+                },
+                {
+                  "id": "4259566",
+                  "name": "Andrew Thomas",
+                  "teamId": "19",
+                  "americanOdds": 3000,
+                  "impliedProbability": 3.225806451612903
+                },
+                {
+                  "id": "3134312",
+                  "name": "Kolton Miller",
+                  "teamId": "13",
+                  "americanOdds": 3000,
+                  "impliedProbability": 3.225806451612903
+                },
+                {
+                  "id": "4361985",
+                  "name": "Christian Darrisaw",
+                  "teamId": "16",
+                  "americanOdds": 3500,
+                  "impliedProbability": 2.7777777777777777
+                },
+                {
+                  "id": "3051324",
+                  "name": "Dion Dawkins",
+                  "teamId": "2",
+                  "americanOdds": 3500,
+                  "impliedProbability": 2.7777777777777777
+                },
+                {
+                  "id": "4240435",
+                  "name": "Zach Bako-Bewele",
+                  "teamId": "9",
+                  "americanOdds": 3500,
+                  "impliedProbability": 2.7777777777777777
+                },
+                {
+                  "id": "4426358",
+                  "name": "Darnell Wright",
+                  "teamId": "3",
+                  "americanOdds": 4000,
+                  "impliedProbability": 2.4390243902439024
+                },
+                {
+                  "id": "4685260",
+                  "name": "Kelvin Banks Jr.",
+                  "teamId": "18",
+                  "americanOdds": 4000,
+                  "impliedProbability": 2.4390243902439024
+                },
+                {
+                  "id": "3917599",
+                  "name": "Kevin Dotson",
+                  "teamId": "14",
+                  "americanOdds": 4000,
+                  "impliedProbability": 2.4390243902439024
+                },
+                {
+                  "id": "4429100",
+                  "name": "Peter Skoronski",
+                  "teamId": "10",
+                  "americanOdds": 4000,
+                  "impliedProbability": 2.4390243902439024
+                },
+                {
+                  "id": "4789907",
+                  "name": "Armand Membou",
+                  "teamId": "20",
+                  "americanOdds": 5000,
+                  "impliedProbability": 1.9607843137254901
+                },
+                {
+                  "id": "4426376",
+                  "name": "Charles Cross",
+                  "teamId": "26",
+                  "americanOdds": 5000,
+                  "impliedProbability": 1.9607843137254901
+                },
+                {
+                  "id": "2577773",
+                  "name": "Joe Thuney",
+                  "teamId": "3",
+                  "americanOdds": 5000,
+                  "impliedProbability": 1.9607843137254901
+                },
+                {
+                  "id": "4428991",
+                  "name": "Paris Johnson Jr.",
+                  "teamId": "22",
+                  "americanOdds": 5000,
+                  "impliedProbability": 1.9607843137254901
+                },
+                {
+                  "id": "4568652",
+                  "name": "Tyler Smith",
+                  "teamId": "6",
+                  "americanOdds": 5000,
+                  "impliedProbability": 1.9607843137254901
+                },
+                {
+                  "id": "4685298",
+                  "name": "Will Campbell",
+                  "teamId": "17",
+                  "americanOdds": 6000,
+                  "impliedProbability": 1.639344262295082
+                },
+                {
+                  "id": "3123954",
+                  "name": "Brian O'Neill",
+                  "teamId": "16",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "4362647",
+                  "name": "Damien Lewis",
+                  "teamId": "29",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "5092959",
+                  "name": "Dominick Puni",
+                  "teamId": "25",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "2978247",
+                  "name": "Isaac Seumalo",
+                  "teamId": "22",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "4431437",
+                  "name": "JC Latham",
+                  "teamId": "10",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "3115303",
+                  "name": "Jermaine Eluemunor",
+                  "teamId": "19",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "3052885",
+                  "name": "Mike McGlinchey",
+                  "teamId": "7",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "4030899",
+                  "name": "Spencer Brown",
+                  "teamId": "2",
+                  "americanOdds": 7500,
+                  "impliedProbability": 1.3157894736842106
+                },
+                {
+                  "id": "4692525",
+                  "name": "Anton Harrison",
+                  "teamId": "30",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "4362580",
+                  "name": "Bernhard Raimann",
+                  "teamId": "11",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "4870914",
+                  "name": "Francis Mauigoa",
+                  "teamId": "19",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "4380507",
+                  "name": "Luke Goedeke",
+                  "teamId": "27",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "4870694",
+                  "name": "Monroe Freeling",
+                  "teamId": "29",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "4832793",
+                  "name": "Olaivavega Ioane",
+                  "teamId": "33",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "4431809",
+                  "name": "Olu Fashanu",
+                  "teamId": "20",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "2980153",
+                  "name": "Ronnie Stanley",
+                  "teamId": "33",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "4870723",
+                  "name": "Spencer Fano",
+                  "teamId": "5",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "4429775",
+                  "name": "Zach Frazier",
+                  "teamId": "23",
+                  "americanOdds": 8000,
+                  "impliedProbability": 1.2345679012345678
+                },
+                {
+                  "id": "4033748",
+                  "name": "Connor McGovern",
+                  "teamId": "2",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "16713",
+                  "name": "Jake Matthews",
+                  "teamId": "1",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                },
+                {
+                  "id": "4036444",
+                  "name": "Ryan Neuzil",
+                  "teamId": "1",
+                  "americanOdds": 10000,
+                  "impliedProbability": 0.9900990099009901
+                }
+              ],
+              "note": "50 candidates captured from 78 listed outcomes. Only the strongest 50 valid quotes are resolved per market; the rest are not captured. Raw implied percentages include bookmaker margin; the captured field is not normalized to 100%."
+            }
+          ]
+        }
       }
     }
   ]

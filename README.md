@@ -9,6 +9,7 @@ A free NFL season tracker: the long view on championship forecasts, playoff chan
 - All 32 teams: Super Bowl winner, AFC/NFC champion, all eight division races, playoff chances, and projected regular-season wins.
 - Team-colored time-series charts with hover/focus tooltips, team filters, a top-eight shortcut, and accessible latest-value tables.
 - Top-10 statistical leaders, cumulative charts, and leaderboard cards. Regular-season totals stay separate from postseason statistics.
+- An **Awards** tab for MVP, OPOY, DPOY, OROY, DROY, Coach of the Year, Comeback Player of the Year, and Protector of the Year. Includes market favorites, American odds, implied-percentage trends for the latest top ten, and an expandable captured-candidate field.
 - A season selector that defaults to the current season, independent projection-source selection, and persistent light/dark mode.
 - A snapshot-history slider to rewind the charts and leaderboards to any captured week.
 - Explicit **mocked — not fully accurate** labels on the illustrative previous season. Actual current-season captures are never supplemented with invented history.
@@ -53,7 +54,11 @@ Charts prefer the primary team color, switch to the official alternate when need
 
 Live sources are **ESPN FPI** and **DraftKings futures syndicated by ESPN**. The sportsbook adapter captures Super Bowl, conference, and division prices and normalizes complete markets to remove the displayed overround proportionally. It does not invent playoff probabilities or projected win totals. Although accessed through ESPN infrastructure, DraftKings is a separate odds provider, not another FPI forecast. Initial 2026 FPI observations are dated August 31 and visibly marked delayed; sportsbook update timestamps are not supplied.
 
+Award markets use **raw implied percentages**, not the normalized team-market method. They include bookmaker margin, may omit candidates, and must not be treated as fair chances or added to 100%. Up to the strongest 50 valid quotes per award are captured; both captured and listed counts are shown. The first award capture was September 11, 2026 at 01:15 UTC (September 10 in U.S. time zones), after kickoff. It is not labeled or copied into preseason history. Older snapshots, including the mocked 2025 archive, have no award odds; the history slider shows this explicitly.
+
 Adapters publish the same five optional metrics: `superBowl`, `conference`, `division`, `playoffs`, and `wins`. A provider declares which metrics it supports. Unavailable inputs remain absent/null, never zero. Missing snapshots break lines instead of interpolating across failures. Model forecasts and market-implied probabilities are never blended. All values are percentages, except projected wins.
+
+Award-capable sources additionally declare `awards: true`. Their optional `snapshot.awards[sourceId]` records contain category and candidate IDs, named candidates, nullable team IDs, American odds, and raw implied percentages. This is an additive schema-version-1 extension: old JSON remains valid and is not rewritten. The Awards selector is independent of the Projections selector. Future providers can populate the same contract.
 
 See [`src/types.ts`](src/types.ts) for the contract and [the source guide](docs/DATA-SOURCES.md) for provider-specific limitations, normalization, and how to add an adapter.
 
