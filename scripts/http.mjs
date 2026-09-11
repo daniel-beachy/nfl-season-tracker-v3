@@ -1,4 +1,11 @@
-const HOSTS = new Set(['site.web.api.espn.com', 'site.api.espn.com', 'sports.core.api.espn.com', 'gamma-api.polymarket.com']);
+const HOSTS = new Set([
+  'site.web.api.espn.com',
+  'site.api.espn.com',
+  'sports.core.api.espn.com',
+  'gamma-api.polymarket.com',
+  'www.bovada.lv',
+  'bovada.lv',
+]);
 
 export function safeReference(value) {
   let url;

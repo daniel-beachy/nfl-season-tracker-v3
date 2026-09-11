@@ -7,6 +7,8 @@ export const URLS = {
   scoreboard: (year, type = 2, week = 1) => `https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=${year}&seasontype=${type}&week=${week}&limit=100`,
   leaders: year => `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/${year}/types/2/leaders?limit=10`,
   futures: year => `https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/${year}/futures?limit=100`,
+  bovada: 'https://www.bovada.lv/services/sports/event/v2/events/A/description/football',
+  polymarket: 'https://gamma-api.polymarket.com/events?tag_slug=nfl&closed=false&limit=100',
 };
 
 export const SOURCES = [
@@ -19,6 +21,16 @@ export const SOURCES = [
     id: 'draftkings', name: 'DraftKings', kind: 'market',
     description: 'DraftKings sportsbook American futures odds syndicated by ESPN, independent of FPI. Complete Super Bowl, conference and division markets are proportionally de-vigged to 100%; incomplete markets retain raw implied probabilities. No playoff or win-total estimates are invented.',
     url: 'https://www.espn.com/nfl/futures', metrics: ['superBowl', 'conference', 'division'], awards: true,
+  },
+  {
+    id: 'bovada', name: 'Bovada', kind: 'market',
+    description: 'Bovada sportsbook American futures and season props. Complete Super Bowl, conference and division markets are de-vigged to 100%. Playoff chances use two-way Yes/No implied probabilities; win totals reflect regular-season over/under lines.',
+    url: 'https://www.bovada.lv/sports/football/nfl', metrics: ['superBowl', 'conference', 'division', 'playoffs', 'wins'], awards: true,
+  },
+  {
+    id: 'polymarket', name: 'Polymarket', kind: 'market',
+    description: 'Polymarket decentralized prediction market contracts. Real-time probabilities derived from on-chain trading prices on Polygon for championship, conference, division, and individual player awards.',
+    url: 'https://polymarket.com/sports/nfl', metrics: ['superBowl', 'conference', 'division'], awards: true,
   },
 ];
 

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { TEAMS } from '../scripts/teams.mjs';
-import { adaptFpi, adaptFutures, americanToPercent, fetchLeaders, isolatedSource } from '../scripts/providers.mjs';
+import { SOURCES, adaptFpi, adaptFutures, americanToPercent, fetchLeaders, isolatedSource } from '../scripts/providers.mjs';
 import { safeReference, createHttpClient, mapLimit } from '../scripts/http.mjs';
 
 const ref = (kind, id, year = 2026) =>
@@ -192,4 +192,20 @@ test('provider errors remain source-local and visible', async () => {
   assert.deepEqual(result.projections, {});
   assert.equal(result.status, 'unavailable');
   assert.match(result.note, /Example.*503/);
+});
+
+test('registered sources include Bovada and Polymarket and HTTP client allows their hosts', () => {
+  assert.equal(safeReference('https://www.bovada.lv/services/sports/event/v2/events/A/description/football'), 'https://www.bovada.lv/services/sports/event/v2/events/A/description/football');
+  assert.equal(safeReference('https://gamma-api.polymarket.com/events?tag_slug=nfl'), 'https://gamma-api.polymarket.com/events?tag_slug=nfl');
+  const bovada = SOURCES.find(s => s.id === 'bovada');
+  assert.ok(bovada, 'Bovada source must be registered');
+  assert.equal(bovada.kind, 'market');
+  assert.deepEqual(bovada.metrics, ['superBowl', 'conference', 'division', 'playoffs', 'wins']);
+  assert.equal(bovada.awards, true);
+
+  const polymarket = SOURCES.find(s => s.id === 'polymarket');
+  assert.ok(polymarket, 'Polymarket source must be registered');
+  assert.equal(polymarket.kind, 'market');
+  assert.deepEqual(polymarket.metrics, ['superBowl', 'conference', 'division']);
+  assert.equal(polymarket.awards, true);
 });
