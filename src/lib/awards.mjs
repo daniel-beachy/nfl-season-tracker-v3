@@ -6,11 +6,33 @@ function record(value) {
 /** @param {unknown} value @returns {value is string} */
 const text = value => typeof value === 'string' && value.trim().length > 0;
 
+/** @param {unknown} value */
+function publishedHistory(value) {
+  if (!record(value) || value.kind !== 'published-preseason' || !text(value.label)
+    || !text(value.addedAt) || !Number.isFinite(Date.parse(value.addedAt))
+    || !Array.isArray(value.references) || !value.references.length) return false;
+  const added = Date.parse(value.addedAt);
+  const urls = new Set();
+  return value.references.every(reference => {
+    if (!record(reference) || !text(reference.title) || !text(reference.url) || urls.has(reference.url)
+      || !text(reference.publishedAt) || !text(reference.modifiedAt)) return false;
+    try {
+      const url = new URL(reference.url);
+      if (url.protocol !== 'https:' || url.username || url.password) return false;
+    } catch { return false; }
+    urls.add(reference.url);
+    const published = Date.parse(reference.publishedAt);
+    const modified = Date.parse(reference.modifiedAt);
+    return Number.isFinite(published) && Number.isFinite(modified) && published <= modified && modified <= added;
+  });
+}
+
 /** @param {unknown} value @returns {value is import('../types').AwardSourceSnapshot} */
 export function isAwardSource(value) {
   if (!record(value) || !['ok', 'unavailable'].includes(String(value.status)) || !text(value.note)
     || !Array.isArray(value.categories)
-    || value.observedAt !== undefined && (!text(value.observedAt) || !Number.isFinite(Date.parse(value.observedAt)))) return false;
+    || value.observedAt !== undefined && (!text(value.observedAt) || !Number.isFinite(Date.parse(value.observedAt)))
+    || value.provenance !== undefined && !publishedHistory(value.provenance)) return false;
   if (value.status === 'unavailable') return value.categories.length === 0;
   if (!value.categories.length) return false;
   const categories = new Set();
@@ -43,10 +65,12 @@ export function isAwardSource(value) {
   });
 }
 
-/** @param {unknown} value @param {string[]} sourceIds @param {string[]} teamIds */
-export function isAwards(value, sourceIds, teamIds) {
+/** @param {unknown} value @param {string[]} sourceIds @param {string[]} teamIds @param {string} [startsAt] */
+export function isAwards(value, sourceIds, teamIds, startsAt) {
   return record(value) && Object.keys(value).length > 0 && Object.entries(value).every(([id, source]) =>
     sourceIds.includes(id) && isAwardSource(source)
+    && (!source.provenance || startsAt === undefined ||
+      source.provenance.references.every(reference => Date.parse(reference.modifiedAt) < Date.parse(startsAt)))
     && source.categories.every(category => category.candidates.every(candidate =>
       candidate.teamId === null || teamIds.includes(candidate.teamId))));
 }

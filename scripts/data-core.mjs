@@ -46,8 +46,7 @@ export function shouldCapture(date, phase, startsAt, endsAt) {
   if (!Number.isFinite(date.getTime()) || !PHASES.includes(phase)) return false;
   const untilKickoff = Date.parse(startsAt) - +date;
   const afterSeason = +date - Date.parse(endsAt);
-  if ((phase === 'preseason' || phase === 'offseason') && date.getUTCMonth() >= 2 &&
-    date.getUTCMonth() <= 8 && date.getUTCDate() === 1) return true;
+  if ((phase === 'preseason' || phase === 'offseason') && date.getUTCMonth() <= 8 && date.getUTCDate() === 1) return true;
   return date.getUTCDay() === 3 &&
     (phase === 'regular' || phase === 'postseason' ||
       untilKickoff > 0 && untilKickoff <= 7 * DAY || afterSeason >= 0 && afterSeason < 7 * DAY);
@@ -143,7 +142,7 @@ export function validateSeason(data) {
     ids.add(id);
     requireValid(snapshot.id === id && snapshot.capturedAt >= prior, 'snapshot ID or chronological order');
     prior = snapshot.capturedAt;
-    if (snapshot.awards !== undefined) requireValid(isAwards(snapshot.awards, [...sourceIds], [...teamIds]), 'awards snapshot');
+    if (snapshot.awards !== undefined) requireValid(isAwards(snapshot.awards, [...sourceIds], [...teamIds], data.startsAt), 'awards snapshot');
     requireValid(PHASES.includes(snapshot.phase) && isText(snapshot.label), 'snapshot phase or label');
     requireValid(snapshot.note === undefined || isText(snapshot.note), 'snapshot note');
     requireValid(snapshot.week === null || Number.isInteger(snapshot.week) && snapshot.week >= 1 && snapshot.week <= 18, 'snapshot week');
@@ -258,8 +257,10 @@ export async function writeSeason(root, incoming, currentSeason, now = new Date(
       });
     }
     entries.sort((a, b) => b.year - a.year);
+    const selectedSeason = entries.some(entry => entry.year === currentSeason) ? currentSeason : incoming.season;
+    if (selectedSeason !== currentSeason) console.warn(`NFL season ${currentSeason} has no saved file; the manifest selects available season ${selectedSeason} instead.`);
     await atomicJson(join(root, 'manifest.json'), {
-      schemaVersion: 1, currentSeason, generatedAt: now.toISOString(), seasons: entries,
+      schemaVersion: 1, currentSeason: selectedSeason, generatedAt: now.toISOString(), seasons: entries,
     });
     return data;
   } finally {

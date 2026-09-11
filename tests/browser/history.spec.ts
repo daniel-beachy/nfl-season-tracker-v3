@@ -50,7 +50,7 @@ test('monthly preseason history can be hidden without losing completed weeks or 
   await expect(page.getByTestId('snapshot-position')).toHaveText('3 / 3');
 });
 
-test('the actual partial opening-week capture has a visible timing correction in every tab', async ({ page }) => {
+test('September Preseason shows sourced pre-opener Maye odds without the September 11 update', async ({ page }) => {
   const data = JSON.parse(await readFile(new URL('../../public/data/seasons/2026.json', import.meta.url), 'utf8'));
   data.snapshots = data.snapshots.filter((snapshot: { capturedAt: string }) => snapshot.capturedAt <= '2026-09-11T01:15:27.503Z');
   await page.route('**/data/manifest.json', route => route.fulfill({ json: {
@@ -59,9 +59,13 @@ test('the actual partial opening-week capture has a visible timing correction in
   } }));
   await page.route('**/data/seasons/2026.json', route => route.fulfill({ json: data }));
   await page.goto('/');
-  await expect(page.getByRole('note')).toContainText('not preseason odds or a completed Week 1');
-  await expect(page.locator('.explorer-label')).toContainText('Opening-week update');
+  await expect(page.getByRole('note')).toContainText('retrospectively');
   await page.getByRole('tab', { name: 'Awards', exact: true }).click();
-  await expect(page.getByRole('note')).toContainText('not preseason odds');
   await expect(page.locator('.award-market')).toHaveCount(8);
+  await expect(page.getByRole('slider', { name: 'Snapshot history' })).toHaveCount(0);
+  await expect(page.getByText('September Preseason', { exact: true })).toBeVisible();
+  await expect(page.locator('.historical-awards')).toContainText('Published preseason odds');
+  await expect(page.locator('.historical-awards')).toContainText('not a complete market');
+  await expect(page.locator('.award-candidate').filter({ hasText: 'Drake Maye' })).toContainText('+1000');
+  await expect(page.locator('.historical-awards a')).toHaveCount(2);
 });

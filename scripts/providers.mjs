@@ -16,7 +16,7 @@ export const SOURCES = [
     url: 'https://www.espn.com/nfl/fpi', metrics: [...METRICS],
   },
   {
-    id: 'draftkings', name: 'DraftKings via ESPN', kind: 'market',
+    id: 'draftkings', name: 'DraftKings', kind: 'market',
     description: 'DraftKings sportsbook American futures odds syndicated by ESPN, independent of FPI. Complete Super Bowl, conference and division markets are proportionally de-vigged to 100%; incomplete markets retain raw implied probabilities. No playoff or win-total estimates are invented.',
     url: 'https://www.espn.com/nfl/futures', metrics: ['superBowl', 'conference', 'division'], awards: true,
   },
@@ -58,8 +58,8 @@ export function adaptFpi(payload, teams, season, now = new Date()) {
   }
   normalizeDivisions(projections, teams);
   const observedAt = isoDate(payload.lastUpdated);
-  if (observedAt && Date.parse(observedAt) < Date.UTC(season, 2, 1)) {
-    return unavailable(`ESPN FPI ${season}: provider update timestamp ${observedAt} predates this season's March rollover; season headers may have advanced before forecasts were refreshed.`);
+  if (observedAt && Date.parse(observedAt) < Date.UTC(season, 0, 1)) {
+    return unavailable(`ESPN FPI ${season}: provider update timestamp ${observedAt} predates this season's January rollover; season headers may have advanced before forecasts were refreshed.`);
   }
   const notes = [
     `ESPN reports season ${season}. Probabilities are supplied in percent, not fractions.`,

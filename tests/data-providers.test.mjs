@@ -50,6 +50,12 @@ test('FPI missing values remain null rather than number-coerced zero or 25 perce
   assert.match(result.note, /partial|missing/i);
 });
 
+test('FPI accepts genuine requested-year January updates before the old March rollover', () => {
+  const fixture = fpiFixture(2027);
+  fixture.lastUpdated = '2027-01-01T12:00Z';
+  assert.equal(adaptFpi(fixture, TEAMS, 2027, new Date('2027-01-02T16:00Z')).status, 'ok');
+});
+
 test('FPI rejects a prior-season update timestamp even when upstream season headers have rolled over', () => {
   const fixture = fpiFixture();
   fixture.lastUpdated = '2025-12-20T12:00Z';

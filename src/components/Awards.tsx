@@ -10,6 +10,7 @@ export default function Awards({ data, source, theme }: { data: SeasonData; sour
   const [showAll, setShowAll] = useState(false);
   const latest = data.snapshots.at(-1);
   const observation = source ? latest?.awards?.[source.id] : undefined;
+  const history = observation?.provenance;
   const categories = observation?.status === 'ok' ? observation.categories : [];
   const category = categories.find(item => item.id === categoryId) ?? categories[0];
   const candidates = category?.candidates ?? [];
@@ -37,7 +38,13 @@ export default function Awards({ data, source, theme }: { data: SeasonData; sour
         <h3>{observation?.status === 'unavailable' ? 'Award odds are unavailable.' : 'Awards weren’t captured in this snapshot.'}</h3>
         <p>{observation?.note ?? 'Award tracking starts with its first actual capture. Earlier snapshots and the mocked archive have no award odds; choose a later snapshot or the current season.'}</p>
       </div> : <>
-        <div className="awards-market-grid" aria-label="Award market favorites">
+        {history && <div className="source-notice historical-awards"><div>
+          <strong>Published preseason odds · {history.label}</strong>
+          <p>Added retrospectively from dated articles, not captured by this app before kickoff. These are selected published quotes, not a complete market or verified closing prices. Cards show the lowest odds in the captured subset, not necessarily the market favorite.</p>
+          <p>Added {formatDate(history.addedAt)}. Publication and revision timestamps are preserved in the JSON.</p>
+          <div className="history-references">{history.references.map(reference => <a key={reference.url} href={reference.url} target="_blank" rel="noreferrer">{reference.title}<ArrowUpRight size={12} /></a>)}</div>
+        </div></div>}
+        <div className="awards-market-grid" aria-label={history ? 'Published award selections' : 'Award market favorites'}>
           {categories.map(item => {
             const favorite = item.candidates[0];
             return <button key={item.id} className={`award-market ${category.id === item.id ? 'active' : ''}`}
@@ -51,17 +58,17 @@ export default function Awards({ data, source, theme }: { data: SeasonData; sour
           })}
         </div>
         <div className="award-provenance">
-          <span><span className="status-dot" />{source?.name} · {latest ? formatDate(latest.capturedAt) : 'No capture'}</span>
+          <span><span className="status-dot" />{source?.name} · {history ? history.label : latest ? formatDate(latest.capturedAt) : 'No capture'}</span>
           <span>Bookmaker margin included · not normalized</span>
         </div>
         <section className="chart-card chart-card-wide">
           <div className="chart-heading"><div><span className="eyebrow">RAW IMPLIED PROBABILITY OVER TIME</span><h3>{category.name}</h3><p>The latest top {topTen.length} candidates · missing quotes stay missing</p></div><span className="chart-unit">%</span></div>
           <Plot rows={rows} series={topTen.map(candidate => ({ id: candidate.id, name: candidate.name, color: colorFor(candidate.teamId) }))} tall />
-          {observations === 1 && <div className="award-first-observation"><strong>First award observation</strong><span>A trend needs another capture. This point uses its actual date, not a backdated preseason estimate.</span></div>}
+          {observations === 1 && <div className="award-first-observation"><strong>First award observation</strong><span>{history ? 'A dated preseason reference, reconstructed from the linked publications. Later captures will show movement.' : 'A trend needs another capture. This point uses its actual date, not a backdated preseason estimate.'}</span></div>}
           <div className="player-legend">{topTen.map(candidate => <span key={candidate.id}><span className="series-dot" style={{ background: colorFor(candidate.teamId) }} />{candidate.name}</span>)}</div>
           <p className="chart-footnote">These are price-implied percentages, not model forecasts or fair chances. Award fields may be incomplete; the displayed probabilities do not sum to 100%.</p>
         </section>
-        <div className="leaderboard-heading"><h3><Trophy size={18} /> The contenders</h3><span>{candidates.length} captured / {category.listedCount} listed</span></div>
+        <div className="leaderboard-heading"><h3><Trophy size={18} /> The contenders</h3><span>{candidates.length} {history ? 'verified' : 'captured'} / {category.listedCount} {history ? 'published selections' : 'listed'}</span></div>
         <div className="award-table-key"><span>{category.candidateType === 'coach' ? 'Coach' : 'Player'}</span><span>American odds <span>/ Implied %</span></span></div>
         <ol className="leaderboard awards-leaderboard">
           {(showAll ? candidates : topTen).map((candidate, index) => {
@@ -78,7 +85,7 @@ export default function Awards({ data, source, theme }: { data: SeasonData; sour
         </button>}
         <p className="source-note">{category.note}</p>
         <details className="award-source-details"><summary>Source &amp; capture notes <ChevronDown size={13} /></summary><p>{observation?.note}</p>
-          {source && <a href={source.url} target="_blank" rel="noreferrer">View source <ArrowUpRight size={13} /></a>}
+          {source && !history && <a href={source.url} target="_blank" rel="noreferrer">View source <ArrowUpRight size={13} /></a>}
         </details>
       </>}
     </section>

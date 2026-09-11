@@ -16,9 +16,9 @@ export function isManifest(value: unknown): value is Manifest {
 
 export function isSeason(value: unknown): value is SeasonData {
   if (!isRecord(value)) return false;
-  const { sources, teams } = value;
+  const { sources, teams, startsAt } = value;
   return isRecord(value) && value.schemaVersion === 1 && typeof value.season === 'number'
-    && (value.kind === 'live' || value.kind === 'mock') && typeof value.startsAt === 'string'
+    && (value.kind === 'live' || value.kind === 'mock') && typeof startsAt === 'string'
     && Array.isArray(teams) && teams.length === 32
     && teams.every(team => isRecord(team) && typeof team.id === 'string'
       && typeof team.name === 'string' && typeof team.color === 'string' && typeof team.alternateColor === 'string')
@@ -29,7 +29,7 @@ export function isSeason(value: unknown): value is SeasonData {
       && (snapshot.note === undefined || typeof snapshot.note === 'string')
       && isRecord(snapshot.leaders) && Array.isArray(snapshot.leaders.categories)
       && (snapshot.awards === undefined || isAwards(snapshot.awards,
-        sources.map(source => source.id), teams.map(team => team.id))));
+        sources.map(source => source.id), teams.map(team => team.id), startsAt)));
 }
 
 export function useData<T>(path: string | null, validate: (value: unknown) => value is T) {

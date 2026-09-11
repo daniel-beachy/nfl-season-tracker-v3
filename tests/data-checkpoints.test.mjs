@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { capture } from '../scripts/capture.mjs';
+import * as collector from '../scripts/capture.mjs';
 import { shouldCapture } from '../scripts/data-core.mjs';
 import * as checkpoints from '../scripts/checkpoints.mjs';
 
@@ -158,8 +159,9 @@ test('a collection crossing the next kickoff is rejected even if it began before
   assert.doesNotThrow(() => checkpoints.assertBeforeNextKickoff(Date.parse('2026-11-25T16:00Z'), Date.parse('2026-11-26T01:00Z')));
 });
 
-test('March through August snapshots run on the first, regardless of weekday or unpublished schedule', async () => {
+test('January through August snapshots run on the first, regardless of weekday or unpublished schedule', async () => {
   const months = [
+    ['2027-01-01', 'January'], ['2027-02-01', 'February'],
     ['2027-03-01', 'March'], ['2027-04-01', 'April'], ['2027-05-01', 'May'],
     ['2027-06-01', 'June'], ['2027-07-01', 'July'], ['2027-08-01', 'August'],
   ];
@@ -184,18 +186,56 @@ test('September gets a monthly preseason point plus a final pre-kickoff baseline
   assert.equal((await run('2026-09-09T16:00Z', { scheduled: true })).data.snapshots[0].label, 'Preseason');
 });
 
-test('monthly cron is March through September on day one, not the first Wednesday', async () => {
+test('monthly cron is January through September on day one, not the first Wednesday', async () => {
   assert.equal(shouldCapture(new Date('2027-04-01T16:00Z'), 'offseason', '2027-09-10T00:20Z'), true);
   assert.equal(shouldCapture(new Date('2027-04-07T16:00Z'), 'offseason', '2027-09-10T00:20Z'), false);
   const workflow = await readFile(new URL('../.github/workflows/site.yml', import.meta.url), 'utf8');
-  assert.match(workflow, /cron: '0 16 1 3-9 \*'/);
+  assert.match(workflow, /cron: '0 16 1 1-9 \*'/);
 });
 
-test('the original partial opening-game capture is not presented as completed Week 1 or preseason', async () => {
+test('the September 11 partial capture is removed and the September 8 baseline is named explicitly', async () => {
   const season = JSON.parse(await readFile(new URL('../public/data/seasons/2026.json', import.meta.url), 'utf8'));
-  const partial = season.snapshots.find(snapshot => snapshot.capturedAt === '2026-09-11T01:15:27.503Z');
-  assert.equal(partial.label, 'Opening-week update');
-  assert.equal(partial.week, null);
-  assert.match(partial.note, /not preseason/i);
-  assert.match(partial.note, /not.*completed/i);
+  assert.equal(season.snapshots.some(snapshot => snapshot.id === '2026-2026-09-11'), false);
+  assert.equal(season.snapshots.find(snapshot => snapshot.id === '2026-2026-09-08').label, 'September Preseason');
+});
+
+test('automatic capture initializes the calendar year in January while preserving the prior NFL season', async () => {
+  assert.equal(typeof collector.captureAll, 'function');
+  const root = await mkdtemp(join(process.cwd(), 'scripts', '.checkpoint-test-'));
+  try {
+    const results = await collector.captureAll({
+      root, now: new Date('2027-01-01T16:00Z'), scheduled: true,
+      get: async () => { throw new Error('schedule not yet available'); },
+    });
+    assert.deepEqual(results.map(result => result.season), [2027, 2026]);
+    assert.equal(results[0].data.season, 2027);
+    assert.equal(results[0].data.snapshots[0].label, 'January');
+    assert.equal(results[1].reason, 'cadence');
+    const manifest = JSON.parse(await readFile(join(root, 'manifest.json'), 'utf8'));
+    assert.ok(manifest.seasons.some(season => season.year === manifest.currentSeason));
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('January weekly runs preserve playoffs and advance capture time between season requests', async t => {
+  const root = await mkdtemp(join(process.cwd(), 'scripts', '.checkpoint-test-'));
+  const now = new Date('2027-01-20T16:00Z');
+  let elapsed = 0;
+  t.mock.method(performance, 'now', () => elapsed += 1000);
+  const schedule = scheduleFixture(now);
+  try {
+    const results = await collector.captureAll({
+      root, now, scheduled: true,
+      get: async url => {
+        if (url.includes('/scoreboard')) return schedule(url);
+        throw new Error('fixture provider unavailable');
+      },
+    });
+    assert.equal(results[0].season, 2027);
+    assert.equal(results[0].reason, 'cadence');
+    assert.equal(results[1].season, 2026);
+    assert.equal(results[1].data.snapshots[0].label, 'Postseason week 1');
+    assert.ok(Date.parse(results[1].data.snapshots[0].capturedAt) > +now);
+    assert.deepEqual(collector.captureYears(new Date('2031-01-01T16:00Z')), [2031, 2030]);
+    assert.deepEqual(collector.captureYears(new Date('2031-03-01T16:00Z')), [2031]);
+  } finally { await rm(root, { recursive: true, force: true }); }
 });

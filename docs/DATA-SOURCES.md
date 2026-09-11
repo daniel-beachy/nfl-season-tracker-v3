@@ -4,7 +4,7 @@ This app publishes static JSON, not a backend. Capture scripts use Node 22+ buil
 
 ## What was actually captured
 
-`public/data/seasons/2026.json` contains the genuine preseason capture at **2026-09-08T16:56:42.327Z** and a partial **Opening-week update** at **2026-09-11T01:15:27.503Z**. The table below describes the original preseason capture. No current-year history was invented.
+The 2026 starting point is **September Preseason**: the original team forecasts captured **2026-09-08T16:56:42.327Z**, with article-backed pre-opener award odds attached retrospectively. The September 11 partial capture was explicitly removed, not relabeled or copied into this baseline. The table below describes the original September 8 API capture.
 
 | Source | Observed result | Persisted coverage |
 | --- | --- | --- |
@@ -40,7 +40,7 @@ The adapter joins top-level `categories[].names` to each team's corresponding `c
 
 `probmakeconfchamp` is **not** conference-winning probability. `probwinconf` is not substituted for the requested field. ESPN probabilities are already on a **0–100 percentage scale**; `projectedw` is on a 0–17 win scale. The raw captured FPI Super Bowl probabilities sum to **100.2%** because of upstream rounding. Those values are preserved; only complete division groups are normalized as required.
 
-Season headers are explicitly checked. Absent, contradictory, or wrong-year headers produce `unavailable`, never relabeled older values. A provider update earlier than March 1 of the requested season is rejected to catch headers rolling forward before projections. Future-dated updates beyond a one-day tolerance are rejected. All-zero/uninitialized probability tables are rejected. Missing/invalid values remain `null`; valid partial results carry a warning. Provider updates seven or more days older than capture remain usable but are prominently marked delayed.
+Season headers are explicitly checked. Absent, contradictory, or wrong-year headers produce `unavailable`, never relabeled older values. A provider update earlier than January 1 of the requested season is rejected to catch headers rolling forward before projections; genuine January/February new-year updates are allowed. Future-dated updates beyond a one-day tolerance are rejected. All-zero/uninitialized probability tables are rejected. Missing/invalid values remain `null`; valid partial results carry a warning. Provider updates seven or more days older than capture remain usable but are prominently marked delayed.
 
 ### DraftKings via ESPN — `draftkings`, `kind: "market"`
 
@@ -90,18 +90,22 @@ The futures endpoint supplied **no verified odds observation timestamp**. `obser
 
 Awards share the keyless season-specific ESPN futures endpoint with the DraftKings team adapter. A single fetched/resolved futures payload is reused in each capture. Only DraftKings markets with a verified requested-season futures reference are accepted.
 
-The first live awards record was captured **2026-09-11T01:15:27.503Z**, after regular-season kickoff. It is a genuine opening-week observation, **not a historical preseason estimate**. A one-time labeling correction replaces the misleading `Week 1` with **Opening-week update**, sets `week: null`, and adds a visible explanatory `note`. Its original prices, stats, and timestamps are unchanged; it is not merged into preseason or passed off as a completed week. The September 8 snapshot and all 2025 mocked checkpoints remain unchanged. Future captures enforce the completed-week window.
+The displayed **September Preseason** baseline contains **45 verified candidate quotes across eight markets** reconstructed from September 8 publications. The original September 11 API observation was after kickoff and has been removed at the user's request; none of its prices were reused as preseason prices. The original September 8 team forecasts, leader status and capture timestamp remain unchanged, and the addition is explicitly disclosed at snapshot and Awards level.
 
-| Award | Stable ID | Captured / listed candidates in first capture |
+| Award | Stable ID | Verified / published selections in baseline |
 | --- | --- | --- |
-| Most Valuable Player | `mvp` | 50 / 102 |
-| Offensive Player of the Year | `opoy` | 50 / 108 |
-| Defensive Player of the Year | `dpoy` | 50 / 102 |
-| Offensive Rookie of the Year | `oroy` | 42 / 42 |
-| Defensive Rookie of the Year | `droy` | 50 / 50 |
-| Coach of the Year | `coy` | 12 / 12 |
-| Comeback Player of the Year | `cpoy` | 41 / 41 |
-| Protector of the Year | `protector` | 50 / 78 |
+| Most Valuable Player | `mvp` | 10 / 10 |
+| Offensive Player of the Year | `opoy` | 5 / 5 |
+| Defensive Player of the Year | `dpoy` | 5 / 5 |
+| Offensive Rookie of the Year | `oroy` | 5 / 5 |
+| Defensive Rookie of the Year | `droy` | 5 / 5 |
+| Coach of the Year | `coy` | 2 / 5 |
+| Comeback Player of the Year | `cpoy` | 6 / 6 |
+| Protector of the Year | `protector` | 7 / 7 |
+
+**Pre-opener evidence:** [DraftKings Network's preseason column](https://dknetwork.draftkings.com/2026/09/08/nfl-awards-odds/) was published `2026-09-08T17:10:00Z`, modified `2026-09-09T01:15:52Z`. [CBS Sports' editorial picks](https://www.cbssports.com/nfl/news/2026-nfl-mvp-odds-award-best-bets-joe-burrow-mvp/) were published `2026-09-08T21:30:00Z`, modified `2026-09-08T21:30:23Z`. Both independently quote **Drake Maye MVP +1000**, and both revision timestamps precede Seattle-New England kickoff at `2026-09-10T00:20:00Z`. These are publisher-dated pages verified retrospectively, not independent archival captures or exact closing prices.
+
+DraftKings supplies the MVP/OPOY/DPOY/OROY/DROY/CPOY baseline; CBS supplies selected Coach and Protector prices. Jesse Minter, Joe Brady and Liam Coen were omitted because compatible NFL candidate IDs could not be verified; their omission is disclosed. Counts describe published selections, **not the complete sportsbook board**. Candidate IDs are aligned with verified ESPN season records so subsequent automatic captures join the same time series. No exact March-September first-of-month 2026 evidence was established, so those historical months are not invented.
 
 - Categories preserve American odds as numeric `americanOdds`, with `EVEN` represented by `+100`. `impliedProbability` uses the American-odds formulas above **without normalization**. All award categories declare `probabilityBasis: "raw-implied"`. Even a fully resolved listed field need not represent every possible candidate.
 - Up to the strongest **50 valid quotes per award** are resolved, with a single **six-worker** pool across all categories and a shared candidate-reference cache. Capture notes disclose truncation, invalid/duplicate quotes, unresolved candidates, and missing markets. The dashboard plots the latest top ten and can show all captured candidates.
@@ -109,6 +113,7 @@ The first live awards record was captured **2026-09-11T01:15:27.503Z**, after re
 - ESPN models Coach of the Year entries as athlete refs, sometimes to the coach's former playing record. Those records can carry a **wrong current coaching team**. Coach team IDs are therefore null and displayed as unverified; former team colors are not used. Missing/inactive player team metadata also remains null.
 - There is no verified odds-update timestamp. Capture time is always the actual collection time, not a claim about the bookmaker's last update.
 - Optional `Snapshot.awards` maps source IDs to `{status, note, categories}`. Source metadata declares `awards: true`; `Source.metrics` remains exclusively for team projections. Old snapshots without the optional property still validate and show an explicit not-captured state. Unavailable captures have empty categories and explanatory notes, never forward-filled values.
+- Optional `awards[sourceId].provenance` records `kind: "published-preseason"`, a label, actual `addedAt`, and reference titles/HTTPS links/publication/revision timestamps. This distinguishes retrospective publication-backed prices from an API capture at `capturedAt`; `observedAt` is not fabricated from article dates. Validation requires valid ordered dates and revisions before season kickoff. The UI labels published subsets and links the evidence rather than claiming complete market favorites.
 - Runtime and persistence validation enforce unique market/candidate IDs, valid named candidates, known-or-null teams, sorted rankings, consistent American/implied values, and explicit unavailable states. Another source can implement this same award contract without modifying chart logic.
 
 ### Schedule/calendar
@@ -117,7 +122,7 @@ The first live awards record was captured **2026-09-11T01:15:27.503Z**, after re
 
 The earliest validated season-type-2 opening-week event determines `startsAt`; calendar entries identify candidate regular/postseason periods. `resolveCheckpoint()` then fetches the relevant weeks with `seasontype` and `week`, verifies season/type/week on every event, and requires every game in the captured week to be completed. The next competitive week must be untouched, with its first kickoff still ahead. **A Wednesday in ESPN's Week 2 bucket is the completed Week 1 checkpoint**, not Week 2. Manual midweek captures and delayed runs after a Wednesday night kickoff are skipped. A capture that crosses kickoff while providers load is rejected before persistence. Unverified in-season schedules fail explicitly.
 
-The last Wednesday before kickoff is a **Preseason** baseline, even if it is not the first Wednesday of September. March-September day-one snapshots use month labels; their absence is not backfilled with current values. March-August snapshots can precede schedule publication: only in that pre-September window is an explicitly approximate **first Thursday after Labor Day** kickoff used. That fallback never establishes completion of a regular-season week. The Pro Bowl bucket is excluded, and the first Wednesday after the Super Bowl still captures the completed final even if ESPN has moved into offseason.
+The last Wednesday before kickoff is a **Preseason** baseline, even if it is not the first Wednesday of September. January-September day-one snapshots use month labels; their absence is not backfilled with current values. January-August snapshots for the new calendar year can precede schedule publication: only in that pre-September window is an explicitly approximate **first Thursday after Labor Day** kickoff used. That fallback never establishes completion of a regular-season week. The Pro Bowl bucket is excluded, and the first Wednesday after the Super Bowl still captures the completed final even if ESPN has moved into offseason.
 
 ### Polymarket research
 
@@ -163,12 +168,13 @@ node --test tests/*.test.mjs
 
 `package.json` aliases can call `node scripts/capture.mjs` and `node scripts/seed-mock.mjs`. JSON/URL paths use forward slashes; the PowerShell examples above use Windows filesystem separators.
 
-- Default season: calendar year **March–December**, previous year **January–February**, using UTC.
-- Live `--season` must equal that active season. This flag makes the intended year explicit; it does not request historical backfill.
+- The CLI automatically targets the **current calendar year**. During January-February it also targets the previous NFL season, each with its own cadence gate, so next-year preseason collection does not replace ongoing playoffs.
+- The manifest defaults to the active NFL season (previous year in January-February) when its file exists, otherwise an available captured season. March advances the active default to the calendar year. Every saved year remains selectable.
+- Live `--season` can explicitly choose the current calendar year or the still-active previous NFL season. Other years are rejected; this is not a historical backfill API.
 - No `--date` option: fetching today's values and assigning a past capture date would fabricate history. The exported function's injected clock/client are for tests, not a historical-data API.
 - Manual capture bypasses only the cadence gate, **not** week-completion/kickoff checks, and **cannot overwrite** an existing daily snapshot.
-- Scheduler configuration runs **Wednesdays at 16:00 UTC**, cron `0 16 * * 3`, and the **1st of March-September**, cron `0 16 1 3-9 *`, invoking `--scheduled`. That is noon EDT / 11:00 EST, before Wednesday night games.
-- `shouldCapture(date, phase, startsAt, endsAt)` is exported from both `scripts/data-core.mjs` and `scripts/capture.mjs`. It admits Wednesdays during play, the last pre-kickoff Wednesday, the first post-Super-Bowl Wednesday, and March-September day one outside play. It does not admit other preseason Wednesdays.
+- Scheduler configuration runs **Wednesdays at 16:00 UTC**, cron `0 16 * * 3`, and the **1st of January-September**, cron `0 16 1 1-9 *`, invoking `--scheduled`. That is noon EDT / 11:00 EST, before Wednesday night games. January 1 creates the new year's season file and manifest entry without annual edits.
+- `shouldCapture(date, phase, startsAt, endsAt)` is exported from both `scripts/data-core.mjs` and `scripts/capture.mjs`. It admits Wednesdays during play, the last pre-kickoff Wednesday, the first post-Super-Bowl Wednesday, and January-September day one outside play. It does not admit other preseason Wednesdays.
 - The corrected gate admits September 9, 2026 as a final pre-kickoff baseline. September 16 is the first completed **Week 1** checkpoint. The original gate incorrectly skipped September 9; changing the gate cannot reconstruct prices that were not saved.
 - `deriveSeasonMetadata()` describes calendar phase/period and kickoff/end boundaries. `resolveCheckpoint()` determines the completed snapshot phase/week/label from actual event states; these can differ from the calendar's upcoming week.
 

@@ -11,7 +11,7 @@ export async function resolveCheckpoint(season, now, schedule, metadata, get) {
       .map(entry => ({ type: Number(period.value), week: Number(entry.value), start: Date.parse(entry.startDate), end: Date.parse(entry.endDate) })))
     .sort((a, b) => a.start - b.start);
   // The fall schedule is often unpublished in spring. These dates cannot be regular-season games.
-  if (now.getUTCFullYear() === season && now.getUTCMonth() >= 2 && now.getUTCMonth() < 8 &&
+  if (now.getUTCFullYear() === season && now.getUTCMonth() < 8 &&
     (!periods.length || !schedule?.events?.length)) {
     return {
       ...metadata, week: null, label: monthLabel(now), eligible: true, closesAt: Date.UTC(season, 8, 1),

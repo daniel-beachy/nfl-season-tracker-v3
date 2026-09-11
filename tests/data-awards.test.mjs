@@ -1,10 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { adaptAwards, fetchAwards } from '../scripts/awards.mjs';
 import { TEAMS } from '../scripts/teams.mjs';
 import { createMockSeason } from '../scripts/mock-data.mjs';
 import { validateSeason } from '../scripts/data-core.mjs';
-import { awardRows, formatAmericanOdds, isAwardSource } from '../src/lib/awards.mjs';
+import { awardRows, formatAmericanOdds, isAwardSource, isAwards } from '../src/lib/awards.mjs';
 
 const ref = (kind, id, year = 2026) =>
   `http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/${year}/${kind}/${id}?lang=en&region=us`;
@@ -115,4 +116,37 @@ test('award time series joins stable candidate IDs without copying odds into his
   assert.equal(rows[2]['1'], null);
   assert.equal(formatAmericanOdds(300), '+300');
   assert.equal(formatAmericanOdds(-150), '-150');
+});
+
+test('published preseason provenance rejects unsafe links, invalid dates and post-kickoff revisions', async () => {
+  const source = await adaptAwards({ items: [market('Regular Season MVP')] }, TEAMS, 2026, athlete);
+  source.provenance = {
+    kind: 'published-preseason', label: 'September 8 preseason publications', addedAt: '2026-09-11T05:00:00Z',
+    references: [{ title: 'Published odds', url: 'https://example.com/odds', publishedAt: '2026-09-08T17:10:00Z', modifiedAt: '2026-09-09T01:15:52Z' }],
+  };
+  assert.ok(isAwardSource(source));
+  const references = source.provenance.references;
+  references[0].url = 'javascript:alert(1)';
+  assert.equal(isAwardSource(source), false);
+  references[0].url = 'https://example.com/odds';
+  references[0].modifiedAt = 'not a date';
+  assert.equal(isAwardSource(source), false);
+  references[0].modifiedAt = '2026-09-11T01:00:00Z';
+  assert.equal(isAwards({ draftkings: source }, ['draftkings'], TEAMS.map(t => t.id), '2026-09-10T00:20Z'), false);
+});
+
+test('article-backed preseason Maye +1000 has pre-kickoff evidence and no post-opener snapshot', async () => {
+  const season = JSON.parse(await readFile(new URL('../public/data/seasons/2026.json', import.meta.url), 'utf8'));
+  const baseline = season.snapshots.find(s => s.capturedAt === '2026-09-08T16:56:42.327Z');
+  assert.equal(season.snapshots.some(s => s.id === '2026-2026-09-11'), false);
+  const historical = baseline.awards?.draftkings;
+  assert.ok(historical, 'published preseason awards must be attached to the baseline');
+  assert.equal(historical.provenance.kind, 'published-preseason');
+  assert.equal(historical.provenance.references.length, 2);
+  assert.equal(historical.categories.length, 8);
+  const before = historical.categories.find(c => c.id === 'mvp').candidates.find(c => c.name === 'Drake Maye');
+  assert.equal(before.id, '4431452');
+  assert.equal(before.americanOdds, 1000);
+  assert.ok(historical.provenance.references.every(reference => Date.parse(reference.modifiedAt) < Date.parse(season.startsAt)));
+  assert.doesNotThrow(() => validateSeason(season));
 });

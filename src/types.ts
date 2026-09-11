@@ -69,6 +69,12 @@ export interface AwardSourceSnapshot {
   observedAt?: string;
   note: string;
   categories: AwardCategory[];
+  provenance?: {
+    kind: 'published-preseason';
+    label: string;
+    addedAt: string;
+    references: { title: string; url: string; publishedAt: string; modifiedAt: string }[];
+  };
 }
 
 export interface Snapshot {

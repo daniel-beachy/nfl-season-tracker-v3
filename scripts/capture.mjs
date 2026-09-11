@@ -10,11 +10,27 @@ import { assertBeforeNextKickoff, resolveCheckpoint } from './checkpoints.mjs';
 export { shouldCapture, seasonForDate, deriveSeasonMetadata } from './data-core.mjs';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', 'public', 'data');
 
+export function captureYears(now = new Date()) {
+  return [...new Set([now.getUTCFullYear(), seasonForDate(now)])];
+}
+
+export async function captureAll(options = {}) {
+  const now = options.now ?? new Date();
+  const started = performance.now();
+  const get = options.get ?? createHttpClient();
+  const results = [];
+  for (const season of options.season === undefined ? captureYears(now) : [options.season]) {
+    const capturedAt = new Date(+now + performance.now() - started);
+    results.push({ season, ...await capture({ ...options, now: capturedAt, get, season }) });
+  }
+  return results;
+}
+
 export async function capture({ season, scheduled = false, now = new Date(), root = ROOT, get = createHttpClient() } = {}) {
   const started = performance.now();
   season ??= seasonForDate(now);
-  if (season !== seasonForDate(now)) {
-    throw new Error(`Live capture supports the current NFL season ${seasonForDate(now)} only; --season ${season} cannot create historical live data.`);
+  if (!captureYears(now).includes(season)) {
+    throw new Error(`Live capture supports the current NFL season ${seasonForDate(now)} and calendar year ${now.getUTCFullYear()} only; --season ${season} cannot create historical live data.`);
   }
   let schedule;
   let scheduleWarning = '';
@@ -23,7 +39,7 @@ export async function capture({ season, scheduled = false, now = new Date(), roo
   let metadata = deriveSeasonMetadata(season, now, schedule);
   console.log(JSON.stringify({ season, phase: metadata.phase, week: metadata.week, startsAt: metadata.startsAt, scheduled, schedule: metadata.note + scheduleWarning }));
   if (scheduled && !shouldCapture(now, metadata.phase, metadata.startsAt, metadata.endsAt)) {
-    console.log('Capture skipped by cadence gate: Wednesdays during play, final pre-kickoff and first post-Super-Bowl Wednesdays; March-September monthly on day 1.');
+    console.log('Capture skipped by cadence gate: Wednesdays during play, final pre-kickoff and first post-Super-Bowl Wednesdays; January-September monthly on day 1.');
     return { skipped: true, reason: 'cadence', metadata };
   }
   const existing = await readJson(join(root, 'seasons', `${season}.json`));
@@ -79,5 +95,5 @@ export async function capture({ season, scheduled = false, now = new Date(), roo
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  capture(parseArgs(process.argv.slice(2))).catch(error => { console.error(`Capture failed: ${error.message}`); process.exitCode = 1; });
+  captureAll(parseArgs(process.argv.slice(2))).catch(error => { console.error(`Capture failed: ${error.message}`); process.exitCode = 1; });
 }

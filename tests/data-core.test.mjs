@@ -48,7 +48,7 @@ test('season rollover uses previous year in January and February', () => {
   assert.equal(seasonForDate(new Date('2027-03-01T00:00Z')), 2027);
 });
 
-test('cadence is Wednesdays during play and March-September day one outside play, in UTC', () => {
+test('cadence is Wednesdays during play and January-September day one outside play, in UTC', () => {
   assert.equal(shouldCapture(new Date('2026-09-09T14:15Z'), 'regular'), true);
   assert.equal(shouldCapture(new Date('2026-09-09T14:15Z'), 'preseason'), false);
   assert.equal(shouldCapture(new Date('2026-07-01T14:15Z'), 'offseason'), true);
@@ -119,7 +119,7 @@ test('atomic persistence produces valid season JSON and source-neutral manifest'
     assert.deepEqual(saved, season);
     assert.equal(manifest.seasons[0].file, 'seasons/2025.json');
     assert.equal(manifest.seasons[0].label, '2025 — mocked — not fully accurate');
-    assert.equal(manifest.currentSeason, 2026);
+    assert.equal(manifest.currentSeason, 2025);
     await writeSeason(root, season, 2026, new Date('2026-09-08T16:00Z'));
     assert.deepEqual(JSON.parse(await readFile(join(root, 'seasons', '2025.json'), 'utf8')), season);
   } finally {

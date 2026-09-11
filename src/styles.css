@@ -126,6 +126,9 @@ select:disabled { cursor: default; opacity: 0.72; }
 .history-controls label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
 .history-controls input { accent-color: var(--cp-accent); width: 16px; height: 16px; }
 .history-empty .primary-button { margin: 20px auto 0; }
+.historical-awards p { margin: 8px 0; line-height: 1.6; }
+.history-references { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+.history-references a { display: inline-flex; align-items: center; gap: 4px; color: var(--cp-link); }
 .snapshot-explorer { display: flex; align-items: center; gap: 22px; padding: 13px 18px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-bg-elevated); margin-bottom: 20px; }
 .explorer-label { width: 135px; flex-shrink: 0; }
 .explorer-label .eyebrow { font-size: 8px; }
