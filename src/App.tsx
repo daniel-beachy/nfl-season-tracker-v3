@@ -66,7 +66,7 @@ export default function App() {
           <button title="Stat Leaders" aria-label="Open stat leaders" className={tab === 'leaders' ? 'active' : ''} onClick={() => setTab('leaders')}><BarChart3 size={21} /></button>
           <button title="Awards" aria-label="Open awards" className={tab === 'awards' ? 'active' : ''} onClick={() => setTab('awards')}><Trophy size={21} /></button>
         </div>
-        <div className="rail-bottom"><span className="rail-season">NFL</span><a className="portfolio-link" href={portfolio} title="Back to portfolio" aria-label="Portfolio"><Home size={20} /><span>Portfolio</span></a><button aria-label="About the data" title="About the data" onClick={() => setAboutOpen(true)}><Info size={20} /></button><a href={repository} target="_blank" rel="noreferrer" aria-label="GitHub repository"><Github size={20} /></a></div>
+        <div className="rail-bottom"><span className="rail-season">NFL</span><a className="portfolio-link" href={portfolio} title="More projects by Daniel Beachy" aria-label="More projects"><Home size={20} /><span>More projects</span></a><button aria-label="About the data" title="About the data" onClick={() => setAboutOpen(true)}><Info size={20} /></button><a href={repository} target="_blank" rel="noreferrer" aria-label="GitHub repository"><Github size={20} /></a></div>
       </aside>
       <div className="app-shell">
         <header className="masthead">
@@ -126,7 +126,7 @@ export default function App() {
             </>}
           </>}
         </main>
-        <footer className="footer"><div><span className="footer-brand">sunday signal.</span><span>Independent. Open source. In it for the season.</span></div><div><span className="footer-keys"><Check size={12} /> No keys. No subscriptions.</span><a href={portfolio}><Home size={13} /> Portfolio</a><a href={repository} target="_blank" rel="noreferrer">View on GitHub <ChevronRight size={13} /></a></div></footer>
+        <footer className="footer"><div><span className="footer-brand">sunday signal.</span><span>Independent. Open source. In it for the season.</span></div><div><span className="footer-keys"><Check size={12} /> No keys. No subscriptions.</span><a href={portfolio}><Home size={13} /> More projects</a><a href={repository} target="_blank" rel="noreferrer">View on GitHub <ChevronRight size={13} /></a></div></footer>
       </div>
       <AboutDialog open={aboutOpen} close={() => setAboutOpen(false)} data={data} />
     </>
