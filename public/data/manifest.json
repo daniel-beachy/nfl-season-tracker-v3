@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "currentSeason": 2026,
-  "generatedAt": "2026-11-10T20:38:27.636Z",
+  "generatedAt": "2026-11-17T21:56:31.265Z",
   "seasons": [
     {
       "year": 2026,
@@ -9,8 +9,8 @@
       "kind": "live",
       "phase": "regular",
       "startsAt": "2026-09-10T00:20:00.000Z",
-      "snapshotCount": 10,
-      "lastCapturedAt": "2026-11-10T20:38:27.636Z",
+      "snapshotCount": 11,
+      "lastCapturedAt": "2026-11-17T21:56:31.265Z",
       "file": "seasons/2026.json"
     },
     {
